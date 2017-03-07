@@ -3,11 +3,14 @@ body {
 	
 }
 
+img {
+}
+
 #container {
 	width: 100%;
 	height: 100%;
 	margin-left: auto;
-	margin-right: auto;
+	margin-right: auto; 
 }
 
 #header{
@@ -17,6 +20,9 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	vertical-align: top;
+	border-style: groove;
+  	border-width: thick;
+  	border-radius: 15px;
 }
 
 #main {
@@ -26,7 +32,35 @@ body {
 	margin-top: 2em;
 	margin-left: auto;
 	margin-right: auto;
-	
+	border-style: groove;
+  	border-width: thick;
+  	border-radius: 15px;
+}
+
+#main div {
+	display: inline-flex;
+	width: 49.5%;
+	height: 49.5%;
+	overflow: hidden;
+	margin: auto;
+
+}
+
+.products {
+	margin: auto;	
+}
+
+ul {
+	display:flex;
+	padding: 0;
+	width: 400%;
+
+	animation: changeImages 20s infinite;
+}
+
+li {
+	list-style: none;
+	width: 100%;
 }
 
 #footer {
@@ -37,6 +71,9 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	vertical-align: bottom;
+	border-style: groove;
+  	border-width: thick;
+  	border-radius: 15px;
 }
 
 #footer span {
@@ -47,11 +84,17 @@ body {
 	margin-left: 6.5%;
 }
 
-#main div {
-	align-items: center;
-	background-color: green;
-	display: inline-flex;
-	width: 49.5%;
-	height: 49.5%;
-	box-sizing: content-box;
+
+@keyframes changeImages {
+	0%{margin-left: 0;}
+	20%{margin-left: 0;}
+
+	25%{margin-left: -100%;}
+	45%{margin-left: -100%;}
+
+	50%{margin-left: -200%;}
+	70%{margin-left: -200%;}
+
+	75%{margin-left: -300%;}
+	95%{margin-left: -300%;}
 }
