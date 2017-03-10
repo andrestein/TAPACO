@@ -1,35 +1,18 @@
-#navigation{
-	background-color: #FAF3DD;
-	width: 90%;
-	height: 20%;
-	margin: auto;
-	padding: 0;
-	vertical-align: top;
+#main {
+	width: 80%;
+
+}
+
+#info{
 	border-style: groove;
   	border-width: thick;
-  	border-radius: 15px;
-}
-
-#navigation ul{
-	list-style-type: none;
-	text-align: left;
-}
-
-#navigation li{
-	display: inline;
+  	border-collapse: collapse;
 	text-align: center;
-	margin: 0 10px 0 0;
-	text-decoration: none;
-}
-
-#contentContainer {
-	background-color: #FAF3DD;
-	width: 80%;
-	margin: auto;
+	margin: 2em;
 }
 
 #contentRight {
-	background-color: #FAF3DD;
+	background-color: rgba(192, 199, 173, 0.6); 
 	width: 60%;
 	height: auto;
 	border-style: groove;
@@ -39,11 +22,7 @@
 }
 
 #contentLeft {
-	background-color: #FAF3DD;
-	width: 20%;
-	border-style: groove;
-  	border-width: thick;
-  	border-radius: 15px;
+	width: 38%;
   	vertical-align: top;
   	display: inline-block;
 }
@@ -55,13 +34,26 @@
 
 #text{
 	font-family: cursive;
+
 }
 
-body{
-	background-color: #FAF3DD;
+#imagePerson{
+	width: 10%;
+	height: 14%;
 }
 
-button #logIn {
-	text-align: center;
-	margin: auto;
+#imageBuild{
+	width: 60%;
+	height: 40%;
+}
+
+#contentLeft div{
+	background-color: rgba(192, 199, 173, 0.6); 
+	width: 60%;
+	height: auto;
+	border-style: groove;
+  	border-width: thick;
+  	border-radius: 15px;
+  	display: inline-block;
+	font-size: 20px;
 }
