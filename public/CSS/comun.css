@@ -8,6 +8,12 @@ img {
 	height: 100%;
 }
 
+.container-fluid{
+  background: -webkit-linear-gradient(top,white,rgba(0,166,0,0.6));
+  border-style: groove;
+	border-width: 3px;
+	border-radius: 20px;
+}
 
 a {
 	color:black;
