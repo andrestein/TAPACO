@@ -1,5 +1,5 @@
 #navigation{
-	background-color: rgba(166,166,166,0.6);
+	background-color: #FAF3DD;
 	width: 90%;
 	height: 20%;
 	margin: auto;
@@ -23,13 +23,13 @@
 }
 
 #contentContainer {
-	background-color: rgba(55,55,55,0.1);
+	background-color: #FAF3DD;
 	width: 80%;
 	margin: auto;
 }
 
 #contentRight {
-	background-color: rgba(192, 199, 173, 0.6); 
+	background-color: #FAF3DD;
 	width: 60%;
 	height: auto;
 	border-style: groove;
@@ -39,7 +39,7 @@
 }
 
 #contentLeft {
-	background-color: rgba(192, 199, 173, 0.6); 
+	background-color: #FAF3DD;
 	width: 20%;
 	border-style: groove;
   	border-width: thick;
@@ -58,7 +58,7 @@
 }
 
 body{
-	background-color: rgba(236, 151, 63, 0.21);
+	background-color: #FAF3DD;
 }
 
 button #logIn {
