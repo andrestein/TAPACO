@@ -1,11 +1,33 @@
 
 body {
 	margin: auto;
+	background: -webkit-linear-gradient(top,white,rgb(0,166,0));
 }
 
-.seccion img {
+img {
 	width: 100%;
 	height: 100%;
+}
+
+h2 {
+	margin-left: 1em;
+	background: -webkit-linear-gradient(top,white,rgba(0,166,0,0.6));
+	border-style: groove;
+  	border-width: 3px;
+  	border-radius: 5px;
+}
+
+a {
+	color:black;
+}
+
+.seccion {
+	display: inline-block;
+	width: 49.5%;
+	height: 49.5%;
+	overflow: hidden;
+	margin: auto;
+	border-radius: 5px;
 }
 
 .seccion ul {
@@ -35,54 +57,74 @@ body {
   	border-radius: 15px;*/
 }
 
-#container {
-	width: 100%;
+.lema {
+	width: 20%;
 	height: 100%;
-	margin-left: auto;
-	margin-right: auto; 
+	margin: auto;
+	float: left;
 }
 
-#header{
-	background-color: rgb(166,166,166);
-	width: 90%;
-	height: 15%;	
-	margin-left: auto;
-	margin-right: auto;
-	vertical-align: top;
-	border-style: groove;
-  	border-width: thick;
-  	border-radius: 15px;
+.logo {
+	width: 40%;
+	height: 100%;
+	margin: auto;
+	float: left;
 }
+
+.options {
+	width: 30%;
+	height: 100%;
+	margin:1em;
+	float: right;
+
+}
+
+.options button {
+	width: 49%;
+	height: 15%;
+	vertical-align: bottom;
+} 
 
 #main {
-	width: 90%;
+	width: 105%;
 	height: 70%;
 	margin-top: 2em;
 	margin-left: auto;
 	margin-right: auto;
 }
 
-.seccion {
-	display: inline-block;
-	width: 49.5%;
-	height: 49.5%;
-	overflow: hidden;
-	margin: auto;
-	border-radius: 10px;
+#container {
+	width: 100%;
+	height: 150%;
+	margin-left: auto;
+	margin-right: auto; 
 
 }
 
-#footer {
-	background-color: rgba(166,166,166,0.6); 
+#header{
+	background-color: white;
 	width: 90%;
-	height: 5%;
+	height: 15%;
+	margin-top: 2em;	
+	margin-left: auto;
+	margin-right: auto;
+	vertical-align: top;
+	border-style: groove;
+  	border-width: thick;
+  	border-radius: 5px;
+}
+
+#footer {
+	background-color: white; 
+	width: 90%;
+	height: 3%;
 	margin-top: 2em;
 	margin-left: auto;
 	margin-right: auto;
 	vertical-align: bottom;
 	border-style: groove;
   	border-width: thick;
-  	border-radius: 15px;
+  	border-radius: 5px;
 }
 
 #footer span {
