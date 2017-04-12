@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Crear Listado</title>
+	<link rel="stylesheet" type="text/css" href="CSS/comun.css">
+	<link rel="stylesheet" type="text/css" href="CSS/list.css">
+	<script type="text/javascript">
+		function addProductList(){
+			var list = document.getElementById('main');
+	 		list.innerHTML= list.innerHTML + "<div id='newProduct'> <div id='productInfo'>	<i>Nombre del producto</i> <input type='text' name='Nombre'></div>	<div id='productInfo'>  <i>Referencia</i>	<input type='text' name='Referencia'>	</div>	<div id='productInfo'>	<i>Cantidad requerida</i>	<input type=' name='Cantidad'>	</div>	<div id='productInfo'>	<i>Empresa del producto</i>	<input type='text' name='Empresa'>	</div>	</div>"
+	 	}	
+	 	function sendList(){
+	 		window.alert("su listado se ha enviado");
+	 	}
+
+	</script>
+</head>
+<body>
+<div id="container">
+			<div id = "header">
+				<div class="lema">
+					<img src="images/lemaTOPACO.jpg">
+				</div>
+				<div class="logo">
+					<img src="images/logoTOPACO.jpg">
+				</div>
+				<div class="options">
+					<button> Iniciar Sesion </button>
+					<button> Registrarse </button>
+				</div>
+			</div>
+
+		<div id="navigation">
+			<ul>
+			<li><a href="home.html">Principal</a></li>
+			<li><a href="brands.html">Marcas distribucion</a></li>
+			<li><a href="productos.html">Productos</a></li>
+			<li><a href="contactUs.html">Contactenos</a></li>
+			</ul>
+		</div>
+
+		<div id="main">
+			<div id="newProduct">
+				<div id="productInfo">
+				<i>Nombre del producto</i>
+				<input type="text" name="Nombre">
+				</div>
+				<div id="productInfo"> 
+				<i>Referencia</i>
+				<input type="text" name="Referencia">
+				</div>
+				<div id="productInfo">
+				<i>Cantidad requerida</i>
+				<input type="" name="Cantidad">
+				</div>
+				<div id="productInfo">
+				<i>Empresa del producto</i>
+				<input type="text" name="Empresa">
+				</div>
+			</div>
+
+			<div id="button">
+				<button id="btAdd" onclick="addProductList()">Agregar</button>
+			</div>
+		</div>
+
+		<center><button id="enviar" onclick="sendList()"> Enviar Listado</button></center>
+
+		<div id = "footer">
+			<span> CARRERA 50 No. 53-20 ITAGUÍ </span>
+			<span> PBX: 373 00 22 - FAX: 371 67 64 </span>
+			<span> E-MAIL: comercial.topacosa@une.net.co </span>
+		</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+
+#main{
+	width: 80%;
+	background-color: rgb(221, 221, 221);
+	border-style: groove;
+}
+
+#newProduct{
+	display: block;
+	vertical-align: top;
+	border-style:  double;
+}
+
+#productInfo{
+	display: inline-block;
+	width: 20%;
+}
+
+#productInfo input{
+	width: 70%;
+}
+
+#button{
+	margin: auto;
+}
+
+#btAdd{
+	margin: 1em;
+}

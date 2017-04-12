@@ -1,0 +1,55 @@
+h2 {
+	margin-left: 1em;
+	background: -webkit-linear-gradient(top,white,rgba(0,166,0,0.6));
+	border-style: groove;
+  	border-width: 3px;
+  	border-radius: 5px;
+}
+
+.seccion-adviser {
+	width: 100%;
+	height: 32%;
+	display: inline-flex;
+	margin: auto;
+}
+
+.adviser {
+	width: 25%;
+	height: 100%;
+	margin: 1px;
+	overflow: hidden;
+	background-color: white;
+	border-style: groove;
+  	border-width: thick;
+  	border-radius: 5px;
+}
+
+.adviser ul{
+	padding: 0;
+}
+
+.adviser li{
+	text-align: center;
+	list-style: none;
+	width: 100%;
+}
+
+
+.seccion-direction{
+	margin: 2em;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+	height: 32%;
+}
+
+.seccion-direction .subtitles {
+	z-index: 1;
+	height: auto;
+	width: auto;
+	text-align: center;
+	position: absolute;
+}
+
+
+
