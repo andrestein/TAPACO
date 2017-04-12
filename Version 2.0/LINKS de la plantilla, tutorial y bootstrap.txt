@@ -1,0 +1,14 @@
+Plantilla 
+http://getbootstrap.com/examples/carousel/
+
+codigo fuente plantilla
+view-source:http://getbootstrap.com/examples/carousel/
+
+css basico plantilla
+http://getbootstrap.com/examples/carousel/carousel.css
+
+boostrap
+http://getbootstrap.com/getting-started/#download
+
+"tutorial de como usar toda esa mierda"
+https://www.youtube.com/watch?v=YP2Y-Rebtl4
