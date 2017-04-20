@@ -11,11 +11,19 @@ server.listen(process.env.PORT || 5000);
 
 function atenderServidor(request,response){
   console.log("Peticion recibida : "+request.url);
-  fs.readFile("./files"+request.url+"topaco/index.html",archivolisto);
+
+  if(request.url != "/"){
+    retornarArchivo(request,response);
+  }
+  else{
+    response.end("Hola para ingresar a los archivos puedes cambiar la ruta con \n /cocktel/Index.html \n /ajedrez/ajedrez.html");
+  }
+}
+function retornarArchivo(request,response){
+  fs.readFile("./files"+request.url,archivolisto);
 
   function archivolisto(err,data){
     if(err == null){
-      response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
       response.write(data);
       response.end();
     }else {
