@@ -10,17 +10,13 @@ server.listen(process.env.PORT || 5000);
 //server.listen( 8088 );
 
 function atenderServidor(request,response){
+  var date = new Date();
   console.log("Peticion recibida : "+request.url);
-
-  if(request.url != "/"){
-    retornarArchivo(request,response);
-  }
-  else{
-    response.end("Hola para ingresar a los archivos puedes cambiar la ruta con \n /cocktel/Index.html \n /ajedrez/ajedrez.html");
-  }
+  retornarArchivo(request,response);
 }
+
 function retornarArchivo(request,response){
-  fs.readFile("./files"+request.url,archivolisto);
+  fs.readFile("./files"+request.url+"topaco/index.html",archivolisto);
 
   function archivolisto(err,data){
     if(err == null){
