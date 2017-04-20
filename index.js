@@ -1,20 +1,30 @@
-var express = require('express');
-var app = express();
+var http = require('http');
+var fs = require('fs');
 
-app.set('port', (process.env.PORT || 5000));
+//Crear una instancia del servidor HTTP
+var server=http.createServer(atenderServidor);
 
-app.use(express.static(__dirname + '/public'));
+console.log("Servidor iniciado");
+//Iniciar la escucha del servidor en el puerto 8088
+server.listen(process.env.PORT || 5000);
+//server.listen( 8088 );
 
-// views is directory for all template files
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+function atenderServidor(request,response){
+  var date = new Date();
+  console.log("Peticion recibida : "+request.url);
+  retornarArchivo(request,response);
+}
 
-app.get('/', function(request, response) {
-  response.sendFile( __dirname + '/public/home.html');
-});
+function retornarArchivo(request,response){
+  fs.readFile("./files/topaco/index.html",archivolisto);
 
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
-
-
+  function archivolisto(err,data){
+    if(err == null){
+      response.write(data);
+      response.end();
+    }else {
+      console.log(err);
+      response.end(err.toString());
+    }
+  }
+}
