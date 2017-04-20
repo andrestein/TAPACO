@@ -11,12 +11,13 @@ server.listen(process.env.PORT || 5000);
 
 function atenderServidor(request,response){
   var date = new Date();
+  request.url = request.url+"/topaco/index.html";
   console.log("Peticion recibida : "+request.url);
   retornarArchivo(request,response);
 }
 
 function retornarArchivo(request,response){
-  fs.readFile(request.url+"files/topaco/index.html",archivolisto);
+  fs.readFile("./files"+request.url,archivolisto);
 
   function archivolisto(err,data){
     if(err == null){
