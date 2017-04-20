@@ -15,6 +15,7 @@ function atenderServidor(request,response){
 
   function archivolisto(err,data){
     if(err == null){
+      response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
       response.write(data);
       response.end();
     }else {
