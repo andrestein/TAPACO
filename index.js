@@ -10,9 +10,8 @@ server.listen(process.env.PORT || 5000);
 //server.listen( 8088 );
 
 function atenderServidor(request,response){
-  var date = new Date();
   console.log("Peticion recibida : "+request.url);
-  fs.readFile("./files"+request.url+"topaco/index.html/",archivolisto);
+  fs.readFile("./files"+request.url+"topaco/index.html",archivolisto);
 
   function archivolisto(err,data){
     if(err == null){
