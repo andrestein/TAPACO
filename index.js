@@ -16,7 +16,7 @@ function atenderServidor(request,response){
 }
 
 function retornarArchivo(request,response){
-  fs.readFile("./files/topaco/index.html",archivolisto);
+  fs.readFile(request.url+"/files/topaco/index.html",archivolisto);
 
   function archivolisto(err,data){
     if(err == null){
