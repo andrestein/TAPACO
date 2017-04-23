@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Crear registro de productos
+	</title>
+
+	<script type="text/javascript">
+		
+ //variable global con el listado de procutos
+
+ 	var productos = new Array(); 
+
+ 	//para tener un constructor de productos
+		function Producto(Nombre, Referencia, Cantidad, Empresa){
+			this.Nombre = Nombre;
+			this.Referencia = Referencia;
+			this.Cantidad = Cantidad;
+			this.Empresa = Empresa;
+		}
+	
+
+		function addProductList(){
+			var espacio = document.getElementById('productosTodos');
+
+			var nuevo = document.createElement('div');
+			nuevo.setAttribute("id",'Producto');
+			nuevo.innerHTML= '<div id="productoInfo"> ' + 
+					'<i>Nombre del producto</i>'+
+					'<input type="text" name="Nombre">'+
+					'</div>'+
+					'<div id="productoInfo">'+ 
+					'<i>Referencia</i>'+
+					'<input type="text" name="Referencia">'+
+					'</div>'+
+					'<div id="productoInfo">'+
+					'<i>Cantidad requerida</i>'+
+					'<input type="" name="Cantidad">'+
+					'</div>'+
+					'<div id="productoInfo">'+
+					'<i>Empresa del producto</i>'+
+					'<input type="text" name="Empresa">'+
+					'</div>' ;
+
+			espacio.appendChild(nuevo);
+		}
+
+//PARA ENCONTRAR LOS DATOS INTRODUCIDOS POR EL USUARIO HAY QUE DESCENDER EN LOS HIJOS DE LOS ELEMENTOS
+// productoTodos ---> producto ---> productoInfo (tienen varios cada uno una propiedad distinta)
+		function guardarProductos(){
+			var padre = document.getElementById('productosTodos');
+			var productos2 = padre.children;
+
+			console.log("hay " + productos2.length+ " lineas de producto en la lista");
+
+			for (var i = 0; i < productos2.length; i++) {
+				var hijo = productos2[i].getElementsByTagName('input');  //LOS INPUTS QUE CONTENGA EL HIJO QEU SERIAN LAS PROPIEDADES PRODUCTO
+
+				var nom = hijo[0].value; 
+				var ref = hijo[1].value;
+				var can = hijo[2].value;
+				var emp = hijo[3].value;
+
+				console.log("sacando valores del "+ (i+1) + " producto: " + nom + " , " + ref + " , " + can + " , " + emp);
+				productos.push(new Producto(nom,ref,can,emp));
+			}
+			console.log("total de productos guardados: " + productos.length);
+		}
+
+
+
+	</script>
+
+	<style type="text/css">
+		div #productoInfo {
+			display: inline-block;
+		}	
+
+		 #main{
+			align-content: center;
+			background-color: yellow;
+			width: auto;
+			margin-left: 8em;
+			margin-right: 8em;
+		}
+
+		button {
+			display: inline-block;
+		}
+
+		input {
+			width: 6em;
+					}
+
+		form {
+			background-color: #FFEEFF;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<div id="main">
+			
+			<div id="productosTodos"> 
+				<div id="Producto">
+					<div id="productoInfo">
+					<i>Nombre del producto</i>
+					<input type="text" name="Nombre">
+					</div>
+					<div id="productoInfo"> 
+					<i>Referencia</i>
+					<input type="text" name="Referencia">
+					</div>
+					<div id="productoInfo">
+					<i>Cantidad requerida</i>
+					<input type="" name="Cantidad">
+					</div>
+					<div id="productoInfo">
+					<i>Empresa del producto</i>
+					<input type="text" name="Empresa">
+					</div>
+				</div>
+			</div>
+
+			<div id="btns">
+				<button id="btAdd" onclick="addProductList()">Agregar</button>
+
+				<button id="btnDelete" onclick="deleteLastProductList()">Borrar Ultimo</button>
+			</div>
+		</div>
+
+		<button id="send" onclick="guardarProductos()" style="margin: 3em; width: auto;"> Enviar </button>
+	
+</body>
+</html>
