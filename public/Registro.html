@@ -28,29 +28,32 @@
     usuario.telPersonal = document.getElementById( "telPersonal" ).value ;
     usuario.correo = document.getElementById( "correo" ).value ;
     usuario.contraseña = document.getElementById( "contraseña" ).value ;
-    usuario.conContraseña = document.getElementById( "conContraseña" ).value ;
+    var conContraseña = document.getElementById( "conContraseña" ).value ;
     
-    if(usuario.contraseña == usuario.conContraseña){
+    if(usuario.contraseña == conContraseña){
       return usuario;
+    }
+    else {
+      window.alert("contraseña incorrecta");
     }    
   }
   
   function registrar(){
     var usuario = salvarCampos();
-    
+    if (usuario != null){
     var serializado = "";
     // Serializar el objeto como una cadena de texto JSON
     serializado = JSON.stringify( usuario );
-    window.alert( serializado );
     
     // Crear un objeto para hacer peticiones HTTP
     var request = new XMLHttpRequest();
     
     // Abrir una peticion HTTP POST a la url deseado y no asincronico
-    request.open( "POST", "/registrar", false );
+    request.open( "POST", "/registro", false );
     
     // Ejecuta la peticion HTTP
     request.send( serializado );
+    }
   }
   
 </script>
@@ -64,19 +67,19 @@
         </br>
         <div class="form-group">
           <label for="exampleInputEmail1">Nombre</label>
-          <input type="email" class="form-control" placeholder="Nombre" id="nombre">
+          <input type="text" class="form-control" placeholder="Nombre" id="nombre">
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Empresa</label>
-          <input type="email" class="form-control" placeholder="Empresa" id="empresa">
+          <input type="text" class="form-control" placeholder="Empresa" id="empresa">
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Telefono de la empresa</label>
-          <input type="email" class="form-control" placeholder="Telefono de la empresa" id="telEmpresa">
+          <input type="number" class="form-control" placeholder="Telefono de la empresa" id="telEmpresa">
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Telefono personal</label>
-          <input type="email" class="form-control" placeholder="Telefono personal" id="telPersonal">
+          <input type="number" class="form-control" placeholder="Telefono personal" id="telPersonal">
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Correo Electronico</label>

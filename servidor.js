@@ -1,18 +1,16 @@
 var http = require( "http" );
 var fs = require( "fs" );
 
-// vector que va  al macenar los usuarios registrados
+// usuarios
 var usuarios = [];
 
-// Cargar el archivo de usuarios del disco a memoria
-fs.readFile( "usuarios.json", cargarUsuarios );
+fs.readFile( "BD/usuarios.json", cargarUsuarios );
 function cargarUsuarios( error, data ){
 	if( error == null ){
 		usuarios = JSON.parse( data ); // Des - stringify
-	
-		console.log( "Los usuarios registrados son: " );
-		console.log( usuarios );
+		console.log("Usuarios cargados correctamente \n");
 	} else {
+		console.log("Error al cargar los usuarios \n");
 		console.log( error );
 		response.end( error.toString() );
 	}
@@ -32,21 +30,7 @@ server.listen( 8088 );
 function atenderServidor( request, response ){
 	console.log( "Peticion recibida : " + request.url );
 	
-	if( request.url == "/fecha" ){
-		var f = new Date();
-		response.end(  f.toString() );
-	} else if( request.url == "/status" ){
-		retornarEncicla( request, response );
-	}
-	else if( request.url == "/ajedrez") {
-		retornarArchivo( request, response );
-	} 
-	else if( request.url == "/producto" ){
-		console.log( "Me estan enviando un producto" );
-		guardarProducto( request, response );
-		response.end( "Producto Recibido" );
-
-	} else if( request.url == "/registrar" ){
+	if( request.url == "/registro" ){
 		guardarRegistro( request, response );
 	}
 	else {
@@ -55,43 +39,6 @@ function atenderServidor( request, response ){
 }
 
 
-// Web Service que Reenvia los datos de Encicla
-function retornarEncicla( request, response ){
-	console.log( "Contactando el servicio de Encicla" );
-	http.get( "http://www.encicla.gov.co/status/",  pipe );
-	
-	// procesa la respuesta de http.get
-	function pipe( res ){
-		var body="";
-		
-		res.on( "data", recibir );
-		res.on( "end", terminar );
-		
-		// Call back que recibe los datos pedidos con http.get
-		function recibir(data){
-			body += data;
-		}
-		// Callback que se llama cunado termina la peticion GET
-		function terminar(data){
-			response.end( body );
-			console.log( "Completado!" );
-		}
-	}
-}
-
-
-function guardarProducto( request, response ){
-	request.on( "data", recibir );
-	// recibe asincronicamente el Payload de una peticion POST
-	function recibir( data ){
-		console.log( data.toString() );
-		var producto;
-		// Deserializa un objeto a partir de una cadena JSON
-		producto = JSON.parse( data.toString() );
-		console.log( "Me llego el producto " + producto.codigo );
-	}
-}
-
 // Guarda el registro de un usuario
 function guardarRegistro( request, response ){
 	// Programa el Callback
@@ -99,32 +46,61 @@ function guardarRegistro( request, response ){
 	
 	// Callback que recibe el cuerpo del POST
 	function recibir( data ){
-		console.log( data.toString() );
+
+		console.log( "\n este fue el usuario que recibio: \n" + data.toString() );
 		var usr = JSON.parse( data.toString() );
+	
 		// Agregar al vector
-		usuarios.push( usr );
-		console.log( usuarios );
+		// si no hay otro usuario con el mismo email lo registra.
+		if(verificarUsuario(usr)){
+			usuarios.push( usr );
 		
-		fs.writeFile('usuarios.json', JSON.stringify( usuarios ), null );
-		
-		response.end( "Ya recibimos el usuario" );
+			fs.writeFile('BD/usuarios.json', JSON.stringify( usuarios ), null );
+			console.log("\n el usuario fue agregado");
+
+			response.end( "Ya recibimos el usuario" );
+		}
+		else{
+			response.end("No se pudo recibir el usuario")
+		}
+
+		// verifica que no exista otro usuario con el mismo correo (email)
+		function verificarUsuario( usr ){
+			for(var i = 0; i < usuarios.length; i++){		
+				if(usuarios[i].correo == usr.correo){	
+					console.log('\n Ya existe un usuario con ese email');					
+					return false;
+				}
+			}
+			return true;	
+		}
 	}
 }
 
 
+
 function retornarArchivo( request, response ){
-  fs.readFile( "./public" + request.url, archivoListo );
-  
-  function archivoListo( error, data ){
-	if( error == null ){
-		response.writeHead(200, { 'content-type': 'text/html' });
-		response.write( data );
-		response.end();
-	} else {
-		console.log( error );
-		response.end( error.toString() );
+	var a = "./public" + request.url;
+	var url = "";
+	for(var i = 0; i < a.length; i++){
+		if(a.charAt(i) != '?'){
+			url += a.charAt(i);
+		}
 	}
-  }
+
+	//fs.readFile( "./public" + request.url, archivoListo );
+	fs.readFile( url, archivoListo );
+
+  	function archivoListo( error, data ){
+		if( error == null ){
+			response.writeHead(200, { 'content-type': 'text/html' });
+			response.write( data );
+			response.end();
+		} else {
+			//console.log( error );
+			response.end( error.toString() );
+		}
+  	}
 }
 
 
