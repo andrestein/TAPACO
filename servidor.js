@@ -26,18 +26,30 @@ console.log( "Servidor iniciado" );
 // Iniciar la escucha del servidor en el puero 8088
 server.listen( 8088 );
 
+
+
+//--------------------------------------------------------------------------------------------
+// AQUI SE ATIENDEN LAS PETICIONES QUE RECIBE EL SERVIDOR
+
 //   CoffeeScript o TypeScript
 function atenderServidor( request, response ){
 	console.log( "Peticion recibida : " + request.url );
 	
-	if( request.url == "/registro" ){
+	if( request.url == "/registro2" ){
 		guardarRegistro( request, response );
+	}
+	else if( request.url == "/inicio" ){
+		iniciarSesion( request, response );
 	}
 	else {
 		retornarArchivo( request, response );
 	}
 }
 
+
+
+//--------------------------------------------------------------------------------------------
+// AQUI SE MANEJAN LOS DATOS RECIVIDOS DEL NAVEGADOR, AL REGISTRARSE UN NUEVO USUARIO
 
 // Guarda el registro de un usuario
 function guardarRegistro( request, response ){
@@ -47,7 +59,7 @@ function guardarRegistro( request, response ){
 	// Callback que recibe el cuerpo del POST
 	function recibir( data ){
 
-		console.log( "\n este fue el usuario que recibio: \n" + data.toString() );
+		//console.log( "\n este fue el usuario que recibio: \n" + data.toString() );
 		var usr = JSON.parse( data.toString() );
 	
 		// Agregar al vector
@@ -58,10 +70,18 @@ function guardarRegistro( request, response ){
 			fs.writeFile('BD/usuarios.json', JSON.stringify( usuarios ), null );
 			console.log("\n el usuario fue agregado");
 
-			response.end( "Ya recibimos el usuario" );
+			var resp = {} ;
+			resp.status = "ok";
+			resp.url = "inicio.html";
+
+			response.end( JSON.stringify(resp) );
 		}
 		else{
-			response.end("No se pudo recibir el usuario")
+
+			var resp = {} ;
+			resp.status = "fail";
+
+			response.end( JSON.stringify(resp) );
 		}
 
 		// verifica que no exista otro usuario con el mismo correo (email)
@@ -78,6 +98,59 @@ function guardarRegistro( request, response ){
 }
 
 
+
+//--------------------------------------------------------------------------------------------
+// AQUI SE VALIDAN LOS DATOS QUE LLEGAN DE INICIAR SESION CON LOS GUARDADOS EN LOS .JSON
+
+// verifica los datos para inciar sesion de un usuario sean correctos
+function iniciarSesion( request , response ){
+	request.on("data", datosInicio);
+	
+	function datosInicio( data ){
+		var datos = JSON.parse( data.toString() );
+
+		if(verificarDatos(datos)){
+			console.log('\n usuario accedio correctamente');			
+
+			// para cargar una pagina con la respuesta ok 
+			var resp = {};
+			resp.status = 'ok';
+			resp.url = 'index.html';
+			resp.level = 1;
+
+			response.writeHead( 200 , {'Set-Cookie' : 'usuario = ' + datos.email });
+
+			response.end(JSON.stringify(resp));
+
+		}
+
+		else{
+			console.log('\n Usuario o Contraseña incorrectos!!');
+
+			var resp = {};
+			resp.status = 'fail';
+
+			response.end(JSON.stringify(resp));
+		}
+	}
+
+	// verifica que el email y clave si correspondan
+	function verificarDatos(datos){
+		for(var i = 0; i < usuarios.length; i++){
+			if(usuarios[i].correo == datos.correo && usuarios[i].contraseña == datos.contraseña) {			
+				return true;
+			}
+		}
+		return false;
+	}
+
+	
+}
+
+
+
+//--------------------------------------------------------------------------------------------
+// AQUI SE CARGAN LOS ARCHIVOS QUE REQUIERE CADA PETICION
 
 function retornarArchivo( request, response ){
 	var a = "./public" + request.url;
