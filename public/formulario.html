@@ -165,19 +165,45 @@
 	</script>
 
 	<style type="text/css">
-		div #productoInfo {
+		.productoInfo {
 			display: inline-block;
+		}
+
+		.contenido{
+			display: -webkit-inline-box;
 		}	
+
+		.opcionesBusqueda {
+			width: 20%;
+			height: auto;
+			margin-left: 1em;
+			margin-right: 1em;
+		}
+
+		.webServices{
+			width: auto;
+			height: 45%;
+			background-color: blue;
+		}
+		.asesores{
+			width: auto;
+			height: 45%;
+			background-color: blue;
+		}
 
 		#main{
 			align-content: center;
 			background-color: yellow;
-			width: auto;
-			margin-left: 8em;
-			margin-right: 8em;
+			width: 70%;
+			margin-left: 1em;
+			margin-right: 1em;
 		}
 
 		button {
+			display: inline-block;
+		}
+
+		.opciones{
 			display: inline-block;
 		}
 
@@ -194,7 +220,6 @@
 </head>
 
 <body>
-<div class="container">
 <!-- ENCABEZADO -->
 
     <!-- Aqui empieza lo que llamabamos Header -->
@@ -247,40 +272,52 @@
       </div>
     </div>
 
-
     <!-- CODIGO DE NOSOTROS -->
+<div class="contenido">
+    <div class="opcionesBusqueda">
+    	<div class="webServices">
+    		<h5> Aqui va la parte del web service </h5>
+    	</div>
+    	<hr class="featurette-divider">
+    	<div class="asesores">
+    		<h5> Aqui van los asesores </h5>
+    	</div>
+    </div>
 	<div id="main">
 		<div id="productosTodos"> 
 			<div id="Producto">
-				<div id="productoInfo">
+				<div class="productoInfo">
 					<i>Nombre del producto</i>
 					<input type="text" name="Nombre">
 				</div>
-				<div id="productoInfo"> 
+				<div class="productoInfo"> 
 					<i>Referencia</i>
 					<input type="text" name="Referencia">
 				</div>
-				<div id="productoInfo">
+				<div class="productoInfo">
 					<i>Cantidad requerida</i>
 					<input type="" name="Cantidad">
 				</div>
-				<div id="productoInfo">
+				<div class="productoInfo">
 					<i>Empresa del producto</i>
 					<input type="text" name="Empresa">
 				</div>
 			</div>
 		</div>
 
-		<div id="btns">
+		<div id="opciones">
 			<button id="btAdd" onclick="addProductList()">Agregar</button>
 
 			<button id="btnDelete" onclick="deleteLastProductList()">Borrar Ultimo</button>
 		</div>
+		<div class ="opciones">
+			<button id="view" onclick="guardarProductos()" style="margin: 3em; width: auto;"> Ver Doc </button>
+			<button id="dowload" onclick="guardarProductos()" style="margin: 3em; width: auto;"> Descargar </button>
+			<button id="send" style="margin: 3em; width: auto;"> Enviar </button>
+		</div>
 	</div>
-
-	<button id="view" onclick="guardarProductos()" style="margin: 3em; width: auto;"> Ver Doc </button>
-	<button id="dowload" onclick="guardarProductos()" style="margin: 3em; width: auto;"> Descargar </button>
-	<button id="send" style="margin: 3em; width: auto;"> Enviar </button>
+	
+</div>
 	<!-- FOOTER -->
       <footer>
         <p class="pull-right"><a href="#">Incio de la Pagina</a></p>

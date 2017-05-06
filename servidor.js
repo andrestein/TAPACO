@@ -271,7 +271,8 @@ function retornarArchivo( request, response ){
 	//fs.readFile( url, archivoListo );
 
   	function archivoListo( error, data ){
-		if( error == null ){
+  		console.log("\n nueva peticion(es) \n");
+		if( error == null ){			
 			response.writeHead(200, { 'content-type': 'text/html' });
 			response.write( data );
 			response.end();
