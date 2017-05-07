@@ -18,34 +18,33 @@ integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7T
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <script>
   // Declarar un objeto
-  
+
   function salvarCampos(){
     var datos = {};
     datos.correo = document.getElementById( "correo" ).value ;
     datos.contraseña = document.getElementById( "contraseña" ).value ;
 
-    return datos;
-   
+    return datos;   
   }
-  
+
   function iniciarSesion(){
     var datos = salvarCampos();
-    
+
     var serializado = "";
     // Serializar el objeto como una cadena de texto JSON
     serializado = JSON.stringify( datos );
     window.alert( serializado );
-    
+
     // Crear un objeto para hacer peticiones HTTP
     var request = new XMLHttpRequest();
-    
+
     // Abrir una peticion HTTP POST a la url deseado y no asincronico
     request.open( "POST", "/iniciosesion", false );
-    
+
     // Ejecuta la peticion HTTP
     request.send( serializado );
   }
-  
+
 </script>
 </head>
 <body>

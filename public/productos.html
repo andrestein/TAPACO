@@ -1,0 +1,208 @@
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico"> -->
+
+    <title>TOPACO S.A</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/Style.css" rel="stylesheet">
+    <link href="./css/app.css" rel="stylesheet">
+    <script src="js/cookies.js" > </script>
+    <script>
+      function salvarCampos(){
+        var datos = {};
+        datos.empresa = document.getElementById('empresa').value ;
+        datos.producto = document.getElementById('producto').value ;
+        if(document.getElementById('cantidad').value != ""){
+          datos.cantidad="1";
+        }else{
+          datos.cantidad=document.getElementById('cantidad').value;
+        }
+        console.log(document.getElementById('empresa').value );
+        return datos;
+      }
+
+      function addTable(){
+        var datos = salvarCampos();
+        if(datos.producto != "" || datos.empresa != "" || datos.cantidad =! ""){
+          var tabla=document.getElementById('tablaProd');
+          var fila=document.createElement('tr');
+          fila.innerHTML="<tr>"+
+          "<td>"+datos.empresa+"</td>"+
+          "<td>"+datos.producto+"</td>"+
+          "<td>"+datos.cantidad+"</td>"+
+          "</tr>";
+          tabla.appendChild(fila);
+        }else {
+          window.alert("Debes ingresar el producto y la empresa");
+        }
+      }
+      function cargarBox(){
+        var datos = salvarCampos();
+
+        var serializado = "";
+        // Serializar el objeto como una cadena de texto JSON
+        serializado = JSON.stringify(datos.empresa);
+        window.alert( serializado );
+
+        // Crear un objeto para hacer peticiones HTTP
+        var request = new XMLHttpRequest();
+
+        // Abrir una peticion HTTP POST a la url deseado y no asincronico
+        request.open( "POST", "/producto", false );
+    
+        // Ejecuta la peticion HTTP
+        request.send( serializado );
+      }
+
+    </script>
+
+  </head>
+
+<!-- NAVBAR
+================================================== -->
+  <body>
+
+  	<!-- Aqui empieza lo que llamabamos Header -->
+    <div class="navbar-wrapper">
+      <div class="container">
+
+        <nav class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+
+          	<!-- Parte del Titulo - TOPACO S.A -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">TOPACO S.A</a>
+            </div>
+
+            <!-- los demas opciones principales menos el desplegable -->
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="AboutUs.html">Acerca de Nosotros</a></li>
+                <li><a href="ContacUs.html">Contactenos</a></li>
+				<li><a href="brands.html">Marcas de Distribucion</a></li>
+
+
+                <!-- Desplegable-->
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Navegar<span class="caret"></span></a>
+                  <ul id="prueba" class="dropdown-menu">
+
+                  	<!-- colocar las marcas que tenemos -->
+
+                    <li><a href="inicio.html">Iniciar Sesion</a></li>
+                    <li><a href="registro2.html">Registrarse</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header">Nav header</li>
+                    <li><a href="#">Preguntas Frecuentes</a></li>
+                    <li><a href="#">Terminos y Condiciones</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+      </div>
+    </div>
+      <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+	<hr class="featurette-divider">
+
+  <div class="col-sm-5" style="padding-left:5%">
+           <div class="form-group">
+               <label for="inputPassword" class="col-md-4 input-xs">Empresa:</label>
+               <div class="col-md-8">
+                   <select class="form-control" id="empresa" size="1">
+                       <option value="">Selecciona la empresa</option>
+                       <option value="corona">corona</option>
+                   </select>
+               </div>
+           </div>
+       </div>
+   <div class="col-sm-5" style="padding-left:5%">
+       <div class="form-group">
+           <label for="inputLabel3" class="col-md-4 input-xs">Producto:</label>
+           <div class="col-md-8">
+               <select class="form-control" id="producto" size="1">
+                   <option value="">Selecciona el producto</option>
+                   <<option value="silla">silla</option>
+               </select>
+           </div>
+       </div>
+   </div>
+   <br></br>
+   <br></br>
+       <div class="col-sm-5" style="padding-left:5%">
+           <div class="form-group">
+             <label for="inputLabel3" class="col-md-4 input-xs">Numero de productos:</label>
+             <div class="col-xs-3">
+               <input type="text" class="form-control" id="cantidad" placeholder="cantidad">
+            </div>
+           </div>
+       </div>
+       <div class="col-sm-5" style="padding-left:5%">
+           <div class="form-group">
+             <div class="col-xs-3">
+               <button onclick="addTable()" type="button" class="btn btn-default" >Agregar producto</button>
+            </div>
+           </div>
+       </div>
+    <div>
+      <br></br>
+      <br></br>
+      <table class="table">
+        <caption>Tus productos</caption>
+        <thead>
+          <tr>
+            <th>Empresa</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody id="tablaProd">
+          </tbody>
+        </table>
+    </div>
+   </div>
+   <div>
+     <button type="button" class="btn btn-default" >Productos y pedidos</button>
+   </div>
+      <hr class="featurette-divider">
+
+      <!-- /END THE FEATURETTES -->
+
+
+      <!-- FOOTER -->
+      <footer>
+        <p class="pull-right"><a href="#">Incio de la Pagina</a></p>
+        <p>&copy; 2016 Todo Para Construir y TOPACO S.A son marcas registradas. &middot; <a href="#">Privacidad</a> &middot; <a href="#">Terminos de Uso</a></p>
+      </footer>
+      <script> loadOptions(); </script>
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+
+  </body>
+</html>

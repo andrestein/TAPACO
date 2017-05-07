@@ -10,3 +10,15 @@ form{
   padding-left: 10px;
   padding-right: 10px;
 }
+div{
+  padding-left: 5%;
+  padding-right: 5%;
+}
+hr{
+  padding-left: 5%;
+  padding-right: 5%;
+}
+.col-md-5{
+  padding-left: 5%;
+  padding-right: 5%;
+}

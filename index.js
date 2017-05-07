@@ -30,6 +30,18 @@ function cargarAsesores( error, data ){
 		response.end( error.toString() );
 	}
 }
+fs.readFile( "BD/productos.json", cargarProductos );
+function cargarProductos( error, data ){
+
+	if( error == null ){
+		producto = JSON.parse( data ); // Des - stringify
+		console.log( "Los productos han sido cargados correctamente " );
+
+	} else {
+		console.log( error );
+		response.end( error.toString() );
+	}
+}
 
 
 
