@@ -14,11 +14,13 @@
 
         <!-- Custom styles for this template -->
         <link href="./css/Style.css" rel="stylesheet">
+        <script src="js/cookies.js" > </script>
       </head>
 
 <body>
 
 <!-- ENCABEZADO -->
+
     <!-- Aqui empieza lo que llamabamos Header -->
     <div class="navbar-wrapper">
       <div class="container">
@@ -40,21 +42,21 @@
             <!-- los demas opciones principales menos el desplegable -->
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html">Inicio</a></li>
+                <li><a href="index.html">Inicio</a></li>
                 <li><a href="AboutUs.html">Acerca de Nosotros</a></li>
                 <li><a href="ContacUs.html">Contactenos</a></li>
-                <li><a href="brands.html">Marcas de Distribucion</a></li>
+        <li><a href="brands.html">Marcas de Distribucion</a></li>
 
 
                 <!-- Desplegable-->
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Navegar<span class="caret"></span></a>
-                  <ul class="dropdown-menu">
+                  <ul  id="prueba" class="dropdown-menu">
 
                     <!-- colocar las marcas que tenemos -->
 
-                    <li><a href="#">Iniciar Sesion</a></li>
-                    <li><a href="#">Registrarse</a></li>
+                    <li><a href="iniciosesion.html">Iniciar Sesion</a></li>
+                    <li><a href="registro.html">Registrarse</a></li>
                     <li role="separator" class="divider"></li>
                     <li class="dropdown-header">Nav header</li>
                     <li><a href="#">Preguntas Frecuentes</a></li>
@@ -68,6 +70,7 @@
 
       </div>
     </div>
+
 
 <!-- CONTENIDO DE LA PAG ACERCA DE NOSOTROS-->
 
@@ -98,21 +101,44 @@
           <div class="col-lg-4">
               <img class="img-circle" src="images/logoCorona.png" width="140" height="140">
               <h2> CORONA </h2>
-              <p> Datos Asesor # 1</p>
-              <p><a class="btn btn-default" href="#" role="button"> Ver Catalogo &raquo;</a></p>
+              <ul class= "productList">
+                <li><a href="http://www.corona.co/tu-solucion/productos/otras-areas/pisos/ceramica-pisos"> <p> pisos ceramicos </p> </a></li>
+                <li><a href="http://www.corona.co/tu-solucion/productos/otras-areas/pisos/porcelanato"> <p> porcelanatos </p> </a></li>
+                <li><a href="http://www.corona.co/tu-solucion/productos/otras-areas/paredes"> <p> paredes ceramicas </p> </a></li>
+                <li><a href="http://www.corona.co/tu-solucion/productos/banos/combos-sanitarios"> <p> porcelana sanitaria residencial </p> </a></li>
+                <li><a href="http://www.corona.co/tu-solucion/productos/institucionales"> <p> porcelana sanitaria institucional </p> </a></li>
+                <li><a href="http://www.corona.co/tu-solucion/productos/banos/griferia-lavamanos"> <p> plomeria </p> </a></li>
+                <li><a href="http://www.corona.co/tu-solucion/productos/exteriores/decorados"> <p> decorados ceramicos </p> </a></li>
+                <li><a href="http://www.corona.co/tu-solucion/productos/otras-areas/materiales-de-construccion"> <p> pinturas </p> </a></li>
+
+              </ul>
+              <p><a class="btn btn-default" href="http://www.corona.co/tu-solucion/productos" role="button"> Ver Catalogo &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
 
           <div class="col-lg-4">
             <img class="img-circle" src="images/logoHolcim.png" alt="Generic placeholder image" width="140" height="140">
               <h2> Holcim </h2>
-              <p> Datos Asesor # 2</p>
+              <ul class= "productList">
+                <li><a href="#"> <p> cemento gris uso general </p> </a></li>
+                <li><a href="#"> <p> cemento gris especial </p> </a></li>
+              </ul>
               <p><a class="btn btn-default" href="#" role="button"> Ver Catalogo &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
 
           <div class="col-lg-4">
               <img class="img-circle" src="images/logoToxement.png" alt="Generic placeholder image" width="140" height="140">
               <h2> Toxement </h2>
-              <p>Datos Asesor # 3</p>
+              <ul class= "productList">
+                <li><a href="#"> <p> aditivos </p> </a></li>
+                <li><a href="#"> <p> adhesivos y recubrimiento epoxicos </p> </a></li>
+                <li><a href="#"> <p> impermeabilizantes </p> </a></li>
+                <li><a href="#"> <p> pisos industriales y comerciales </p> </a></li>
+                <li><a href="#"> <p> grouts y anclajes </p> </a></li>
+                <li><a href="#"> <p> juntas y sellantes </p> </a></li>
+                <li><a href="#"> <p> reparacion vertical </p> </a></li>
+                <li><a href="#"> <p> reparacion de placas y pavimento </p> </a></li>
+
+              </ul>
             <p><a class="btn btn-default" href="#" role="button"> Ver Catalogo &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
       </div><!-- /.row -->
@@ -120,22 +146,53 @@
             <div class="row">
           <div class="col-lg-4">
               <img class="img-circle" src="images/logoPavco.png" width="140" height="140">
-              <h2> Pavco </h2>
-              <p>Datos Asesor # 4</p>
+              <h2> Pavco - tuberias y accesorios</h2>
+              <ul class= "productList">
+
+                <li><a href="#"> <p> presion </p> </a></li>
+                <li><a href="#"> <p> sanitario y novatec </p> </a></li>
+                <li><a href="#"> <p> ventilacion y aguas lluvias </p> </a></li>
+                <li><a href="#"> <p> agua caliente ultratemp </p> </a></li>
+                <li><a href="#"> <p> soldaduras y limpiadores </p> </a></li>
+                <li><a href="#"> <p> conduit y conduplex </p> </a></li>
+                <li><a href="#"> <p> union platino y biaxial </p> </a></li>
+
+              </ul>
               <p><a class="btn btn-default" href="#" role="button"> Ver Catalogo &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
 
           <div class="col-lg-4">
-            <img class="img-circle" src="images/siluetaAsesor.jpg" alt="Generic placeholder image" width="140" height="140">
-              <h2>Asesor # 5</h2>
-              <p>Datos Asesor # 5</p>
+            <img class="img-circle" src="images/logoPavco.png" alt="Generic placeholder image" width="140" height="140">
+              <h2>Pavco - Geosisteticos </h2>
+              <ul class= "productList">
+
+                <li><a href="#"> <p> geo-textil no tejido </p> </a></li>
+                <li><a href="#"> <p> geo-textil tejido </p> </a></li>
+                <li><a href="#"> <p> geo-drenes </p> </a></li>
+                <li><a href="#"> <p> geo-membranas </p> </a></li>
+                <li><a href="#"> <p> geo-mallas </p> </a></li>
+                <li><a href="#"> <p> bolsacretos </p> </a></li>
+                <li><a href="#"> <p> agromantos </p> </a></li>
+                <li><a href="#"> <p> neoweb </p> </a></li>
+
+              </ul>
               <p><a class="btn btn-default" href="#" role="button"> Ver Catalogo &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
 
           <div class="col-lg-4">
-              <img class="img-circle" src="images/siluetaAsesor.jpg" alt="Generic placeholder image" width="140" height="140">
-              <h2>Asesor # 6</h2>
-              <p>Datos Asesor # 6</p>
+              <img class="img-circle" src="images/logoGrival.png" alt="Generic placeholder image" width="140" height="140">
+              <h2> Grival </h2>
+              <ul class= "productList">
+
+                <li><a href="#"> <p> griferia institucional </p> </a></li>
+                <li><a href="#"> <p> griferia lavamanos </p> </a></li>
+                <li><a href="#"> <p> griferia lavaplatos </p> </a></li>
+                <li><a href="#"> <p> griferia ducha </p> </a></li>
+                <li><a href="#"> <p> griferia sanitario </p> </a></li>
+                <li><a href="#"> <p> valvulas </p> </a></li>
+                <li><a href="#"> <p> repuestos </p> </a></li>
+
+              </ul>
             <p><a class="btn btn-default" href="#" role="button"> Ver Catalogo &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
       </div><!-- /.row -->
@@ -147,7 +204,7 @@
         <p class="pull-right"><a href="#">Incio de la Pagina</a></p>
         <p>&copy; 2016 Todo Para Construir y TOPACO S.A son marcas registradas. &middot; <a href="#">Privacidad</a> &middot; <a href="#">Terminos de Uso</a></p>
       </footer>
-
+      <script> loadOptions(); </script>
     </div><!-- /.container -->
 
 
@@ -157,5 +214,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="./js/bootstrap.min.js"></script>
+    
   </body>
 </html>

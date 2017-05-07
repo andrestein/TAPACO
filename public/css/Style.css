@@ -7,6 +7,20 @@ body {
   color: #5a5a5a;
 }
 
+/* CUSTOMIZE THE PRODUCT LIST ON BRANDS PAGE 
+---------------------------------------------------*/
+
+/* Remove dots on the rigth*/
+.productList {
+  padding: 0;
+  margin: auto;
+}
+
+.productList li {
+  list-style: none;
+}
+
+
 
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
@@ -132,3 +146,4 @@ body {
     margin-top: 120px;
   }
 }
+

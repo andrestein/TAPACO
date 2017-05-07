@@ -16,6 +16,37 @@ integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7T
 <link href="./css/Style.css" rel="stylesheet">
 <link href="./css/app.css" rel="stylesheet">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <script>
+  // Declarar un objeto
+  
+  function salvarCampos(){
+    var datos = {};
+    datos.correo = document.getElementById( "correo" ).value ;
+    datos.contraseña = document.getElementById( "contraseña" ).value ;
+
+    return datos;
+   
+  }
+  
+  function iniciarSesion(){
+    var datos = salvarCampos();
+    
+    var serializado = "";
+    // Serializar el objeto como una cadena de texto JSON
+    serializado = JSON.stringify( datos );
+    window.alert( serializado );
+    
+    // Crear un objeto para hacer peticiones HTTP
+    var request = new XMLHttpRequest();
+    
+    // Abrir una peticion HTTP POST a la url deseado y no asincronico
+    request.open( "POST", "/iniciosesion", false );
+    
+    // Ejecuta la peticion HTTP
+    request.send( serializado );
+  }
+  
+</script>
 </head>
 <body>
   <div class="row">
@@ -25,17 +56,17 @@ integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7T
         </br>
         <div class="form-group">
           <label for="exampleInputEmail1">Usuario</label>
-          <input type="email" class="form-control" placeholder="Usuario">
+          <input type="email" class="form-control" placeholder="correo electronico" id="correo">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Contraseña</label>
-          <input type="password" class="form-control" placeholder="Contraseña">
+          <input type="password" class="form-control" placeholder="Contraseña" id="contraseña">
           <div class="checkbox">
             <label>
               <input type="checkbox"> Remember me
             </label>
           </div>
-          <button class="btn btn-default" >Iniciar sesion</button>
+          <button class="btn btn-default" onclick="iniciarSesion()">Iniciar sesion</button>
       </div>
     </div>
       </form>

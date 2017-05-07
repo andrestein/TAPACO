@@ -12,11 +12,62 @@
   integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
   <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
   integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  -->
+  <script>
+  // Declarar un objeto
+  
+  function salvarCampos(){
+    var usuario = {};
+    usuario.nombre = document.getElementById( "nombre" ).value ;
+    usuario.empresa = document.getElementById( "empresa" ).value ;
+    usuario.telEmpresa = document.getElementById( "telEmpresa" ).value ;
+    usuario.telPersonal = document.getElementById( "telPersonal" ).value ;
+    usuario.correo = document.getElementById( "correo" ).value ;
+    usuario.contraseña = document.getElementById( "contraseña" ).value ;
+    var conContraseña = document.getElementById( "conContraseña" ).value ;
+    
+    if(usuario.contraseña == conContraseña){
+      return usuario;
+    }
+    else {
+      window.alert("contraseña incorrecta");
+    }    
+  }
+  
+  function registrar(){
+    var usuario = salvarCampos();
+
+    if (usuario != null){
+      var serializado = "";
+      // Serializar el objeto como una cadena de texto JSON
+      serializado = JSON.stringify( usuario );
+    
+      // Crear un objeto para hacer peticiones HTTP
+      var request = new XMLHttpRequest();
+    
+      // Abrir una peticion HTTP POST a la url deseado y no asincronico
+      request.open( "POST", "/registro", false );
+    
+      // Ejecuta la peticion HTTP
+      request.send( serializado );
+    
+
+      var respuesta;
+      respuesta = JSON.parse( request.responseText );
+      if( respuesta.status == "ok" ){
+        window.location.hfer( respuesta.url );
+      }
+      else {
+        document.getElementById('mensaje').innerText = "<h4 style='color: red;'> Ya existe un usuario registrado con ese correo <h4>";
+      }
+    }
+  }
+  
+</script>
   <meta charset="utf-8"/>
 </head>
 <body>
@@ -26,34 +77,34 @@
       <form>
         </br>
         <div class="form-group">
-          <label for="exampleInputEmail1">Usuario</label>
-          <input type="email" class="form-control" placeholder="Usuario">
+          <label for="exampleInputEmail1">Nombre</label>
+          <input type="text" class="form-control" placeholder="Nombre" id="nombre">
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Empresa</label>
-          <input type="email" class="form-control" placeholder="Empresa">
+          <input type="text" class="form-control" placeholder="Empresa" id="empresa">
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Telefono de la empresa</label>
-          <input type="email" class="form-control" placeholder="Telefono de la empresa">
+          <input type="number" class="form-control" placeholder="Telefono de la empresa" id="telEmpresa">
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Telefono personal</label>
-          <input type="email" class="form-control" placeholder="Telefono personal">
+          <input type="number" class="form-control" placeholder="Telefono personal" id="telPersonal">
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Correo Electronico</label>
-          <input type="email" class="form-control" placeholder="Correo electronico">
+          <input type="email" class="form-control" placeholder="Correo electronico" id="correo">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Contraseña</label>
-          <input type="password" class="form-control" placeholder="Contraseña">
+          <input type="password" class="form-control" placeholder="Contraseña" id="contraseña">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Confirmacion de contraseña</label>
-          <input type="password" class="form-control" placeholder="Confirmar contraseña">
+          <input type="password" class="form-control" placeholder="Confirmar contraseña" id="conContraseña">
           </br>
-            <button class="btn btn-default">Registrar</button>
+            <button class="btn btn-default" onclick="registrar()">Registrar</button>
           </br>
         </div>
         </form>

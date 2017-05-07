@@ -1,137 +1,339 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>
-		Crear registro de productos
-	</title>
 
-	<script type="text/javascript">
-		
- //variable global con el listado de procutos
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico"> -->
 
- 	var productos = new Array(); 
+    <title>TOPACO S.A - Cotizaciones </title>
 
- 	//para tener un constructor de productos
-		function Producto(Nombre, Referencia, Cantidad, Empresa){
-			this.Nombre = Nombre;
-			this.Referencia = Referencia;
-			this.Cantidad = Cantidad;
-			this.Empresa = Empresa;
-		}
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/Style.css" rel="stylesheet">
+
+    <script src="js/cookies.js" > </script>
 	
+	<script type="text/javascript">
 
-		function addProductList(){
-			var espacio = document.getElementById('productosTodos');
+	 	//variable global con el listado de procutos
+	 	var productos = new Array();
 
-			var nuevo = document.createElement('div');
-			nuevo.setAttribute("id",'Producto');
-			nuevo.innerHTML= '<div id="productoInfo"> ' + 
-					'<i>Nombre del producto</i>'+
-					'<input type="text" name="Nombre">'+
-					'</div>'+
-					'<div id="productoInfo">'+ 
-					'<i>Referencia</i>'+
-					'<input type="text" name="Referencia">'+
-					'</div>'+
-					'<div id="productoInfo">'+
-					'<i>Cantidad requerida</i>'+
-					'<input type="" name="Cantidad">'+
-					'</div>'+
-					'<div id="productoInfo">'+
-					'<i>Empresa del producto</i>'+
-					'<input type="text" name="Empresa">'+
-					'</div>' ;
+	 	//variable global del archivo PDF
+	 	var pdfUser = new jsPDF(); 
+	 	
+	 	var ultimoLista=0; //variable para saber cual fue el ultimo elemento añadido en lista y no repetir
+	 	var ultimoPdf = 0; //variable para saber cual fue el ultimo elemento añadido en pdf y no repetir
 
-			espacio.appendChild(nuevo);
+	 	//Variables para mantener el control de la distancia vertical del texto en el pdf - la horizontal es fija
+	 	var lastNombre=40; 
+	 	var lastRefer=40;
+	 	var lastCant=40;
+	 	var lastEmp=40;
+	 	
+
+		//METODO QUE USA LA LIBRERIA JSPDF PARA CREAR UN ARCHIVO PDF CON LOS PRODUCTOS GUARDADOS teniendo en cuenta el ultimo agregado (actualiza)
+		function  verPDF () {
+			for (var i = ultimoPdf; i < productos.length; i++) {
+				var forAdd = productos[i];
+				addProductoPdf(forAdd);
+				ultimoPdf= ultimoPdf+1;
+			}
+			pdfUser.output("dataurlnewwindow");
+			
 		}
 
-//PARA ENCONTRAR LOS DATOS INTRODUCIDOS POR EL USUARIO HAY QUE DESCENDER EN LOS HIJOS DE LOS ELEMENTOS
-// productoTodos ---> producto ---> productoInfo (tienen varios cada uno una propiedad distinta)
+		function delProductoPdf() {
+			pdfUser = new jsPDF();	
+			ultimoPdf=0;
+			lastNombre=40;
+			lastRefer=40;
+			lastCant=40;
+			lastEmp=40;
+			verPDF();
+		}
+
+		function addProductoPdf (pro) {
+			pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
+			pdfUser.text(20,40, "Nombre");
+			pdfUser.text(70,40, "Referencia");
+			pdfUser.text(120,40, "Cantidad");
+			pdfUser.text(160,40, "Empresa");
+
+			var posicion1 = lastNombre+15;
+			var posicion2 = lastRefer+15;
+			var posicion3 = lastCant+15;
+			var posicion4 = lastEmp+15;
+
+			pdfUser.text(20, posicion1, pro.Nombre);
+			pdfUser.text(70, posicion2, pro.Referencia);
+			pdfUser.text(120,posicion3, pro.Cantidad);
+			pdfUser.text(160, posicion4, pro.Empresa);
+		
+		
+			lastNombre = posicion1;
+			lastRefer = posicion2;
+			lastCant = posicion3;
+			lastEmp = posicion4;
+
+
+			//Con esta linea se abre el documento en una nueva ventana 
+			console.log("PDF CREADO EXITOSAMENTE!");
+
+			//Esta linea descarga el documento
+			//pdfUser.save('prueba1.pdf');
+		}
+
+	 	//para tener un constructor de productos
+	 	function Producto(Nombre, Referencia, Cantidad, Empresa){
+	 		this.Nombre = Nombre;
+	 		this.Referencia = Referencia;
+	 		this.Cantidad = Cantidad;
+	 		this.Empresa = Empresa;
+	 	}
+
+	 	//Con esta funcion se añaden los divisores html para un nuevo producto
+	 	function addProductList(){
+
+	 		//el divisor contenedor de todos los otros div de productos
+	 		var espacio = document.getElementById('productosTodos');
+
+	 		//crea un nuevo div y le asigna las pripiedades y html que debe contener
+	 		var nuevo = document.createElement('div');
+	 		nuevo.setAttribute("id",'Producto');
+	 		nuevo.innerHTML= '<div id="productoInfo"> ' + 
+	 		'<i>Nombre del producto</i>'+
+	 		'<input type="text" name="Nombre">'+
+	 		'</div>'+
+	 		'<div id="productoInfo">'+ 
+	 		'<i>Referencia</i>'+
+	 		'<input type="text" name="Referencia">'+
+	 		'</div>'+
+	 		'<div id="productoInfo">'+
+	 		'<i>Cantidad requerida</i>'+
+	 		'<input type="" name="Cantidad">'+
+	 		'</div>'+
+	 		'<div id="productoInfo">'+
+	 		'<i>Empresa del producto</i>'+
+	 		'<input type="text" name="Empresa">'+
+	 		'</div>' ;
+
+	 		//se añade el divisor como un hijo del contenedor de todos
+	 		espacio.appendChild(nuevo);
+	 	}
+
+	//PARA ENCONTRAR LOS DATOS INTRODUCIDOS POR EL USUARIO HAY QUE DESCENDER EN LOS HIJOS DE LOS ELEMENTOS COMENZANDO POR EL CONTENEDOR DE TODOS
+	// productoTodos ---> producto ---> productoInfo (tiene varios div, cada uno con una propiedad distinta)
 		function guardarProductos(){
 			var padre = document.getElementById('productosTodos');
 			var productos2 = padre.children;
 
 			console.log("hay " + productos2.length+ " lineas de producto en la lista");
 
-			for (var i = 0; i < productos2.length; i++) {
-				var hijo = productos2[i].getElementsByTagName('input');  //LOS INPUTS QUE CONTENGA EL HIJO QEU SERIAN LAS PROPIEDADES PRODUCTO
+			for (var i = ultimoLista; i < productos2.length; i++) {
+				var hijo = productos2[i].getElementsByTagName('input');  //LOS INPUTS QUE CONTENGA EL HIJO QUe SERIAN LAS PROPIEDADES PRODUCTO
 
 				var nom = hijo[0].value; 
-				var ref = hijo[1].value;
+				var ref = hijo[1].value; 
 				var can = hijo[2].value;
 				var emp = hijo[3].value;
 
 				console.log("sacando valores del "+ (i+1) + " producto: " + nom + " , " + ref + " , " + can + " , " + emp);
 				productos.push(new Producto(nom,ref,can,emp));
+				ultimoLista= ultimoLista+1;
 			}
 			console.log("total de productos guardados: " + productos.length);
+			verPDF();
 		}
 
+		function deleteLastProductList(){
+			var padre = document.getElementById('productosTodos');
+			padre.removeChild(padre.lastChild);
 
+			productos.pop();
+			ultimoLista= ultimoLista-1;
+			delProductoPdf();
+
+			console.log("Ultimo producto eliminado, total en lista "+ productos.length);
+		}
 
 	</script>
 
 	<style type="text/css">
-		div #productoInfo {
+		.productoInfo {
 			display: inline-block;
+		}
+
+		.contenido{
+			display: -webkit-inline-box;
 		}	
 
-		 #main{
+		.opcionesBusqueda {
+			width: 20%;
+			height: auto;
+			margin-left: 1em;
+			margin-right: 1em;
+		}
+
+		.webServices{
+			width: auto;
+			height: 45%;
+			background-color: blue;
+		}
+		.asesores{
+			width: auto;
+			height: 45%;
+			background-color: blue;
+		}
+
+		#main{
 			align-content: center;
 			background-color: yellow;
-			width: auto;
-			margin-left: 8em;
-			margin-right: 8em;
+			width: 70%;
+			margin-left: 1em;
+			margin-right: 1em;
 		}
 
 		button {
 			display: inline-block;
 		}
 
+		.opciones{
+			display: inline-block;
+		}
+
 		input {
 			width: 6em;
-					}
+		}
 
 		form {
 			background-color: #FFEEFF;
 		}
+
 	</style>
 
 </head>
 
 <body>
+<!-- ENCABEZADO -->
 
+    <!-- Aqui empieza lo que llamabamos Header -->
+    <div class="navbar-wrapper">
+      <div class="container">
+
+        <nav class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+
+            <!-- Parte del Titulo - TOPACO S.A -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">TOPACO S.A</a>
+            </div>
+
+            <!-- los demas opciones principales menos el desplegable -->
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="AboutUs.html">Acerca de Nosotros</a></li>
+                <li><a href="ContacUs.html">Contactenos</a></li>
+        <li><a href="brands.html">Marcas de Distribucion</a></li>
+
+
+                <!-- Desplegable-->
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Navegar<span class="caret"></span></a>
+                  <ul  id="prueba" class="dropdown-menu">
+
+                    <!-- colocar las marcas que tenemos -->
+
+                    <li><a href="iniciosesion.html">Iniciar Sesion</a></li>
+                    <li><a href="registro.html">Registrarse</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header">Nav header</li>
+                    <li><a href="#">Preguntas Frecuentes</a></li>
+                    <li><a href="#">Terminos y Condiciones</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+      </div>
+    </div>
+
+    <!-- CODIGO DE NOSOTROS -->
+<div class="contenido">
+    <div class="opcionesBusqueda">
+    	<div class="webServices">
+    		<h5> Aqui va la parte del web service </h5>
+    	</div>
+    	<hr class="featurette-divider">
+    	<div class="asesores">
+    		<h5> Aqui van los asesores </h5>
+    	</div>
+    </div>
 	<div id="main">
-			
-			<div id="productosTodos"> 
-				<div id="Producto">
-					<div id="productoInfo">
+		<div id="productosTodos"> 
+			<div id="Producto">
+				<div class="productoInfo">
 					<i>Nombre del producto</i>
 					<input type="text" name="Nombre">
-					</div>
-					<div id="productoInfo"> 
+				</div>
+				<div class="productoInfo"> 
 					<i>Referencia</i>
 					<input type="text" name="Referencia">
-					</div>
-					<div id="productoInfo">
+				</div>
+				<div class="productoInfo">
 					<i>Cantidad requerida</i>
 					<input type="" name="Cantidad">
-					</div>
-					<div id="productoInfo">
+				</div>
+				<div class="productoInfo">
 					<i>Empresa del producto</i>
 					<input type="text" name="Empresa">
-					</div>
 				</div>
-			</div>
-
-			<div id="btns">
-				<button id="btAdd" onclick="addProductList()">Agregar</button>
-
-				<button id="btnDelete" onclick="deleteLastProductList()">Borrar Ultimo</button>
 			</div>
 		</div>
 
-		<button id="send" onclick="guardarProductos()" style="margin: 3em; width: auto;"> Enviar </button>
+		<div id="opciones">
+			<button id="btAdd" onclick="addProductList()">Agregar</button>
+
+			<button id="btnDelete" onclick="deleteLastProductList()">Borrar Ultimo</button>
+		</div>
+		<div class ="opciones">
+			<button id="view" onclick="guardarProductos()" style="margin: 3em; width: auto;"> Ver Doc </button>
+			<button id="dowload" onclick="guardarProductos()" style="margin: 3em; width: auto;"> Descargar </button>
+			<button id="send" style="margin: 3em; width: auto;"> Enviar </button>
+		</div>
+	</div>
 	
+</div>
+	<!-- FOOTER -->
+      <footer>
+        <p class="pull-right"><a href="#">Incio de la Pagina</a></p>
+        <p>&copy; 2016 Todo Para Construir y TOPACO S.A son marcas registradas. &middot; <a href="#">Privacidad</a> &middot; <a href="#">Terminos de Uso</a></p>
+      </footer>
+      <script> loadOptions(); </script>
+
+
+</div><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="./js/bootstrap.min.js"></script>
+  
 </body>
 </html>
