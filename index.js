@@ -82,7 +82,6 @@ server.listen(process.env.PORT || 5000);
 //   CoffeeScript o TypeScript
 function atenderServidor( request, response ){
 	console.log( "Peticion recibida : " + request.url );
-
 	if( request.url == "/registro2" ){
 		guardarRegistro( request, response );
 	}
@@ -90,8 +89,13 @@ function atenderServidor( request, response ){
 		iniciarSesion( request, response );
 	}
 	else {
+		if(request.url =="/"){
+			retornarArchivoInicio( request, response );
+			cerrarSesion( request, response );
+		}else{
 		retornarArchivo( request, response );
 		cerrarSesion( request, response );
+		}
 	}
 }
 
@@ -268,6 +272,31 @@ function retornarArchivo( request, response ){
 	}
 	*/
 	fs.readFile( "./public" + request.url, archivoListo );
+	//fs.readFile( url, archivoListo );
+
+  	function archivoListo( error, data ){
+  		console.log("\n nueva peticion(es) \n");
+		if( error == null ){
+			response.writeHead(200, { 'content-type': 'text/html' });
+			response.write( data );
+			response.end();
+		} else {
+			//console.log( error );
+			response.end( error.toString() );
+		}
+  	}
+}
+
+function retornarArchivoInicio( request, response ){
+	/* var a = "./public" + request.url;
+	var url = "";
+	for(var i = 0; i < a.length; i++){
+		if(a.charAt(i) != '?'){
+			url += a.charAt(i);
+		}
+	}
+	*/
+	fs.readFile( "./public" + "/index.html", archivoListo );
 	//fs.readFile( url, archivoListo );
 
   	function archivoListo( error, data ){
