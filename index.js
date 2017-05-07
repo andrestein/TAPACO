@@ -72,7 +72,7 @@ console.log( "Servidor iniciado" );
 
 
 // Iniciar la escucha del servidor en el puero 8088
-server.listen( 'port', (process.env.PORT || 5000) );
+server.listen(process.env.PORT || 5000);
 
 
 
