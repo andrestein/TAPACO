@@ -72,7 +72,7 @@ console.log( "Servidor iniciado" );
 
 
 // Iniciar la escucha del servidor en el puero 8088
-server.listen( 8088 );
+server.listen( 'port', (process.env.PORT || 5000) );
 
 
 
@@ -82,9 +82,9 @@ server.listen( 8088 );
 //   CoffeeScript o TypeScript
 function atenderServidor( request, response ){
 	console.log( "Peticion recibida : " + request.url );
-	
+
 	if( request.url == "/registro2" ){
-		guardarRegistro( request, response );	
+		guardarRegistro( request, response );
 	}
 	else if( request.url == "/inicio" ){
 		iniciarSesion( request, response );
@@ -104,18 +104,18 @@ function atenderServidor( request, response ){
 function guardarRegistro( request, response ){
 	// Programa el Callback
 	request.on( "data", recibir );
-	
+
 	// Callback que recibe el cuerpo del POST
 	function recibir( data ){
 
 		//console.log( "\n este fue el usuario que recibio: \n" + data.toString() );
 		var usr = JSON.parse( data.toString() );
-	
+
 		// Agregar al vector
 		// si no hay otro usuario con el mismo email lo registra.
 		if(verificarUsuario(usr)){
 			usuarios.push( usr );
-		
+
 			fs.writeFile('BD/usuarios.json', JSON.stringify( usuarios ), null );
 			console.log("\n el usuario fue agregado");
 
@@ -136,19 +136,19 @@ function guardarRegistro( request, response ){
 		// verifica que no exista otro usuario con el mismo correo (email)
 		function verificarUsuario( usr ){
 			for(var i = 0; i < asesores.length; i++){
-					if(usuarios[i].correo == usr.correo){	
-					console.log('\n No se puede usar ese correo');					
+					if(usuarios[i].correo == usr.correo){
+					console.log('\n No se puede usar ese correo');
 					return false;
 				}
 			}
 
-			for(var i = 0; i < usuarios.length; i++){		
-				if(usuarios[i].correo == usr.correo){	
-					console.log('\n Ya existe un usuario con ese email');					
+			for(var i = 0; i < usuarios.length; i++){
+				if(usuarios[i].correo == usr.correo){
+					console.log('\n Ya existe un usuario con ese email');
 					return false;
 				}
 			}
-			return true;	
+			return true;
 		}
 	}
 }
@@ -161,14 +161,14 @@ function guardarRegistro( request, response ){
 // verifica los datos para inciar sesion de un usuario sean correctos
 function iniciarSesion( request , response ){
 	request.on("data", datosInicio);
-	
+
 	function datosInicio( data ){
 		var datos = JSON.parse( data.toString() );
 
 		if (verificarDatosAsr(datos)){
-			console.log('\n asesor accedio correctamente');			
+			console.log('\n asesor accedio correctamente');
 
-			// para cargar una pagina con la respuesta ok 
+			// para cargar una pagina con la respuesta ok
 			var resp = {};
 			resp.status = 'ok';
 			resp.url = 'index.html';
@@ -177,16 +177,16 @@ function iniciarSesion( request , response ){
 			response.writeHead( 200 , {
 				'Set-Cookie' : ['asesor=' + datos.correo + ';',' usuario=null']
 			});
-			
+
 
 			response.end(JSON.stringify(resp));
 
-		}		
+		}
 
 		else if(verificarDatosUsr(datos)){
-			console.log('\n usuario accedio correctamente');			
+			console.log('\n usuario accedio correctamente');
 
-			// para cargar una pagina con la respuesta ok 
+			// para cargar una pagina con la respuesta ok
 			var resp = {};
 			resp.status = 'ok';
 			resp.url = 'index.html';
@@ -194,7 +194,7 @@ function iniciarSesion( request , response ){
 
 			response.writeHead( 200 , {
 				'Set-Cookie' : ['usuario=' + datos.correo + ';','asesor=null']
-			});			
+			});
 			response.end(JSON.stringify(resp));
 
 		}
@@ -212,7 +212,7 @@ function iniciarSesion( request , response ){
 	// verifica que el email y clave si correspondan al asesor
 	function verificarDatosAsr(datos){
 		for(var i = 0; i < asesores.length; i++){
-			if(asesores[i].correo == datos.correo && asesores[i].contraseña == datos.contraseña) {			
+			if(asesores[i].correo == datos.correo && asesores[i].contraseña == datos.contraseña) {
 				return true;
 			}
 		}
@@ -222,14 +222,14 @@ function iniciarSesion( request , response ){
 	// verifica que el email y clave si correspondan al usuario
 	function verificarDatosUsr(datos){
 		for(var i = 0; i < usuarios.length; i++){
-			if(usuarios[i].correo == datos.correo && usuarios[i].contraseña == datos.contraseña) {			
+			if(usuarios[i].correo == datos.correo && usuarios[i].contraseña == datos.contraseña) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	
+
 }
 //--------------------------------------------------------------------------------------------
 // CODIGO PARA CERRAR LA SESION DE UN USUARIO Y/O ASESOR
@@ -266,13 +266,13 @@ function retornarArchivo( request, response ){
 			url += a.charAt(i);
 		}
 	}
-	*/ 
+	*/
 	fs.readFile( "./public" + request.url, archivoListo );
 	//fs.readFile( url, archivoListo );
 
   	function archivoListo( error, data ){
   		console.log("\n nueva peticion(es) \n");
-		if( error == null ){			
+		if( error == null ){
 			response.writeHead(200, { 'content-type': 'text/html' });
 			response.write( data );
 			response.end();
@@ -282,11 +282,3 @@ function retornarArchivo( request, response ){
 		}
   	}
 }
-
-
-
-
-
-
-
-
