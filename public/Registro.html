@@ -20,59 +20,57 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  -->
 <!-- FUNCTIONAL CODE -->
 
- <script>
-  // Declarar un objeto
+<script>
+ // Declarar un objeto
 
-  function salvarCampos(){
-    var usuario = {};
-    usuario.nombre = document.getElementById( "nombre" ).value ;
-    usuario.apellido = document.getElementById( "apellido" ).value ;
-    usuario.telefono = document.getElementById( "telefono" ).value ;
-    usuario.empresa = document.getElementById( "empresa" ).value ;
-    usuario.correo = document.getElementById( "correo" ).value ;
-    usuario.contraseña = document.getElementById( "contraseña" ).value ;
-    var conContraseña = document.getElementById( "conContraseña" ).value ;
+ function salvarCampos(){
+	 var usuario = {};
+	 usuario.nombre = document.getElementById( "nombre" ).value ;
+	 usuario.apellido = document.getElementById( "apellido" ).value ;
+	 usuario.telefono = document.getElementById( "telefono" ).value ;
+	 usuario.empresa = document.getElementById( "empresa" ).value ;
+	 usuario.correo = document.getElementById( "correo" ).value ;
+	 usuario.contraseña = document.getElementById( "contraseña" ).value ;
+	 var conContraseña = document.getElementById( "conContraseña" ).value ;
 
-    if(usuario.contraseña == conContraseña){
-      return usuario;
-    }
-    else {
-      window.alert("contraseña incorrecta");
-    }
-  }
+	 if(usuario.contraseña == conContraseña){
+		 return usuario;
+	 }
+	 else {
+		 window.alert("contraseña incorrecta");
+	 }
+ }
 
-  function iniciarSesion(){
-    var usuario = salvarCampos();
+ function iniciarSesion(){
+	 var usuario = salvarCampos();
+	 if (usuario != null){
+			 var serializado = "";
+			 // Serializar el objeto como una cadena de texto JSON
+			 serializado = JSON.stringify( usuario );
 
-    if (usuario != null){
-      	var serializado = "";
-      	// Serializar el objeto como una cadena de texto JSON
-      	serializado = JSON.stringify( usuario );
+			 // Crear un objeto para hacer peticiones HTTP
+			 var request = new XMLHttpRequest();
 
-      	// Crear un objeto para hacer peticiones HTTP
-      	var request = new XMLHttpRequest();
+			 // Abrir una peticion HTTP POST a la url deseado y no asincronico
+			 request.open( "POST", "/registro2", false );
 
-      	// Abrir una peticion HTTP POST a la url deseado y no asincronico
-      	request.open( "POST", "/registro2", false );
+			 // Ejecuta la peticion HTTP
+			 request.send( serializado );
+			 console.log("ya envio el JSON");
 
-      	// Ejecuta la peticion HTTP
-      	request.send( serializado );
-      	console.log("ya envio el JSON");
+			 var respuesta;
+			 respuesta = JSON.parse( request.responseText );
+			 console.log(respuesta);
+			 if( respuesta.status == "ok" ){
+				 window.location.href = respuesta.url;
+			 }
+			 else {
+				 document.getElementById('mensaje').innerText = "Ya existe un usuario registrado con ese correo";
+			 }
+		 }
+	 }
 
-
-      	var respuesta;
-      	respuesta = JSON.parse( request.responseText );
-      	console.log(respuesta);
-      	if( respuesta.status == "ok" ){
-        	window.location.href = respuesta.url;
-      	}
-      	else {
-        	document.getElementById('mensaje').innerText = "Ya existe un usuario registrado con ese correo";
-     		}
-    	}
-  	}
-
-	</script>
+ </script>
 
 </head>
 <body>
