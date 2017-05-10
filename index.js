@@ -124,6 +124,7 @@ var mimeTypes =
 var usuarios = [];
 var asesores = [];
 var producto = [];
+var pedidos =[];
 
 fs.readFile( "BD/usuarios.json", cargarUsuarios );
 function cargarUsuarios( error, data ){
@@ -162,6 +163,18 @@ function cargarProductos( error, data ){
 		response.end( error.toString() );
 	}
 }
+fs.readFile( "BD/pedidos.json", cargarPedidos );
+function cargarPedidos(error, data){
+
+	if( error == null ){
+		pedidos = JSON.parse( data ); // Des - stringify
+		console.log( "Los pedidos han sido cargados correctamente " );
+
+	} else {
+		console.log( error );
+		response.end( error.toString() );
+	}
+}
 
 function darProductos(request, response){
 			var resp = {};
@@ -169,6 +182,22 @@ function darProductos(request, response){
 			resp.data= producto;
 			console.log("respuesta enviada");
 			response.end(JSON.stringify(resp));
+}
+
+function darAsesores(req, resp){
+			var res = {};
+			res.estado = 'ok';
+			res.data= asesores;
+			console.log("respuesta enviada");
+			resp.end(JSON.stringify(res));
+}
+
+function darPedidos(req, resp){
+			var res = {};
+			res.estado = 'ok';
+			res.data= pedidos;
+			console.log("respuesta enviada");
+			resp.end(JSON.stringify(res));
 }
 
 //var pedidos = [];
@@ -229,6 +258,12 @@ function atenderServidor( request, response ){
 	else if (request.url == "/obtenerProductos"){
 		darProductos(request, response);
 
+	}else if (request.url =="/obtenerAsesores"){
+		darAsesores(request, response);
+	}else if (request.url =="/guardarPedido"){
+		guardarPedido(request, response);
+	}else if( request.url=="/obtenerPedido"){
+		darPedidos(request, response);
 	}else{
 		if(request.url =="/"){
 			retornarArchivoInicio( request, response );
@@ -242,8 +277,27 @@ function atenderServidor( request, response ){
 
 
 
+
 //--------------------------------------------------------------------------------------------
 // AQUI SE MANEJAN LOS DATOS RECIVIDOS DEL NAVEGADOR, AL REGISTRARSE UN NUEVO USUARIO
+
+function guardarPedido(req, res){
+	req.on( "data" , recibir);
+
+	function recibir(data){
+		var pedi = JSON.parse(data.toString() );
+
+		pedidos.push(pedi);
+
+		fs.writeFile('BD/pedidos.json', JSON.stringify(pedidos), null);
+		console.log("el pedido fue añadido");
+
+		var resp= {};
+		resp.status= "ok";
+		res.end(JSON.stringify(resp) );
+	}
+}
+
 
 // Guarda el registro de un usuario
 function guardarRegistro( request, response ){

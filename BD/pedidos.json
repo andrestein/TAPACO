@@ -1,0 +1,25 @@
+[{
+	"asesor": "baños",
+	"nombre": "adasd",
+	"telefono": "1",
+	"preguntas": "Sin Dudas",
+	"listaProductos": [{
+		"Nombre": "Juego",
+		"Referencia": "Auto",
+		"Cantidad": "3 Uni",
+		"Empresa": "corona"
+	},
+	{
+		"Nombre": "Juego",
+		"Referencia": "Auto",
+		"Cantidad": "3 Uni",
+		"Empresa": "corona"
+	},
+	{
+		"Nombre": "Torre",
+		"Referencia": "Auto",
+		"Cantidad": "3 Uni",
+		"Empresa": "corona"
+	}],
+	"fecha": "10/5/2017"
+}]

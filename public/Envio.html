@@ -21,9 +21,91 @@
 
     <script type="text/javascript">
       
-        function listado(){
-          window.location.href="productos.html";
+    //ARRAY CON EL LISTADO DE PRODUCTOS QUE USO EL CLIENTE EN EL PDF  
+    //var productos = new Array();
+
+
+    function enviarFormulario(){
+      var enviar = true;
+
+      var asesor = document.getElementById('asesores').options.item(document.getElementById('asesores').options.selectedIndex).value
+      var nombre= document.getElementById('nombre').value
+      if(nombre == ""){
+        enviar=false;
+      }
+      var telefono= document.getElementById('telefono').value
+      if(telefono == ""){
+        enviar=false;
+      }
+      var preguntas= document.getElementById('preguntas').value
+      if(preguntas==""){
+        preguntas = "Sin Dudas";
+      }
+      var listaProductos = productos;
+      var f = new Date();
+      var fecha = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
+
+      var archivo = {}
+      archivo.asesor = asesor;
+      archivo.nombre = nombre;
+      archivo.telefono = telefono;
+      archivo.preguntas = preguntas;
+      archivo.listaProductos = listaProductos;
+      archivo.fecha = fecha;
+
+      console.log(archivo);
+
+      if(enviar){
+      //ALADIR AL JSON
+      }else {
+        window.alert("verificar por favor, hay informacion incompleta")
+      }
+    }
+
+    function cargarListadoRealizado(){
+      return localStorage.getItem("listadoTopaco");
+    }
+
+    function cargarInfo(){
+      var productos = cargarListadoRealizado();
+      console.log(productos);
+      cargarAsesores();
+    }
+
+    function cargarAsesores(){
+           // Crear un objeto para hacer peticiones HTTP
+        var request = new XMLHttpRequest();
+
+        // Abrir una peticion HTTP POST a la url deseado y no asincronico
+        request.open( "GET", "obtenerAsesores", false );
+    
+        // Ejecuta la peticion HTTP
+        request.send();
+
+        var resp = request.response;
+        resp = JSON.parse(resp);
+        if(resp.estado=="ok"){
+          var ases = resp.data;
+
+          lista = ases;
+          llenarBox(ases);  
+        }else {
+          window.alert("no se pudo cargar los asesores");
         }
+      
+    }
+
+    function llenarBox(lista){
+      var asesor= "";
+      var opt = "";
+        for (var i= 0; i < lista.length; i++) {
+          asesor = lista[i].nombre + " de " + lista[i].encargado;
+          console.log(asesor);
+          opt = opt + "<option value="+lista[i].encargado+">"+asesor+"</option>"
+        }
+
+        document.getElementById("asesores").innerHTML = opt;
+    }
     </script>
 
 <style type="text/css">
@@ -35,7 +117,7 @@
   </style>
 </head>
 <body>
-	<!-- Aqui empieza lo que llamabamos Header -->
+  <!-- Aqui empieza lo que llamabamos Header -->
     <div class="navbar-wrapper">
       <div class="container">
 
@@ -90,28 +172,20 @@
       <!-- /END THE FEATURETTES -->
  <div style="margin-left: 30%; margin-right: 30%;">
   <p>Envianos esta informacion y espera respuesta del asesor respectivo</p>  
-  <p id="nombreArchivo">  Aqui va el archivo que creo: </p>
+  <p id="nombreArchivo"> archivo: Cargado Correctamente </p>
  	<hr>
-  <p style="display: inline-block;">Si aun no has creado un listado, puedes hacerlo en nuestra web: 
-  </p>
- 	<button onclick="listado()"> Crear Listado</button>
+  <p>Informacion del cliente solicitante: </p>
+ 	<input type="text" id="nombre" placeholder="Nombre">
+  <input type="number" id="telefono" placeholder="Tel Contacto">
   <div>
   <hr>
    <p> tienes preguntas?, envialas junto con tu listado</p>
-   <textarea>
-     
-   </textarea>
+   <textarea id="preguntas"></textarea>
    </div>
 
   <div>
     <p>selecciona el asesor que deseas que atienda tu peticion: </p>
-    <select>
-      <option> Asesor Corona</option>
-      <option> Asesor Tuberias</option>
-      <option> Asesor Ceramicas</option>
-      <option> Asesor Cementos</option>
-      <option> Asesor 5</option>
-      <option> Asesor 6</option>
+    <select id="asesores">
     </select>
     <br>
     <br>
@@ -121,7 +195,7 @@
    <hr>
 
      
-     <button> Enviar</button>
+     <button onclick="enviarFormulario()"> Enviar</button>
    </div>
  </div>
 
@@ -136,6 +210,7 @@
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
-    
+    <script> cargarInfo();</script>
+
 </body>
 </html>

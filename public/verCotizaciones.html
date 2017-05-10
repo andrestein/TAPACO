@@ -12,12 +12,58 @@
 
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
-
+	<link href="./css/app.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="./css/Style.css" rel="stylesheet">
 
     <script src="js/cookies.js" > </script>
 	
+	<script type="text/javascript">
+
+		var pedidos = {};
+		var pedidosAsesor =new Array();
+
+		function cargarCotizaciones(){
+			 // Crear un objeto para hacer peticiones HTTP
+        var request = new XMLHttpRequest();
+
+        // Abrir una peticion HTTP POST a la url deseado y no asincronico
+        request.open( "GET", "obtenerPedido", false );
+    
+        // Ejecuta la peticion HTTP
+        request.send();
+
+        var resp = request.response;
+        console.log(resp);
+        resp = JSON.parse(resp);
+        pedidos = resp.data;
+        hacerTabla();
+		}
+
+		function hacerTabla(){
+			for (var i = 0; i < pedidos.length; i++) {
+				if (pedidos[i].asesor == "baños"){
+					pedidosAsesor.push(pedidos[i]);
+					añadirTabla(pedidos[i]);
+				}
+			}
+		}
+
+		function añadirTabla(pedido){
+		  var tabla=document.getElementById('tablaProd');
+          var fila=document.createElement('tr');
+          fila.innerHTML="<tr>"+
+          "<td>"+pedido.nombre+"</td>"+
+          "<td>"+pedido.telefono+"</td>"+
+          "<td> <button>Ver</button> <button>Modificar</button> </td>"+
+          "<td>"+pedido.preguntas+"</td>"+
+          "<td>"+pedido.fecha+"</td>"+
+          "</tr>";
+          tabla.appendChild(fila);
+		}
+
+	</script>
+
 </head>
 <body>
 <div class="navbar-wrapper">
@@ -68,11 +114,22 @@
 
       </div>
     </div>
+ 	
+ 	<hr class="featurette-divider">
 
-<div>
-	CONTENIDO DE LAS COTIZACIONES QUE DEBE VER EL ASESOR CORRESPONDIENTE
-</div>
+	<div>
+		<button onclick="cargarCotizaciones()"> Actualizar </button>
+		<table class="table">
+        <caption>Tus Pendientes</caption>
+        <thead>
+        </thead>
+        <tbody id="tablaProd">
+          </tbody>
+        </table>
+	</div>
      <!-- FOOTER -->
+      
+     <hr class="featurette-divider">
       <footer>
         <p class="pull-right"><a href="#">Incio de la Pagina</a></p>
         <p>&copy; 2016 Todo Para Construir y TOPACO S.A son marcas registradas. &middot; <a href="#">Privacidad</a> &middot; <a href="#">Terminos de Uso</a></p>
