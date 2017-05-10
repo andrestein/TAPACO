@@ -1,79 +1,93 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <title>Iniciar Sesion</title>
-  <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title> iniciar sesion </title>
+	<style type="text/css">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		.container{
+			margin-top: 20%;
+			border-radius: 5px;
+			margin-right: 35%;
+			margin-left: 35%;
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-<link href="./css/Style.css" rel="stylesheet">
-<link href="./css/app.css" rel="stylesheet">
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<script type="text/javascript">
-	function verificarCampos(){
-		var datos = {};
-		datos.correo = document.getElementById("correo").value;
-		datos.contraseña = document.getElementById("contraseña").value;
-		console.log(datos);
-		return datos;
-	}
-
-	function iniciarSesion(){
-		var datos = verificarCampos();
-		var serializado = JSON.stringify( datos );
-		// Crear un objeto para hacer peticiones HTTP
-		var request = new XMLHttpRequest();
-
-		// Abrir una peticion HTTP POST a la url deseado y no asincronico
-		request.open( "POST", "/inicio", false );
-
-		// Ejecuta la peticion HTTP
-		request.send( serializado );
-		var respuesta;
-		respuesta = JSON.parse( request.response );
-		if (respuesta.status == 'ok'){
-			document.getElementById('mensaje').innerHTML = " <h5> Bienvenido </h5> ";
-			window.location.href = respuesta.url;
 		}
-		else {
-			document.getElementById('mensaje').innerHTML = " <h5> Usuario o Contraseña incorrecta </h5> " ;
+		
+		.campo {
+			margin-top: 2em;
+			margin-bottom: 2em;
+			margin-right: 20%;
+			margin-left: 20%;
 		}
-	}
 
-</script>
+		#iniciarSesion {
+			border-radius: 3px;
+		}
+
+		#mensaje {
+			color: red;
+			margin-right: 20%;
+			margin-left: 20%;
+		}
+
+		input {
+			border-radius: 3px;
+		}
+
+	</style>
+
+	<script type="text/javascript">
+
+		function verificarCampos(){
+			var datos = {};
+			datos.correo = document.getElementById("correo").value;
+			datos.contraseña = document.getElementById("contraseña").value;
+			console.log(datos);
+			return datos;
+		}
+		
+		function iniciarSesion(){
+			var datos = verificarCampos();
+			var serializado = JSON.stringify( datos );
+
+			// Crear un objeto para hacer peticiones HTTP
+			var request = new XMLHttpRequest();
+		
+			// Abrir una peticion HTTP POST a la url deseado y no asincronico
+			request.open( "POST", "/inicio", false );
+		
+			// Ejecuta la peticion HTTP
+			request.send( serializado );
+
+			var respuesta;
+			respuesta = JSON.parse( request.responseText );
+
+			if (respuesta.status == 'ok'){
+				document.getElementById('mensaje').innerHTML = " <h5> Bienvenido </h5> ";
+				window.location.href = respuesta.url;
+			}
+			else {
+				document.getElementById('mensaje').innerHTML = " <h5> Usuario o Contraseña incorrecta </h5> " ;
+			}
+		}
+		
+	</script>
 </head>
 <body>
-  <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-      <form>
-        </br>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Usuario</label>
-          <input type="email" class="form-control" placeholder="correo electronico" id="correo">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Contraseña</label>
-          <input type="password" class="form-control" placeholder="Contraseña" id="contraseña">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"> Remember me
-            </label>
-          </div>
-					<button class="btn btn-default" onclick="iniciarSesion()" >Iniciar sesion</button>
-      </div>
-    </div>
-      </form>
-    </div>
-    <div class="col-md-4"></div>
-  </div>
-</form>
+	<div class="container">
+		<div class="campo">
+			<label> Correo Electronico </label>
+			<input type="email" name="email" id="correo">
+		</div>
+		<div class="campo">
+			<label> Contraseña </label>
+			<input type="password" name="clave" id="contraseña">
+		</div>
+		<div id="mensaje">
+		</div>
+		<div class="campo">
+			<button id = "iniciarSesion" onclick="iniciarSesion()">Iniciar Sesion</button>
+		</div>
+	</div>
 </body>
 </html>
