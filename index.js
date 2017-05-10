@@ -320,7 +320,7 @@ function guardarRegistro( request, response ){
 
 			var resp = {} ;
 			resp.status = "ok";
-			resp.url = "inicio.html";
+			resp.url = "index.html";
 
 			response.end( JSON.stringify(resp) );
 		}
@@ -334,7 +334,7 @@ function guardarRegistro( request, response ){
 
 		// verifica que no exista otro usuario con el mismo correo (email)
 		function verificarUsuario( usr ){
-			for(var i = 0; i < asesores.length; i++){
+			for(var i = 0; i < usuarios.length; i++){
 					if(usuarios[i].correo == usr.correo){
 					console.log('\n No se puede usar ese correo');
 					return false;
