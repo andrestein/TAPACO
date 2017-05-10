@@ -1,77 +1,81 @@
+<!DOCTYPE html>
 <html>
 <head>
-  <title>Iniciar Sesion</title>
-  <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<title>Iniciar Sesion</title>
+	  <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-<link href="./css/Style.css" rel="stylesheet">
-<link href="./css/app.css" rel="stylesheet">
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <script>
-  // Declarar un objeto
+	<link href="./css/Style.css" rel="stylesheet">
+	<link href="./css/app.css" rel="stylesheet">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-  function salvarCampos(){
-    var datos = {};
-    datos.correo = document.getElementById( "correo" ).value ;
-    datos.contraseña = document.getElementById( "contraseña" ).value ;
+	<script type="text/javascript">
 
-    return datos;   
-  }
+		function verificarCampos(){
+			var datos = {};
+			datos.correo = document.getElementById("correo").value;
+			datos.contraseña = document.getElementById("contraseña").value;
+			console.log(datos);
+			return datos;
+		}
 
-  function iniciarSesion(){
-    var datos = salvarCampos();
+		function iniciarSesion(){
+			var datos = verificarCampos();
+			var serializado = JSON.stringify( datos );
 
-    var serializado = "";
-    // Serializar el objeto como una cadena de texto JSON
-    serializado = JSON.stringify( datos );
-    window.alert( serializado );
+			// Crear un objeto para hacer peticiones HTTP
+			var request = new XMLHttpRequest();
 
-    // Crear un objeto para hacer peticiones HTTP
-    var request = new XMLHttpRequest();
+			// Abrir una peticion HTTP POST a la url deseado y no asincronico
+			request.open( "POST", "/inicio", false );
 
-    // Abrir una peticion HTTP POST a la url deseado y no asincronico
-    request.open( "POST", "/iniciosesion", false );
+			// Ejecuta la peticion HTTP
+			request.send( serializado );
 
-    // Ejecuta la peticion HTTP
-    request.send( serializado );
-  }
+			var respuesta;
+			respuesta = JSON.parse( request.responseText );
 
-</script>
+			if (respuesta.status == 'ok'){
+				document.getElementById('mensaje').innerHTML = " <h5> Bienvenido </h5> ";
+				window.location.href = respuesta.url;
+			}
+			else {
+				document.getElementById('mensaje').innerHTML = " <h5> Usuario o Contraseña incorrecta </h5> " ;
+			}
+		}
+
+	</script>
 </head>
 <body>
-  <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-      <form>
-        </br>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Usuario</label>
-          <input type="email" class="form-control" placeholder="correo electronico" id="correo">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Contraseña</label>
-          <input type="password" class="form-control" placeholder="Contraseña" id="contraseña">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"> Remember me
-            </label>
-          </div>
-          <button class="btn btn-default" onclick="iniciarSesion()">Iniciar sesion</button>
-      </div>
-    </div>
-      </form>
-    </div>
-    <div class="col-md-4"></div>
-  </div>
-</form>
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<form>
+				</br>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Correo electronico</label>
+					<input type="email" class="form-control" placeholder="correo electronico" id="correo">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Contraseña</label>
+					<input type="password" class="form-control" placeholder="Contraseña" id="contraseña">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox"> Remember me
+						</label>
+					</div>
+					<button class="btn btn-default" onclick="iniciarSesion()">Iniciar sesion</button>
+			</div>
+		</div>
+			</form>
 </body>
 </html>

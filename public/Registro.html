@@ -1,6 +1,7 @@
+﻿<!DOCTYPE html>
 <html>
 <head>
-  <title>Registro</title>
+	<title>Registro</title>
   <link href="CSS/app.css" rel="stylesheet"/>
           <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -17,15 +18,17 @@
   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  -->
-  <script>
+<!-- FUNCTIONAL CODE -->
+
+ <script>
   // Declarar un objeto
 
   function salvarCampos(){
     var usuario = {};
     usuario.nombre = document.getElementById( "nombre" ).value ;
+    usuario.apellido = document.getElementById( "apellido" ).value ;
+    usuario.telefono = document.getElementById( "telefono" ).value ;
     usuario.empresa = document.getElementById( "empresa" ).value ;
-    usuario.telEmpresa = document.getElementById( "telEmpresa" ).value ;
-    usuario.telPersonal = document.getElementById( "telPersonal" ).value ;
     usuario.correo = document.getElementById( "correo" ).value ;
     usuario.contraseña = document.getElementById( "contraseña" ).value ;
     var conContraseña = document.getElementById( "conContraseña" ).value ;
@@ -38,79 +41,80 @@
     }
   }
 
-  function registrar(){
+  function iniciarSesion(){
     var usuario = salvarCampos();
 
     if (usuario != null){
-      var serializado = "";
-      // Serializar el objeto como una cadena de texto JSON
-      serializado = JSON.stringify( usuario );
+      	var serializado = "";
+      	// Serializar el objeto como una cadena de texto JSON
+      	serializado = JSON.stringify( usuario );
 
-      // Crear un objeto para hacer peticiones HTTP
-      var request = new XMLHttpRequest();
+      	// Crear un objeto para hacer peticiones HTTP
+      	var request = new XMLHttpRequest();
 
-      // Abrir una peticion HTTP POST a la url deseado y no asincronico
-      request.open( "POST", "/registro", false );
+      	// Abrir una peticion HTTP POST a la url deseado y no asincronico
+      	request.open( "POST", "/registro2", false );
 
-      // Ejecuta la peticion HTTP
-      request.send( serializado );
+      	// Ejecuta la peticion HTTP
+      	request.send( serializado );
+      	console.log("ya envio el JSON");
 
 
-      var respuesta;
-      respuesta = JSON.parse( request.responseText );
-      if( respuesta.status == "ok" ){
-        window.location.hfer( respuesta.url );
-      }
-      else {
-        document.getElementById('mensaje').innerText = "<h4 style='color: red;'> Ya existe un usuario registrado con ese correo <h4>";
-      }
-    }
-  }
+      	var respuesta;
+      	respuesta = JSON.parse( request.responseText );
+      	console.log(respuesta);
+      	if( respuesta.status == "ok" ){
+        	window.location.href = respuesta.url;
+      	}
+      	else {
+        	document.getElementById('mensaje').innerText = "Ya existe un usuario registrado con ese correo";
+     		}
+    	}
+  	}
 
-</script>
-  <meta charset="utf-8"/>
+	</script>
+
 </head>
 <body>
-  <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-      <form>
-        </br>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Nombre</label>
-          <input type="text" class="form-control" placeholder="Nombre" id="nombre">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Empresa</label>
-          <input type="text" class="form-control" placeholder="Empresa" id="empresa">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Telefono de la empresa</label>
-          <input type="text" class="form-control" placeholder="Telefono de la empresa" id="telEmpresa">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Telefono personal</label>
-          <input type="text" class="form-control" placeholder="Telefono personal" id="telPersonal">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Correo Electronico</label>
-          <input type="email" class="form-control" placeholder="Correo electronico" id="correo">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Contraseña</label>
-          <input type="password" class="form-control" placeholder="Contraseña" id="contraseña">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Confirmacion de contraseña</label>
-          <input type="password" class="form-control" placeholder="Confirmar contraseña" id="conContraseña">
-          </br>
-            <button class="btn btn-default" onclick="registrar()">Registrar</button>
-          </br>
-        </div>
-        </form>
-    </div>
-    <div class="col-md-4"></div>
-  </div>
-
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<form>
+				</br>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Nombre</label>
+					<input type="text" class="form-control" placeholder="Nombre" id="nombre">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Apellido</label>
+					<input type="text" class="form-control" placeholder="Nombre" id="apellido">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Telefono</label>
+					<input type="text" class="form-control" placeholder="Telefono de la empresa" id="telefono">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Empresa</label>
+					<input type="text" class="form-control" placeholder="Empresa" id="empresa">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputEmail1">Correo Electronico</label>
+					<input type="email" class="form-control" placeholder="Correo electronico" id="correo">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Contraseña</label>
+					<input type="password" class="form-control" placeholder="Contraseña" id="contraseña">
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Confirmacion de contraseña</label>
+					<input type="password" class="form-control" placeholder="Confirmar contraseña" id="conContraseña">
+					</br>
+						<button class="btn btn-default" onclick="iniciarSesion()">Registrar</button>
+					</br>
+				</div>
+				</form>
+		</div>
+		<div class="col-md-4"></div>
+	</div>
 </body>
 </html>
