@@ -20,57 +20,59 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  -->
 <!-- FUNCTIONAL CODE -->
 
-<script>
- // Declarar un objeto
 
- function salvarCampos(){
-	 var usuario = {};
-	 usuario.nombre = document.getElementById( "nombre" ).value ;
-	 usuario.apellido = document.getElementById( "apellido" ).value ;
-	 usuario.telefono = document.getElementById( "telefono" ).value ;
-	 usuario.empresa = document.getElementById( "empresa" ).value ;
-	 usuario.correo = document.getElementById( "correo" ).value ;
-	 usuario.contraseña = document.getElementById( "contraseña" ).value ;
-	 var conContraseña = document.getElementById( "conContraseña" ).value ;
+ <script>
+  // Declarar un objeto
 
-	 if(usuario.contraseña == conContraseña){
-		 return usuario;
-	 }
-	 else {
-		 window.alert("contraseña incorrecta");
-	 }
- }
+  function salvarCampos(){
+    var usuario = {};
+    usuario.nombre = document.getElementById( "nombre" ).value ;
+    usuario.apellido = document.getElementById( "apellido" ).value ;
+    usuario.telefono = document.getElementById( "telefono" ).value ;
+    usuario.empresa = document.getElementById( "empresa" ).value ;
+    usuario.correo = document.getElementById( "correo" ).value ;
+    usuario.contraseña = document.getElementById( "contraseña" ).value ;
+    var conContraseña = document.getElementById( "conContraseña" ).value ;
 
- function iniciarSesion(){
-	 var usuario = salvarCampos();
-	 if (usuario != null){
-			 var serializado = "";
-			 // Serializar el objeto como una cadena de texto JSON
-			 serializado = JSON.stringify( usuario );
+    if(usuario.contraseña == conContraseña){
+      return usuario;
+    }
+    else {
+      window.alert("contraseña incorrecta");
+    }
+  }
 
-			 // Crear un objeto para hacer peticiones HTTP
-			 var request = new XMLHttpRequest();
+  function iniciarSesion(){
+    var usuario = salvarCampos();
+    if (usuario != null){
+      	var serializado = "";
+      	// Serializar el objeto como una cadena de texto JSON
+      	serializado = JSON.stringify( usuario );
 
-			 // Abrir una peticion HTTP POST a la url deseado y no asincronico
-			 request.open( "POST", "/registro2", false );
+      	// Crear un objeto para hacer peticiones HTTP
+      	var request = new XMLHttpRequest();
 
-			 // Ejecuta la peticion HTTP
-			 request.send( serializado );
-			 console.log("ya envio el JSON");
+      	// Abrir una peticion HTTP POST a la url deseado y no asincronico
+      	request.open( "POST", "/registro2", false );
 
-			 var respuesta;
-			 respuesta = JSON.parse( request.responseText );
-			 console.log(respuesta);
-			 if( respuesta.status == "ok" ){
-				 window.location.href = respuesta.url;
-			 }
-			 else {
-				 document.getElementById('mensaje').innerText = "Ya existe un usuario registrado con ese correo";
-			 }
-		 }
-	 }
+      	// Ejecuta la peticion HTTP
+      	request.send( serializado );
+      	console.log("ya envio el JSON");
 
- </script>
+      	var respuesta;
+      	respuesta = JSON.parse( request.responseText );
+      	console.log(respuesta);
+      	if( respuesta.status == "ok" ){
+        	window.location.href = respuesta.url;
+      	}
+      	else {
+        	document.getElementById('mensaje').innerText = "Ya existe un usuario registrado con ese correo";
+     		}
+    	}
+  	}
+
+	</script>
+
 
 </head>
 <body>
@@ -107,7 +109,7 @@
 					<label for="exampleInputPassword1">Confirmacion de contraseña</label>
 					<input type="password" class="form-control" placeholder="Confirmar contraseña" id="conContraseña">
 					</br>
-						<a href="index.html"><button class="btn btn-default" onclick="iniciarSesion()" onclick="lotation.href='index.html'">Registrar</button></a>
+						<button class="btn btn-default" onclick="iniciarSesion()">Registrar</button>
 					</br>
 				</div>
 				</form>

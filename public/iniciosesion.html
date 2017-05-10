@@ -16,36 +16,36 @@ integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7T
 <link href="./css/Style.css" rel="stylesheet">
 <link href="./css/app.css" rel="stylesheet">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <script type="text/javascript">
-		function verificarCampos(){
-			var datos = {};
-			datos.correo = document.getElementById("correo").value;
-			datos.contraseña = document.getElementById("contraseña").value;
-			console.log(datos);
-			return datos;
+<script type="text/javascript">
+	function verificarCampos(){
+		var datos = {};
+		datos.correo = document.getElementById("correo").value;
+		datos.contraseña = document.getElementById("contraseña").value;
+		console.log(datos);
+		return datos;
+	}
+
+	function iniciarSesion(){
+		var datos = verificarCampos();
+		var serializado = JSON.stringify( datos );
+		// Crear un objeto para hacer peticiones HTTP
+		var request = new XMLHttpRequest();
+
+		// Abrir una peticion HTTP POST a la url deseado y no asincronico
+		request.open( "POST", "/inicio", false );
+
+		// Ejecuta la peticion HTTP
+		request.send( serializado );
+		var respuesta;
+		respuesta = JSON.parse( request.responseText );
+		if (respuesta.status == 'ok'){
+			document.getElementById('mensaje').innerHTML = " <h5> Bienvenido </h5> ";
+			window.location.href = respuesta.url;
 		}
-
-		function iniciarSesion(){
-			var datos = verificarCampos();
-			var serializado = JSON.stringify( datos );
-			// Crear un objeto para hacer peticiones HTTP
-			var request = new XMLHttpRequest();
-
-			// Abrir una peticion HTTP POST a la url deseado y no asincronico
-			request.open( "POST", "/inicio", false );
-
-			// Ejecuta la peticion HTTP
-			request.send( serializado );
-			var respuesta;
-			respuesta = JSON.parse( request.responseText );
-			if (respuesta.status == 'ok'){
-				document.getElementById('mensaje').innerHTML = " <h5> Bienvenido </h5> ";
-				window.location.href = respuesta.url;
-			}
-			else {
-				document.getElementById('mensaje').innerHTML = " <h5> Usuario o Contraseña incorrecta </h5> " ;
-			}
+		else {
+			document.getElementById('mensaje').innerHTML = " <h5> Usuario o Contraseña incorrecta </h5> " ;
 		}
+	}
 
 </script>
 </head>
@@ -67,7 +67,7 @@ integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7T
               <input type="checkbox"> Remember me
             </label>
           </div>
-          <a href="index.html"><button class="btn btn-default" onclick="iniciarSesion()" >Iniciar sesion</button></a>
+					<button class="btn btn-default" onclick="iniciarSesion()" >Iniciar sesion</button>
       </div>
     </div>
       </form>
