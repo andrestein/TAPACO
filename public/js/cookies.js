@@ -88,8 +88,8 @@
 
       if(resp.status == "sesionClosed"){
         window.location.href="index.html";
-        document.getElementById("prueba").innerHTML = "<li><a href='inicio.html'>Iniciar Sesion</a></li>"
-                    + "<li><a href='registro2.html'>Registrarse</a></li>"
+        document.getElementById("prueba").innerHTML = "<li><a href='iniciarsesion.html'>Iniciar Sesion</a></li>"
+                    + "<li><a href='Registro.html'>Registrarse</a></li>"
                     + "<li role='separator' class='divider'></li>"
                     + "<li class='dropdown-header'>Nav header</li>"
                     + "<li><a href='#'>Preguntas Frecuentes</a></li>"
