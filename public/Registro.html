@@ -1,118 +1,142 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-	<title>Registro</title>
-  <link href="CSS/app.css" rel="stylesheet"/>
-          <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-  crossorigin="anonymous">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title> Registrarse </title>
 
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-  integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- STYLE CODE -->
 
-  <!-- Latest compiled and minified JavaScript -->
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-  crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  -->
+	<style type="text/css">
+		.container{
+			margin-top: 3em;
+			margin-right: 35%;
+			margin-left: 35%;
+		}
+
+		.campo {
+			margin-top: 2em;
+			margin-bottom: 2em;
+			margin-right: 20%;
+			margin-left: 20%;
+			display: block;
+		}
+		#iniciarSesion {
+			border-radius: 3px;
+		}
+		#mensaje {
+			color: red;
+			margin-right: 20%;
+			margin-left: 20%;
+		}
+		input {
+			border-radius: 3px;
+		}
+	</style>
+
 <!-- FUNCTIONAL CODE -->
 
-<script>
- // Declarar un objeto
+ <script>
+  // Declarar un objeto
 
- function salvarCampos(){
-	 var usuario = {};
-	 usuario.nombre = document.getElementById( "nombre" ).value ;
-	 usuario.apellido = document.getElementById( "apellido" ).value ;
-	 usuario.telefono = document.getElementById( "telefono" ).value ;
-	 usuario.empresa = document.getElementById( "empresa" ).value ;
-	 usuario.correo = document.getElementById( "correo" ).value ;
-	 usuario.contraseña = document.getElementById( "contraseña" ).value ;
-	 var conContraseña = document.getElementById( "conContraseña" ).value ;
+  function salvarCampos(){
+    var usuario = {};
+    usuario.nombre = document.getElementById( "nombre" ).value ;
+    usuario.apellido = document.getElementById( "apellido" ).value ;
+    usuario.telefono = document.getElementById( "telefono" ).value ;
+    usuario.empresa = document.getElementById( "empresa" ).value ;
+    usuario.correo = document.getElementById( "correo" ).value ;
+    usuario.contraseña = document.getElementById( "contraseña" ).value ;
+    var conContraseña = document.getElementById( "conContraseña" ).value ;
 
-	 if(usuario.contraseña == conContraseña){
-		 return usuario;
-	 }
-	 else {
-		 window.alert("contraseña incorrecta");
-	 }
- }
+    if(usuario.contraseña == conContraseña){
+      return usuario;
+    }
+    else {
+      window.alert("contraseña incorrecta");
+    }
+  }
 
- function iniciarSesion(){
-	 var usuario = salvarCampos();
-	 if (usuario != null){
-			 var serializado = "";
-			 // Serializar el objeto como una cadena de texto JSON
-			 serializado = JSON.stringify( usuario );
+  function iniciarSesion(){
+    var usuario = salvarCampos();
+    if (usuario != null){
+      	var serializado = "";
+      	// Serializar el objeto como una cadena de texto JSON
+      	serializado = JSON.stringify( usuario );
 
-			 // Crear un objeto para hacer peticiones HTTP
-			 var request = new XMLHttpRequest();
+      	// Crear un objeto para hacer peticiones HTTP
+      	var request = new XMLHttpRequest();
 
-			 // Abrir una peticion HTTP POST a la url deseado y no asincronico
-			 request.open( "POST", "/registro2", false );
+      	// Abrir una peticion HTTP POST a la url deseado y no asincronico
+      	request.open( "POST", "/registro2", false );
 
-			 // Ejecuta la peticion HTTP
-			 request.send( serializado );
-			 console.log("ya envio el JSON");
+      	// Ejecuta la peticion HTTP
+      	request.send( serializado );
+      	console.log("ya envio el JSON");
 
-			 var respuesta;
-			 respuesta = JSON.parse( request.responseText );
-			 console.log(respuesta);
-			 if( respuesta.status == "ok" ){
-				 window.location.href = respuesta.url;
-			 }
-			 else {
-				 document.getElementById('mensaje').innerText = "Ya existe un usuario registrado con ese correo";
-			 }
-		 }
-	 }
+      	var respuesta;
+      	respuesta = JSON.parse( request.responseText );
+      	console.log(respuesta);
+      	if( respuesta.status == "ok" ){
+        	window.location.href = respuesta.url;
+      	}
+      	else {
+        	document.getElementById('mensaje').innerText = "Ya existe un usuario registrado con ese correo";
+     		}
+    	}
+  	}
 
- </script>
+	</script>
 
 </head>
 <body>
-	<div class="row">
-		<div class="col-md-4"></div>
-		<div class="col-md-4">
-			<form>
-				</br>
-				<div class="form-group">
-					<label for="exampleInputEmail1">Nombre</label>
-					<input type="text" class="form-control" placeholder="Nombre" id="nombre">
-				</div>
-				<div class="form-group">
-					<label for="exampleInputEmail1">Apellido</label>
-					<input type="text" class="form-control" placeholder="Nombre" id="apellido">
-				</div>
-				<div class="form-group">
-					<label for="exampleInputEmail1">Telefono</label>
-					<input type="text" class="form-control" placeholder="Telefono de la empresa" id="telefono">
-				</div>
-				<div class="form-group">
-					<label for="exampleInputEmail1">Empresa</label>
-					<input type="text" class="form-control" placeholder="Empresa" id="empresa">
-				</div>
-				<div class="form-group">
-					<label for="exampleInputEmail1">Correo Electronico</label>
-					<input type="email" class="form-control" placeholder="Correo electronico" id="correo">
-				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">Contraseña</label>
-					<input type="password" class="form-control" placeholder="Contraseña" id="contraseña">
-				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">Confirmacion de contraseña</label>
-					<input type="password" class="form-control" placeholder="Confirmar contraseña" id="conContraseña">
-					</br>
-						<button class="btn btn-default" onclick="iniciarSesion()">Registrar</button>
-					</br>
-				</div>
-				</form>
+	<div class="container">
+		<div class="campo">
+			<div>
+				<label> Nombre </label>
+			</div>
+			<input type="text" name="Nombre" id="nombre">
 		</div>
-		<div class="col-md-4"></div>
+		<div class="campo">
+			<div>
+				<label> Apellido </label>
+			</div>
+			<input type="text" name="Apellido" id="apellido">
+		</div>
+		<div class="campo">
+			<div>
+				<label> Telefono </label>
+			</div>
+			<input type="number" name="Telefono" id="telefono">
+		</div>
+		<div class="campo">
+			<div>
+				<label> Empresa </label>
+			</div>
+			<input type="text" name="Empresa" id="empresa">
+		</div>
+		<div class="campo">
+			<div>
+				<label> Correo Electronico </label>
+			</div>
+			<input type="email" name="email" id="correo">
+		</div>
+		<div class="campo">
+			<div>
+				<label> Contraseña </label>
+			</div>
+			<input type="password" name="contraseña" id="contraseña">
+		</div>
+		<div class="campo">
+			<div>
+				<label> Confirmar contraseña </label>
+			</div>
+			<input type="password" name="Confirmar contraseña" id="conContraseña">
+		</div>
+		<div id="mensaje">
+		</div>
+		<div class="campo">
+			<button id = "iniciarSesion" onclick="iniciarSesion()">Iniciar Sesion</button>
+		</div>
 	</div>
 </body>
 </html>
