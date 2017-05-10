@@ -37,7 +37,7 @@ integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7T
 		// Ejecuta la peticion HTTP
 		request.send( serializado );
 		var respuesta;
-		respuesta = JSON.parse( request.response );
+		respuesta = JSON.parse( request.response.text );
 		if (respuesta.status == 'ok'){
 			document.getElementById('mensaje').innerHTML = " <h5> Bienvenido </h5> ";
 			window.location.href = respuesta.url;

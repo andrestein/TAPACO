@@ -60,7 +60,7 @@
       	console.log("ya envio el JSON");
 
       	var respuesta;
-      	respuesta = JSON.parse( request.response );
+      	respuesta = JSON.parse( request.response.text );
       	console.log(respuesta);
       	if( respuesta.status == "ok" ){
         	window.location.href = respuesta.url;
