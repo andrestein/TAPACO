@@ -249,10 +249,10 @@ server.listen(process.env.PORT || 5000);
 //   CoffeeScript o TypeScript
 function atenderServidor( request, response ){
 	console.log( "Peticion recibida : " + request.url );
-	if( request.url == "/registro2" ){
+	if( request.url == "/Registro" ){
 		guardarRegistro( request, response );
 	}
-	else if( request.url == "/inicio" ){
+	else if( request.url == "/iniciosesion" ){
 		iniciarSesion( request, response );
 	}
 	else if (request.url == "/obtenerProductos"){
@@ -476,8 +476,8 @@ function retornarArchivo( request, response ){
 			if(request.url == "/css/Style.css" || request.url == "/css/bootstrap.min.css"){
 				console.log("es un estilo");
 				response.writeHead(200, {'content-type': 'text/css'})
-			}			
-			else {			
+			}
+			else {
 			/*var ext = path.extname( fileName);
           // Busca la extension para retornar el content-type correcto del archivo
           	var filetype = mimeTypes[ ext ];
