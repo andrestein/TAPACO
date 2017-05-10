@@ -23,7 +23,7 @@
 
             user = cookies[i+1];
 
-            document.getElementById("prueba").innerHTML = "<li><a href='formulario.html'> Hacer cotizacion </a></li>"
+            document.getElementById("prueba").innerHTML = "<li><a href='productos.html'> Hacer cotizacion </a></li>"
             + "<li><a onclick='cerrarSesion()'> Cerrar sesion </a></li>"
             + "<li class='dropdown-header'Nav header</li>"
             + "<li role='separator' class='divider'></li>"
@@ -53,7 +53,7 @@
 
     function verificarAutenticidad(){
       
-      if(url[0] == "/verCotizaciones" || url[0] == "/formulario"){
+      if(url[0] == "/verCotizaciones" || url[0] == "/productos" || url[0] == "/Envio"){
         for(var i = 0; i < cookies.length - 3 ; i +=2){
           if(cookies[i+1] == 'null' && cookies[i+3] == 'null'){
             //no hay ningun usuario o asesor regitrado con sesion activa
@@ -87,6 +87,7 @@
       console.log(resp.status);
 
       if(resp.status == "sesionClosed"){
+        window.location.href="index.html";
         document.getElementById("prueba").innerHTML = "<li><a href='inicio.html'>Iniciar Sesion</a></li>"
                     + "<li><a href='registro2.html'>Registrarse</a></li>"
                     + "<li role='separator' class='divider'></li>"

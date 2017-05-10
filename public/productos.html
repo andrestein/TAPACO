@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico"> -->
 
-    <title>TOPACO S.A</title>
+    <title>TOPACO S.A - Listado</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
@@ -16,52 +16,230 @@
     <link href="./css/Style.css" rel="stylesheet">
     <link href="./css/app.css" rel="stylesheet">
     <script src="js/cookies.js" > </script>
+    <script src="js/jsPDF/jspdf.js"></script>
+    <script src="js/jsPDF/dist/jspdf.min.js" ></script>
     <script>
+
+
+//////////////////////FUNCIONES PDF /////////////////////////////////
+      //variable global con el listado de procutos
+    var productos = new Array();
+
+    //variable global del archivo PDF
+    var pdfUser = new jsPDF();
+
+    //Variables para mantener el control de la distancia vertical del texto en el pdf - la horizontal es fija
+    var lastNombre=40;
+    var lastRefer=40;
+    var lastCant=40;
+    var lastEmp=40;
+
+    //para tener un constructor de productos
+    function Producto(Empresa, Nombre, Referencia, Cantidad){
+      this.Nombre = Nombre;
+      this.Referencia = Referencia;
+      this.Cantidad = Cantidad;
+      this.Empresa = Empresa;
+    }
+
+    function addProductoPdf (pro) {
+      pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
+      pdfUser.text(20,40, "Empresa");
+      pdfUser.text(70,40, "Nombre");
+      pdfUser.text(120,40, "Referencia");
+      pdfUser.text(160,40, "Cantidad");
+
+      var posicion1 = lastNombre+15;
+      var posicion2 = lastRefer+15;
+      var posicion3 = lastCant+15;
+      var posicion4 = lastEmp+15;
+
+      pdfUser.text(20, posicion1, pro.Empresa);
+      pdfUser.text(70, posicion2, pro.Nombre);
+      pdfUser.text(120,posicion3, pro.Referencia);
+      pdfUser.text(160, posicion4, pro.Cantidad);
+
+
+      lastNombre = posicion1;
+      lastRefer = posicion2;
+      lastCant = posicion3;
+      lastEmp = posicion4;
+
+
+      //Con esta linea se abre el documento en una nueva ventana
+      console.log("PDF CREADO EXITOSAMENTE!");
+
+      //Esta linea descarga el documento
+      //pdfUser.save('prueba1.pdf');
+    }
+
+    function reiniciarPosicion(){
+       lastNombre=40;
+     lastRefer=40;
+     lastCant=40;
+     lastEmp=40;
+    }
+
+    function  verPDF () {
+      pdfUser = new jsPDF();
+      reiniciarPosicion();
+      for (var i = 0; i < productos.length; i++) {
+        addProductoPdf(productos[i]);
+      }
+      pdfUser.output("dataurlnewwindow");
+    }
+
+    function descargarPDF(){
+      pdfUser.save('ListadoTopaco.pdf');
+    }
+
+    //////////////////////FUNCIONES PDF /////////////////////////////////
+
+    //////////////////////FUNCIONES PARA EL LISTADO CON BD///////////////////
+
       function salvarCampos(){
         var datos = {};
         datos.empresa = document.getElementById('empresa').value ;
         datos.producto = document.getElementById('producto').value ;
-        if(document.getElementById('cantidad').value != ""){
-          datos.cantidad="1";
-        }else{
-          datos.cantidad=document.getElementById('cantidad').value;
+        datos.cantidad=document.getElementById('cantidad').value;
+        datos.unidades=document.getElementById('unidades').options.item(document.getElementById('unidades').options.selectedIndex).value
+        datos.Referencia = "Auto";
+        if(datos.cantidad != ""){
+          datos.cantidad = datos.cantidad +" " + datos.unidades
         }
+        
         console.log(document.getElementById('empresa').value );
         return datos;
       }
 
       function addTable(){
         var datos = salvarCampos();
-        if(datos.producto != "" || datos.empresa != "" || datos.cantidad =! ""){
+        if(!(datos.producto == "" || datos.empresa == "" || datos.cantidad == "")){
+
+          //guarda el producto en el listado creado para este cliente
+          productos.push(new Producto(datos.empresa,datos.producto,datos.Referencia,datos.cantidad));
+
           var tabla=document.getElementById('tablaProd');
           var fila=document.createElement('tr');
           fila.innerHTML="<tr>"+
           "<td>"+datos.empresa+"</td>"+
           "<td>"+datos.producto+"</td>"+
+          "<td>"+datos.Referencia+"</td>"+
           "<td>"+datos.cantidad+"</td>"+
           "</tr>";
           tabla.appendChild(fila);
         }else {
-          window.alert("Debes ingresar el producto y la empresa");
+          window.alert("Debes ingresar el producto, la empresa y una cantidad valida");
         }
       }
+
       function cargarBox(){
-        var datos = salvarCampos();
-
-        var serializado = "";
-        // Serializar el objeto como una cadena de texto JSON
-        serializado = JSON.stringify(datos.empresa);
-        window.alert( serializado );
-
         // Crear un objeto para hacer peticiones HTTP
         var request = new XMLHttpRequest();
 
         // Abrir una peticion HTTP POST a la url deseado y no asincronico
-        request.open( "POST", "/producto", false );
+        request.open( "GET", "obtenerProductos", false );
     
         // Ejecuta la peticion HTTP
-        request.send( serializado );
+        request.send();
+
+        var resp = request.response;
+        resp = JSON.parse(resp);
+        var prod = resp.data;
+
+        listado = prod;
+        llenarEmpresas(prod);
       }
+
+      var listado={};
+
+      function llenarEmpresas(data){
+        var empr= "";
+        for (var posiempresa= 0; posiempresa < data.empresa.length; posiempresa++) {
+
+          console.log(data.empresa.length);
+          empr = empr + "<option value="+ data.empresa[posiempresa].nombre+">"+ data.empresa[posiempresa].nombre+"</option>"
+          var e= data.empresa[posiempresa]; 
+
+        }
+        document.getElementById("empresa").innerHTML = empr;
+        llenarProductos();
+      }
+
+      function recorrerYLlenar(nombre){
+        var prod= "";
+        for (var posiempresa= 0; posiempresa < listado.empresa.length; posiempresa++) {
+          var e= listado.empresa[posiempresa];
+
+            if (e.nombre == nombre){
+              for (var categoria = 0; categoria < e.productos.length; categoria++) {
+              var cat = e.productos[categoria];
+                for (var producto = 0; producto < cat.items.length; producto++) {
+                  var pro = cat.items[producto];
+                  prod = prod + "<option value="+ pro.nombre+">"+ pro.nombre+"</option>"
+                }
+              }
+            }
+            
+        }
+        document.getElementById("producto").innerHTML = prod;
+        
+      }
+
+      function llenarProductos(){
+        var index = document.getElementById("empresa").options.selectedIndex;
+        var nombre = document.getElementById("empresa").options.item(index).value;
+        console.log("seleccionado: " + nombre);
+
+        recorrerYLlenar(nombre);
+      }
+
+      //////////////////////FUNCIONES PARA EL LISTADO CON BD///////////////////
+
+      //////////////////////FUNCIONES PARA EL LISTADO MANUALMENTE//////////////////
+
+      function addTableManual(){
+        var datos = salvarCampos2();
+        if(!(datos.producto == "" || datos.empresa == "" || datos.cantidad == "")){
+
+          //guarda el producto en el listado creado para este cliente
+          productos.push(new Producto(datos.empresa,datos.producto,datos.Referencia,datos.cantidad));
+
+          var tabla=document.getElementById('tablaProd');
+          var fila=document.createElement('tr');
+          fila.innerHTML="<tr>"+
+          "<td>"+datos.empresa+"</td>"+
+          "<td>"+datos.producto+"</td>"+
+          "<td>"+datos.Referencia+"</td>"+
+          "<td>"+datos.cantidad+"</td>"+
+          "</tr>";
+          tabla.appendChild(fila);
+        }else {
+          window.alert("Debes ingresar el producto, la empresa y una cantidad valida");
+      }
+    }
+      function salvarCampos2(){
+        var datos = {};
+        datos.empresa = document.getElementById('empresa2').value ;
+        datos.producto = document.getElementById('producto2').value ;
+        datos.Referencia = document.getElementById('Referencia').value;
+        datos.cantidad=document.getElementById('cantidad2').value;
+        datos.unidades=document.getElementById('unidades2').options.item(document.getElementById('unidades').options.selectedIndex).value
+        
+        if (datos.Referencia == ""){
+          datos.Referencia = "No conocida";
+        }
+        if(datos.cantidad != ""){
+          datos.cantidad = datos.cantidad +" " + datos.unidades
+        }
+        return datos;
+      }
+
+      //////////////////////FUNCIONES PARA EL LISTADO MANUALMENTE//////////////////
+
+      function enviarInfo(){
+      window.location.href = "Envio.html";
+    }
 
     </script>
 
@@ -123,14 +301,14 @@
       <!-- Marketing messaging and featurettes
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div>
 	<hr class="featurette-divider">
 
   <div class="col-sm-5" style="padding-left:5%">
            <div class="form-group">
                <label for="inputPassword" class="col-md-4 input-xs">Empresa:</label>
                <div class="col-md-8">
-                   <select class="form-control" id="empresa" size="1">
-                       <option value="">Selecciona la empresa</option>
+                  <select class="form-control" id="empresa" size="1" onchange="llenarProductos()">
                        <option value="corona">corona</option>
                    </select>
                </div>
@@ -141,19 +319,28 @@
            <label for="inputLabel3" class="col-md-4 input-xs">Producto:</label>
            <div class="col-md-8">
                <select class="form-control" id="producto" size="1">
-                   <option value="">Selecciona el producto</option>
-                   <<option value="silla">silla</option>
+                   <option value="">Selecciona el producto</option>                  
                </select>
            </div>
        </div>
    </div>
    <br></br>
-   <br></br>
+   <br></br> 
        <div class="col-sm-5" style="padding-left:5%">
            <div class="form-group">
-             <label for="inputLabel3" class="col-md-4 input-xs">Numero de productos:</label>
+             <label for="inputLabel3" class="col-md-4 input-xs">Cantidad:</label>
              <div class="col-xs-3">
-               <input type="text" class="form-control" id="cantidad" placeholder="cantidad">
+               <input style="display: inline-block;" type="number" class="form-control" id="cantidad" min="1" placeholder="Cantidad">
+               <select style="display: inline-block;" class="form-control" id="unidades">
+                 <option value="Uni">Unidad</option>
+                  <option value="metros">M</option>
+                  <option value="M2">M¨2</option>
+                  <option value="M3">M¨3</option>
+                  <option value="Cm">CM</option>
+                  <option value="pulgadas">Pulgadas</option>
+                  <option value="Gramos">g</option>
+                  <option value="kilogramos">Kg</option>
+               </select>
             </div>
            </div>
        </div>
@@ -164,15 +351,82 @@
             </div>
            </div>
        </div>
+
+      <br></br>
+      <br></br>
+      <br></br>
+      <hr>
+      <div>
+
+<!-- ESTOS SON LOS CAMPOS PARA LLENAR MANUALMENTE-->
+
+
+      <h4> ¿No Encuentras un producto?... Igualmente envialo con tu listado, sólo llena los campos!:</h1>
+      <br>
+      </div>
+      <div class="col-sm-5" style="padding-left:5%">
+           <div class="form-group">
+               <label for="inputPassword" class="col-md-4 input-xs">Empresa:</label>
+               <div class="col-md-8">
+               <input class="form-control" id="empresa2" size="1" placeholder="Empresa">                          
+               </div>
+           </div>
+       </div>
+   <div class="col-sm-5" style="padding-left:5%">
+       <div class="form-group">
+           <label for="inputLabel3" class="col-md-4 input-xs">Producto:</label>
+           <div class="col-md-8">
+               <input class="form-control" id="producto2" size="1" placeholder="Nombre Producto">
+           </div>
+       </div>
+   </div>
+   <br></br>
+   <br></br>
+      <div class="col-sm-5" style="padding-left:5%">
+       <div class="form-group">
+           <label for="inputLabel3" class="col-md-4 input-xs">Referencia:</label>
+           <div class="col-md-8">
+               <input class="form-control" id="Referencia" size="1" placeholder="Solo si conoce" value="">
+           </div>
+       </div>
+   </div>
+        <div class="col-sm-5" style="padding-left:5%">
+           <div class="form-group">
+             <label for="inputLabel3" class="col-md-4 input-xs">Cantidad:</label>
+             <div class="col-xs-3">
+               <input style="display: inline-block;" type="number" class="form-control" id="cantidad2"  min="1" placeholder="Cantidad">
+               <select style="display: inline-block;" class="form-control" id="unidades2">
+                  <option value="Uni">Unidad</option>
+                  <option value="metros">M</option>
+                  <option value="M2">M¨2</option>
+                  <option value="M3">M¨3</option>
+                  <option value="Cm">CM</option>
+                  <option value="pulgadas">Pulgadas</option>
+                  <option value="Gramos">g</option>
+                  <option value="kilogramos">Kg</option>
+               </select>
+            </div>
+           </div>
+       </div>
+       <div class="col-sm-5" style="padding-left:5%">
+           <div class="form-group">
+             <div class="col-xs-3">
+               <button onclick="addTableManual()" type="button" class="btn btn-default" >Agregar producto</button>
+            </div>
+           </div>
+       </div>
     <div>
       <br></br>
       <br></br>
+      <br></br> 
+      <hr>
       <table class="table">
         <caption>Tus productos</caption>
         <thead>
           <tr>
             <th>Empresa</th>
             <th>Producto</th>
+            <th>Referencia</th>
             <th>Cantidad</th>
           </tr>
         </thead>
@@ -182,7 +436,9 @@
     </div>
    </div>
    <div>
-     <button type="button" class="btn btn-default" >Productos y pedidos</button>
+    <button type="button" class="btn btn-default" onclick="verPDF()" >Ver Archivo</button>
+    <button type="button" class="btn btn-default" onclick="descargarPDF()" >Descargar Archivo</button>
+     <button type="button" class="btn btn-default" onclick="enviarInfo()">Realizar Pedido</button>
    </div>
       <hr class="featurette-divider">
 
@@ -195,6 +451,7 @@
         <p>&copy; 2016 Todo Para Construir y TOPACO S.A son marcas registradas. &middot; <a href="#">Privacidad</a> &middot; <a href="#">Terminos de Uso</a></p>
       </footer>
       <script> loadOptions(); </script>
+
     </div><!-- /.container -->
 
 
@@ -203,6 +460,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
+    <script > cargarBox();</script>
 
   </body>
 </html>

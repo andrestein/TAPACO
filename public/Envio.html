@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title> TOPACO S.A - Envio</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
     <meta name="description" content="">
@@ -17,10 +18,25 @@
     <link href="./css/Style.css" rel="stylesheet">
 
     <script src="js/cookies.js" > </script>
-	
+
+    <script type="text/javascript">
+      
+        function listado(){
+          window.location.href="productos.html";
+        }
+    </script>
+
+<style type="text/css">
+    textarea {
+  width: 500px;
+  height: 150px;
+    }
+
+  </style>
 </head>
 <body>
-<div class="navbar-wrapper">
+	<!-- Aqui empieza lo que llamabamos Header -->
+    <div class="navbar-wrapper">
       <div class="container">
 
         <nav class="navbar navbar-inverse navbar-static-top">
@@ -69,22 +85,57 @@
       </div>
     </div>
 
-<div>
-	CONTENIDO DE LAS COTIZACIONES QUE DEBE VER EL ASESOR CORRESPONDIENTE
-</div>
-     <!-- FOOTER -->
+    <hr class="featurette-divider">
+
+      <!-- /END THE FEATURETTES -->
+ <div style="margin-left: 30%; margin-right: 30%;">
+  <p>Envianos esta informacion y espera respuesta del asesor respectivo</p>  
+  <p id="nombreArchivo">  Aqui va el archivo que creo: </p>
+ 	<hr>
+  <p style="display: inline-block;">Si aun no has creado un listado, puedes hacerlo en nuestra web: 
+  </p>
+ 	<button onclick="listado()"> Crear Listado</button>
+  <div>
+  <hr>
+   <p> tienes preguntas?, envialas junto con tu listado</p>
+   <textarea>
+     
+   </textarea>
+   </div>
+
+  <div>
+    <p>selecciona el asesor que deseas que atienda tu peticion: </p>
+    <select>
+      <option> Asesor Corona</option>
+      <option> Asesor Tuberias</option>
+      <option> Asesor Ceramicas</option>
+      <option> Asesor Cementos</option>
+      <option> Asesor 5</option>
+      <option> Asesor 6</option>
+    </select>
+    <br>
+    <br>
+  </div>
+   <div>
+
+   <hr>
+
+     
+     <button> Enviar</button>
+   </div>
+ </div>
+
+
+ <hr class="featurette-divider">
+      <!-- FOOTER -->
       <footer>
         <p class="pull-right"><a href="#">Incio de la Pagina</a></p>
         <p>&copy; 2016 Todo Para Construir y TOPACO S.A son marcas registradas. &middot; <a href="#">Privacidad</a> &middot; <a href="#">Terminos de Uso</a></p>
       </footer>
       <script> loadOptions(); </script>
-    </div><!-- /.container -->
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
+    
 </body>
 </html>

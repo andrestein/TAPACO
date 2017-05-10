@@ -1,34 +1,174 @@
-{"empresa":[
-  {"id":"1","nombre":"corona","productos":[
-    {"id":"1","categoria":"Baños","items":[
-      {"id":"1","nombre":"Juego Accesorios x4 Dual Suction","costo":"$148.700 COP"},
-      {"id":"2","nombre":"Percha Dual Suction","costo":"$24.600 COP"},
-      {"id":"3","nombre":"Porta Rollo Dual Suction","costo":"$34.800 COP"},
-      {"id":"4","nombre":"Combo Aquapro Redondo","costo":"$497.900 COP"},
-      {"id":"4","nombre":"Combo Aquapro Redondo","costo":"$497.900 COP"},
-      {"id":"5","nombre":"Combo Aquapro Alongado","costo":"$529.900 COP"},
-      {"id":"6","nombre":"Base Decorada Laos Rosas","costo":"$529.900 COP"},
-      {"id":"7","nombre":"Base Decorada Cienfuegos Geométrico","costo":"$43.900 COP"},
-      {"id":"8","nombre":"Base Decorada Laos Geométrica","costo":"$43.900 COP"},
-      {"id":"9","nombre":"Ducha Monocontrol Koral Con Salida","costo":"$285.100 COP"},
-      {"id":"10","nombre":"Torre De Ducha Cristalia","coste":"$923.200 COP"},
-      {"id":"11","nombre":"Regadera Tana Redonda","costo":"$199.000 COP"},
-      {"id":"12","nombre":"Pared Vasana Plana Satinada","costo":"$38.500 COP"},
-      {"id":"13","nombre":"Pared Mambo","costo":"$59.900 COP"},
-      {"id":"14","nombre":"Combo Aquapro Redondo","costo":"$497.900 COP"}]},
-    {"id":"2","categoria":"cocina","items":[
-      {"id":"1","nombre":"Kit Cocina Comfort","costo":"$2.359.900 COP"},
-      {"id":"2","nombre":"Kit Cocina Comfort Silver","costo":"$2.564.900 COP"},
-      {"id":"3","nombre":"Concolor Max","costo":"$24.107 COP"},
-      {"id":"4","nombre":"Piso Siboney","costo":"$23.100 COP"},
-      {"id":"5","nombre":"Piso Barita Ard","costo":"$24.600 COP"}]},
-    {"id":"3","categoria":"Exteriores","items":[
-      {"id":"1","nombre":"VELADURA CONCRETOS MORTEROS","costo":"$61.449 COP"},
-      {"id":"2","nombre":"Fachaleta Jaen","costo":"$48.100 COP"},
-      {"id":"3","nombre":"Piso Siboney","costo":"$23.100 COP"},
-      {"id":"4","nombre":"Mosaico Capricornius","costo":"$41.600 COP"}]},
-    {"id":"4","categoria":"Materiales de construccion","items":[
-      {"id":"1","nombre":"TEX-JOINT JUNTAS BLANCO","coste":"$218.406 COP"},
-      {"id":"2","nombre":"FRISO FLEXIBLE BLANCO","coste":"$189.682 COP"},
-      {"id":"3","nombre":"TEX-JOINT ACABADO BLANCO","coste":"$188.041 COP"},
-      {"id":"4","nombre":"TEXPLACA BLANCO Cuñete","coste":"$102.586 COP"}]}]}]}
+{
+	"empresa": [{
+		"id": "1",
+		"nombre": "corona",
+		"productos": [{
+			"id": "1",
+			"categoria": "Baños",
+			"items": [{
+				"id": "1",
+				"nombre": "Juego Accesorios x4 Dual Suction",
+				"costo": "$148.700 COP"
+			},
+			{
+				"id": "2",
+				"nombre": "Percha Dual Suction",
+				"costo": "$24.600 COP"
+			},
+			{
+				"id": "3",
+				"nombre": "Porta Rollo Dual Suction",
+				"costo": "$34.800 COP"
+			},
+			{
+				"id": "4",
+				"nombre": "Combo Aquapro Redondo",
+				"costo": "$497.900 COP"
+			},
+			{
+				"id": "4",
+				"nombre": "Combo Aquapro Redondo",
+				"costo": "$497.900 COP"
+			},
+			{
+				"id": "5",
+				"nombre": "Combo Aquapro Alongado",
+				"costo": "$529.900 COP"
+			},
+			{
+				"id": "6",
+				"nombre": "Base Decorada Laos Rosas",
+				"costo": "$529.900 COP"
+			},
+			{
+				"id": "7",
+				"nombre": "Base Decorada Cienfuegos Geométrico",
+				"costo": "$43.900 COP"
+			},
+			{
+				"id": "8",
+				"nombre": "Base Decorada Laos Geométrica",
+				"costo": "$43.900 COP"
+			},
+			{
+				"id": "9",
+				"nombre": "Ducha Monocontrol Koral Con Salida",
+				"costo": "$285.100 COP"
+			},
+			{
+				"id": "10",
+				"nombre": "Torre De Ducha Cristalia",
+				"coste": "$923.200 COP"
+			},
+			{
+				"id": "11",
+				"nombre": "Regadera Tana Redonda",
+				"costo": "$199.000 COP"
+			},
+			{
+				"id": "12",
+				"nombre": "Pared Vasana Plana Satinada",
+				"costo": "$38.500 COP"
+			},
+			{
+				"id": "13",
+				"nombre": "Pared Mambo",
+				"costo": "$59.900 COP"
+			},
+			{
+				"id": "14",
+				"nombre": "Combo Aquapro Redondo",
+				"costo": "$497.900 COP"
+			}]
+		},
+		{
+			"id": "2",
+			"categoria": "cocina",
+			"items": [{
+				"id": "1",
+				"nombre": "Kit Cocina Comfort",
+				"costo": "$2.359.900 COP"
+			},
+			{
+				"id": "2",
+				"nombre": "Kit Cocina Comfort Silver",
+				"costo": "$2.564.900 COP"
+			},
+			{
+				"id": "3",
+				"nombre": "Concolor Max",
+				"costo": "$24.107 COP"
+			},
+			{
+				"id": "4",
+				"nombre": "Piso Siboney",
+				"costo": "$23.100 COP"
+			},
+			{
+				"id": "5",
+				"nombre": "Piso Barita Ard",
+				"costo": "$24.600 COP"
+			}]
+		},
+		{
+			"id": "3",
+			"categoria": "Exteriores",
+			"items": [{
+				"id": "1",
+				"nombre": "VELADURA CONCRETOS MORTEROS",
+				"costo": "$61.449 COP"
+			},
+			{
+				"id": "2",
+				"nombre": "Fachaleta Jaen",
+				"costo": "$48.100 COP"
+			},
+			{
+				"id": "3",
+				"nombre": "Piso Siboney",
+				"costo": "$23.100 COP"
+			},
+			{
+				"id": "4",
+				"nombre": "Mosaico Capricornius",
+				"costo": "$41.600 COP"
+			}]
+		},
+		{
+			"id": "4",
+			"categoria": "Materiales de construccion",
+			"items": [{
+				"id": "1",
+				"nombre": "TEX-JOINT JUNTAS BLANCO",
+				"coste": "$218.406 COP"
+			},
+			{
+				"id": "2",
+				"nombre": "FRISO FLEXIBLE BLANCO",
+				"coste": "$189.682 COP"
+			},
+			{
+				"id": "3",
+				"nombre": "TEX-JOINT ACABADO BLANCO",
+				"coste": "$188.041 COP"
+			},
+			{
+				"id": "4",
+				"nombre": "TEXPLACA BLANCO Cuñete",
+				"coste": "$102.586 COP"
+			}]
+		}]
+	},
+	{"id": "2",
+		"nombre": "pavco",
+		"productos": [{
+			"id": "1",
+			"categoria": "tubos",
+			"items": [{
+				"id": "1",
+				"nombre": "pruba pacvo",
+				"costo": "$148.700 COP"
+			}]
+		}]
+	}]
+}
