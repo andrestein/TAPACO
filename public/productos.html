@@ -279,7 +279,8 @@
 
       var archivo = {}
       archivo.asesor = asesor;
-      archivo.nombre = nombre;
+      archivo.usuario = user;
+      archivo.nombre = nombre;    
       archivo.telefono = telefono;
       archivo.preguntas = preguntas;
       archivo.listaProductos = listaProductos;
@@ -346,9 +347,8 @@
       var asesor= "";
       var opt = "";
         for (var i= 0; i < lista.length; i++) {
-          asesor = lista[i].nombre + " de " + lista[i].encargado;
-          console.log(asesor);
-          opt = opt + "<option value="+lista[i].encargado+">"+asesor+"</option>"
+
+          opt = opt + "<option value="+lista[i].correo +">"+ lista[i].nombre+"</option>"
         }
 
         document.getElementById("asesores").innerHTML = opt;
@@ -442,8 +442,8 @@
            <div class="form-group">
              <label for="inputLabel3" class="col-md-4 input-xs">Cantidad:</label>
              <div class="col-xs-3">
-               <input style="display: inline-block;" type="number" class="form-control" id="cantidad" min="1" placeholder="Cantidad">
-               <select style="display: inline-block;" class="form-control" id="unidades">
+               <input style="display: inline-block;width: 10em;" type="number" class="form-control" id="cantidad" min="1" placeholder="Cantidad">
+               <select style="display: inline-block;width: 10em;" class="form-control" id="unidades">
                  <option value="Uni">Unidad</option>
                   <option value="metros">M</option>
                   <option value="M2">M¨2</option>
@@ -506,8 +506,8 @@
            <div class="form-group">
              <label for="inputLabel3" class="col-md-4 input-xs">Cantidad:</label>
              <div class="col-xs-3">
-               <input style="display: inline-block;" type="number" class="form-control" id="cantidad2"  min="1" placeholder="Cantidad">
-               <select style="display: inline-block;" class="form-control" id="unidades2">
+               <input style="display: inline-block;width: 10em;" type="number" class="form-control" id="cantidad2"  min="1" placeholder="Cantidad">
+               <select style="display: inline-block;width: 10em;" class="form-control" id="unidades2">
                   <option value="Uni">Unidad</option>
                   <option value="metros">M</option>
                   <option value="M2">M¨2</option>

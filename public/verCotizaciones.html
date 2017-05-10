@@ -21,7 +21,7 @@
 	<script type="text/javascript">
 
 		var pedidos = {};
-		var pedidosAsesor =new Array();
+		var pedidosAsesor = new Array();
 
 		function cargarCotizaciones(){
 			 // Crear un objeto para hacer peticiones HTTP
@@ -34,15 +34,15 @@
         request.send();
 
         var resp = request.response;
-        console.log(resp);
         resp = JSON.parse(resp);
-        pedidos = resp.data;
+        pedidos = resp.data;       
         hacerTabla();
 		}
 
+
 		function hacerTabla(){
 			for (var i = 0; i < pedidos.length; i++) {
-				if (pedidos[i].asesor == "baños"){
+				if (pedidos[i].asesor == user/* esta variable esta definida en el archivo de las cookies*/){
 					pedidosAsesor.push(pedidos[i]);
 					añadirTabla(pedidos[i]);
 				}
@@ -53,6 +53,7 @@
 		  var tabla=document.getElementById('tablaProd');
           var fila=document.createElement('tr');
           fila.innerHTML="<tr>"+
+          "<td>"+pedido.usuario+"</td>"+
           "<td>"+pedido.nombre+"</td>"+
           "<td>"+pedido.telefono+"</td>"+
           "<td> <button>Ver</button> <button>Modificar</button> </td>"+
