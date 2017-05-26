@@ -47,6 +47,15 @@
       this.Empresa = Empresa;
     }
 
+    function limpiarCampos(){
+      document.getElementById("cantidad").value = "";
+      document.getElementById("cantidad2").value = "";
+      document.getElementById("empresa2").value = "";
+      document.getElementById("Referencia").value = "";
+      document.getElementById("producto2").value = "";
+
+    }
+
     function addProductoPdf (pro) {
       pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
       pdfUser.text(20,40, "Empresa");
@@ -87,6 +96,9 @@
 
     function  verPDF () {
       pdfUser = new jsPDF();
+      pdf.setFont("helvetica");
+      pdf.setFontType("bold");
+      pdf.setFontSize(9);
       reiniciarPosicion();
       for (var i = 0; i < productos.length; i++) {
         addProductoPdf(productos[i]);
@@ -133,6 +145,7 @@
           "<td>"+datos.cantidad+"</td>"+
           "</tr>";
           tabla.appendChild(fila);
+          limpiarCampos();
         }else {
           window.alert("Debes ingresar el producto, la empresa y una cantidad valida");
         }
@@ -219,6 +232,7 @@
           "<td>"+datos.cantidad+"</td>"+
           "</tr>";
           tabla.appendChild(fila);
+          limpiarCampos();
         }else {
           window.alert("Debes ingresar el producto, la empresa y una cantidad valida");
         }
@@ -243,14 +257,6 @@
 
       //////////////////////FUNCIONES PARA EL LISTADO MANUALMENTE//////////////////
 
-      function enviarInfo(){
-       localStorage.setItem('listadoTopaco', productos);
-        window.location.href = "Envio.html";
-        //OBTENER INFO DE USUARIO
-
-        //Tomar la variable productos y añadirla al json
-
-    }
 
     //---------------------///////////SCRIPTS DE PRODUCTOS///////////////-----------------------------------
     //---------------------///////////SCRIPTS DE PRODUCTOS///////////////-----------------------------------
@@ -279,7 +285,7 @@
 
       var archivo = {}
       archivo.asesor = asesor;
-      archivo.usuario = user;
+      archivo.usuario = user; //se debe obtener los datos del usuario iniciado
       archivo.nombre = nombre;    
       archivo.telefono = telefono;
       archivo.preguntas = preguntas;
@@ -309,6 +315,7 @@
         console.log(respuesta);
         if( respuesta.status == "ok" ){
           window.alert("su pedido se ha enviado, espere nuestra pronta respuesta");
+          window.href ="index.html";
         }
       //ALADIR AL JSON
       }else {

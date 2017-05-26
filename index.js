@@ -320,7 +320,7 @@ function guardarRegistro( request, response ){
 
 			var resp = {} ;
 			resp.status = "ok";
-			resp.url = "index.html";
+			resp.url = "iniciosesion.html";
 
 			response.end( JSON.stringify(resp) );
 		}
@@ -458,14 +458,7 @@ function cerrarSesion( request, response ){
 // AQUI SE CARGAN LOS ARCHIVOS QUE REQUIERE CADA PETICION
 
 function retornarArchivo( request, response ){
-	/* var a = "./public" + request.url;
-	var url = "";
-	for(var i = 0; i < a.length; i++){
-		if(a.charAt(i) != '?'){
-			url += a.charAt(i);
-		}
-	}
-	*/
+
 	fs.readFile( "./public" + request.url, archivoListo );
 	//fs.readFile( url, archivoListo );
 
@@ -478,12 +471,7 @@ function retornarArchivo( request, response ){
 				response.writeHead(200, {'content-type': 'text/css'})
 			}
 			else {
-			/*var ext = path.extname( fileName);
-          // Busca la extension para retornar el content-type correcto del archivo
-          	var filetype = mimeTypes[ ext ];
-          	console.log( "tipo: " + filetype);
-       		response.writeHead(200, { 'content-type': filetype })
-			*/
+
 			response.writeHead(200, { 'content-type': 'text/html' });
 			}
 			response.write( data );
@@ -496,14 +484,7 @@ function retornarArchivo( request, response ){
 }
 
 function retornarArchivoInicio( request, response ){
-	/* var a = "./public" + request.url;
-	var url = "";
-	for(var i = 0; i < a.length; i++){
-		if(a.charAt(i) != '?'){
-			url += a.charAt(i);
-		}
-	}
-	*/
+
 	fs.readFile( "./public" + "/index.html", archivoListo );
 	//fs.readFile( url, archivoListo );
 
