@@ -1,76 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-	 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>TOPACO - Terminos y Condiciones</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico"> -->
 
-    <title>TOPACO S.A</title>
-
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
-	<link href="./css/app.css" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="./css/Style.css" rel="stylesheet">
-
+    <link href="./css/app.css" rel="stylesheet">
     <script src="js/cookies.js" > </script>
-	
-	<script type="text/javascript">
-
-		var pedidos = {};
-		var pedidosAsesor = new Array();
-
-		function cargarCotizaciones(){
-			 // Crear un objeto para hacer peticiones HTTP
-        var request = new XMLHttpRequest();
-
-        // Abrir una peticion HTTP POST a la url deseado y no asincronico
-        request.open( "GET", "obtenerPedido", false );
-    
-        // Ejecuta la peticion HTTP
-        request.send();
-
-        var resp = request.response;
-        resp = JSON.parse(resp);
-        pedidos = resp.data;       
-        hacerTabla();
-		}
-
-
-		function hacerTabla(){
-			for (var i = 0; i < pedidos.length; i++) {
-				if (pedidos[i].asesor == user/* esta variable esta definida en el archivo de las cookies*/){
-					pedidosAsesor.push(pedidos[i]);
-					añadirTabla(pedidos[i]);
-				}
-			}
-		}
-
-		function añadirTabla(pedido){
-		  var tabla=document.getElementById('tablaProd');
-          var fila=document.createElement('tr');
-          fila.innerHTML="<tr>"+
-          "<td>"+pedido.usuario+"</td>"+
-          "<td>"+pedido.nombre+"</td>"+
-          "<td>"+pedido.telefono+"</td>"+
-          "<td> <button onclick=""verArchivo()"">Ver</button> <button>Modificar</button> </td>"+
-          "<td>"+pedido.preguntas+"</td>"+
-          "<td>"+pedido.fecha+"</td>"+
-          "</tr>";
-          tabla.appendChild(fila);
-		}
-
-    function verArchivo(){
-
-    }
-
-	</script>
 
 </head>
+
 <body>
+
 <div class="navbar-wrapper">
       <div class="container">
 
@@ -104,10 +54,9 @@
 
                   	<!-- colocar las marcas que tenemos -->
 
-                    <li><a href="inicio.html">Iniciar Sesion</a></li>
-                    <li><a href="registro2.html">Registrarse</a></li>
+                    <li><a href="iniciosesion.html">Iniciar Sesion</a></li>
+                    <li><a href="Registro.html">Registrarse</a></li>
                     <li role="separator" class="divider"></li>
-                    <li class="dropdown-header">Nav header</li>
                     <li><a href="Terms.html">Terminos y Condiciones</a></li>
                   </ul>
                 </li>
@@ -118,23 +67,18 @@
 
       </div>
     </div>
- 	
- 	<hr class="featurette-divider">
 
-	<div>
-		<button onclick="cargarCotizaciones()"> Actualizar </button>
-		<table class="table">
-        <caption>Tus Pendientes</caption>
-        <thead>
-        </thead>
-        <tbody id="tablaProd">
-          </tbody>
-        </table>
-	</div>
-     <!-- FOOTER -->
-      
-     <hr class="featurette-divider">
-      <footer>
+  <hr class="featurette-divider">
+
+    <div>
+      TOPACO S.A es una marca registrada y protegidas por la ley colombiana... <br>
+    	Al hacer uso de los servicios del aplicativo web ofrecido en TOPACO S.A.com  acepta el tratamiento de sus datos personales y almacenamiento de informacion para el uso y disposicion de la empresa, correspondiente a la ley Colombiana 1582 de 2012 correspondientes a la proteccion de informacion y HABEAS DATAS
+    </div>
+
+  <hr class="featurette-divider">
+
+	<!-- FOOTER -->
+     <footer>
         <p class="pull-right"><a href="#">Incio de la Pagina</a></p>
         <p>&copy; 2016 Todo Para Construir y TOPACO S.A son marcas registradas. &middot; <a href="#">Privacidad</a> &middot; <a href="#">Terminos de Uso</a></p>
       </footer>
@@ -147,5 +91,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -28,7 +28,7 @@
             + "<li><a onclick='cerrarSesion()'> Cerrar sesion </a></li>"
             + "<li class='dropdown-header'Nav header</li>"
             + "<li role='separator' class='divider'></li>"
-            + "<li><a href='#'>Terminos y Condiciones</a></li>"; 
+            + "<li><a href='Terms.html'>Terminos y Condiciones</a></li>"; 
 
         }
         else if(cookies[i] == 'asesor' && cookies[i+1] != 'null'){
@@ -39,7 +39,7 @@
           + " <li><a onclick='cerrarSesion()'> Cerrar sesion </a></li>"
           + "<li class='dropdown-header'Nav header</li>"
           + "<li role='separator' class='divider'></li>"
-          + "<li><a href='#'>Terminos y Condiciones</a></li>"; ; 
+          + "<li><a href='Terms.html'>Terminos y Condiciones</a></li>"; ; 
 
         }
       }
