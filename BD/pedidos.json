@@ -1,1 +1,165 @@
-[{"asesor":"asesor1@hotmail.com","usuario":"thomasgiln@hotmail.com","nombre":"adasd","telefono":"1","preguntas":"Sin Dudas","listaProductos":[{"Nombre":"Juego","Referencia":"Auto","Cantidad":"3 Uni","Empresa":"corona"},{"Nombre":"Juego","Referencia":"Auto","Cantidad":"3 Uni","Empresa":"corona"},{"Nombre":"Torre","Referencia":"Auto","Cantidad":"3 Uni","Empresa":"corona"}],"fecha":"10/5/2017"},{"asesor":"asesor3@hotmail.com","usuario":"jhosep.pg01@gmail.com","nombre":"jhoseep","telefono":"131231","preguntas":"ninguna","listaProductos":[{"Nombre":"Percha","Referencia":"Auto","Cantidad":"3 Uni","Empresa":"corona"},{"Nombre":"Base","Referencia":"Auto","Cantidad":"5 M3","Empresa":"corona"},{"Nombre":"cemento","Referencia":"No conocida","Cantidad":"1 kilogramos","Empresa":"toxement"}],"fecha":"26/5/2017"}]
+[{
+	"asesor": "asesor1@hotmail.com",
+	"usuario": "thomasgiln@hotmail.com",
+	"nombre": "adasd",
+	"telefono": "1",
+	"direccion": "aasfd sasdf",
+	"proyecto": "edificiacion",
+	"preguntas": "Sin Dudas",
+	"fechaTent": "21/7/2017",
+	"fecha": "10/5/2017",
+	"estado": "sinRevisar",
+	"listaProductos": [{
+		"Nombre": "Juego",
+		"Referencia": "Auto",
+		"Cantidad": "3 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	},
+	{
+		"Nombre": "Juego",
+		"Referencia": "Auto",
+		"Cantidad": "3 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	},
+	{
+		"Nombre": "Torre",
+		"Referencia": "Auto",
+		"Cantidad": "3 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	}]
+},
+{
+	"asesor": "asesor2@hotmail.com",
+	"usuario": "jhosep.pg01@gmail.com",
+	"nombre": "granda",
+	"telefono": "3123922",
+	"direccion": "asd",
+	"proyecto": "casa",
+	"preguntas": "Sin Dudas",
+	"fechaTent": "11/7/2017",
+	"fecha": "26/5/2017",
+	"estado": "sinRevisar",
+	"listaProductos": [{
+		"Nombre": "Juego Accesorios x4 Dual Suction",
+		"Referencia": "Auto",
+		"Cantidad": "2 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	},
+	{
+		"Nombre": "Base Decorada Cienfuegos Geométrico",
+		"Referencia": "Auto",
+		"Cantidad": "5 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	}]
+},
+{
+	"asesor": "asesor2@hotmail.com",
+	"usuario": "jhosep.pg01@gmail.com",
+	"nombre": "carlos cotra",
+	"telefono": "1231231",
+	"direccion": "asdfa sd fac a",
+	"proyecto": "123a czsdaa ",
+	"preguntas": "Sin Dudas",
+	"fechaTent": "2017-05-31",
+	"fecha": "27/5/2017",
+	"estado": "sinRevisar",
+	"listaProductos": [{
+		"Nombre": "Juego Accesorios x4 Dual Suction",
+		"Referencia": "Auto",
+		"Cantidad": "1 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	},
+	{
+		"Nombre": "Porta Rollo Dual Suction",
+		"Referencia": "Auto",
+		"Cantidad": "4 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	},
+	{
+		"Nombre": "Base Decorada Laos Rosas",
+		"Referencia": "Auto",
+		"Cantidad": "1 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	},
+	{
+		"Nombre": "Regadera Tana Redonda",
+		"Referencia": "Auto",
+		"Cantidad": "1 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	},
+	{
+		"Nombre": "Kit Cocina Comfort Silver",
+		"Referencia": "Auto",
+		"Cantidad": "3 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	},
+	{
+		"Nombre": "Mosaico Capricornius",
+		"Referencia": "Auto",
+		"Cantidad": "5 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	}]
+},
+{
+	"asesor": "asesor2@hotmail.com",
+	"usuario": "jhosep.pg01@gmail.com",
+	"nombre": "jhosep",
+	"telefono": "132213",
+	"direccion": "asdfsadf",
+	"proyecto": "asdfas",
+	"preguntas": "Sin Dudas",
+	"fechaTent": "2017-07-01",
+	"fecha": "27/5/2017",
+	"estado": "sinRevisar",
+	"listaProductos": [{
+		"Nombre": "Juego Accesorios x4 Dual Suction",
+		"Referencia": "Auto",
+		"Cantidad": "4 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	},
+	{
+		"Nombre": "Base Decorada Laos Geométrica",
+		"Referencia": "Auto",
+		"Cantidad": "5 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	}]
+},
+{
+	"asesor": "asesor2@hotmail.com",
+	"usuario": "jhosep.pg01@gmail.com",
+	"nombre": "asdf",
+	"telefono": "12321",
+	"direccion": "asdf",
+	"proyecto": "sadfas",
+	"preguntas": "Sin Dudas",
+	"fechaTent": "2017-05-30",
+	"fecha": "27/5/2017",
+	"estado": "sinRevisar",
+	"listaProductos": [{
+		"Nombre": "Porta Rollo Dual Suction",
+		"Referencia": "Auto",
+		"Cantidad": "2 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	},
+	{
+		"Nombre": "Base Decorada Laos Geométrica",
+		"Referencia": "Auto",
+		"Cantidad": "1 Uni",
+		"Empresa": "corona",
+		"Precio": 0
+	}]
+}]

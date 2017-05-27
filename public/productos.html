@@ -71,6 +71,7 @@
       this.Referencia = Referencia;
       this.Cantidad = Cantidad;
       this.Empresa = Empresa;
+      this.Precio = 0;
     }
 
     function limpiarCampos(){
@@ -302,22 +303,37 @@
       if(telefono == ""){
         enviar=false;
       }
+      var direccion= document.getElementById('direccion').value
+      if(direccion == ""){
+        enviar=false;
+      }
+      var proyecto= document.getElementById('proyecto').value
+      if(proyecto == ""){
+        enviar=false;
+      }
       var preguntas= document.getElementById('preguntas').value
       if(preguntas==""){
         preguntas = "Sin Dudas";
       }
-      var listaProductos = productos;
+      //faltafecha tentantiva
+      var fechaTent = document.getElementById("fechaT").value;
+
       var f = new Date();
       var fecha = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
+      var listaProductos = productos;
 
       var archivo = {}
       archivo.asesor = asesor;
       archivo.usuario = user; //se debe obtener los datos del usuario iniciado
       archivo.nombre = nombre;    
       archivo.telefono = telefono;
+      archivo.direccion = direccion;
+      archivo.proyecto = proyecto;
       archivo.preguntas = preguntas;
-      archivo.listaProductos = listaProductos;
+      archivo.fechaTent = fechaTent;
       archivo.fecha = fecha;
+      archivo.listaProductos = listaProductos;
+      
 
       console.log(archivo);
 
@@ -342,7 +358,7 @@
         console.log(respuesta);
         if( respuesta.status == "ok" ){
           window.alert("su pedido se ha enviado, espere nuestra pronta respuesta");
-          window.href ="index.html";
+          window.location.href="index.html";
         }
       //ALADIR AL JSON
       }else {
@@ -655,7 +671,7 @@
    <hr>
 
      
-     <button onclick="enviarFormulario()"> Enviar</button>
+     <button onclick="enviarFormulario()" class="btn btn-default"> Enviar</button>
    </div>
  </div>
 

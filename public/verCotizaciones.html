@@ -12,16 +12,20 @@
 
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
-	<link href="./css/app.css" rel="stylesheet">
+	  <link href="./css/app.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="./css/Style.css" rel="stylesheet">
 
     <script src="js/cookies.js" > </script>
-	
+	  <script src="js/jsPDF/jspdf.js"></script>
+    <script src="js/jsPDF/dist/jspdf.min.js" ></script>
+
+
 	<script type="text/javascript">
 
 		var pedidos = {};
 		var pedidosAsesor = new Array();
+    var pedidoEnModificacion ={};
 
 		function cargarCotizaciones(){
 			 // Crear un objeto para hacer peticiones HTTP
@@ -41,33 +45,225 @@
 
 
 		function hacerTabla(){
+      var body = document.createElement('tbody');
+      var tabla=document.getElementById('table1');
+      body.id="tablaProd"
+
+
+      var filaTitulos= document.createElement('tr'); 
+        filaTitulos.innerHTML= "<tr>"+
+          "<td>Fecha</td>"+
+          "<td>Envio</td>"+
+          "<td>Nombre</td>"+
+          "<td>Correo</td>"+
+          "<td>archivo</td>"+
+          "<td>Modificar</td>"+
+        "</tr>";
+      body.appendChild(filaTitulos);
+
 			for (var i = 0; i < pedidos.length; i++) {
 				if (pedidos[i].asesor == user/* esta variable esta definida en el archivo de las cookies*/){
 					pedidosAsesor.push(pedidos[i]);
-					añadirTabla(pedidos[i]);
+					body = añadirTabla(pedidos[i], body);
 				}
 			}
+      tabla.replaceChild(body,document.getElementById("tablaProd"));
 		}
 
-		function añadirTabla(pedido){
-		  var tabla=document.getElementById('tablaProd');
+		function añadirTabla(pedido, body){		      
           var fila=document.createElement('tr');
           fila.innerHTML="<tr>"+
-          "<td>"+pedido.usuario+"</td>"+
-          "<td>"+pedido.nombre+"</td>"+
-          "<td>"+pedido.telefono+"</td>"+
-          "<td> <button onclick=""verArchivo()"">Ver</button> <button>Modificar</button> </td>"+
-          "<td>"+pedido.preguntas+"</td>"+
           "<td>"+pedido.fecha+"</td>"+
-          "</tr>";
-          tabla.appendChild(fila);
+          "<td>"+pedido.fechaTent+"</td>"+
+          "<td>"+pedido.nombre+"</td>"+
+          "<td>"+pedido.usuario+"</td>"+
+          "<td> <button class='btn btn-default' onclick='verArchivo()'>Ver </button>"+"</td>"+
+          "<td> <button class='btn btn-default' onclick='modificar()'> Modificar </button>"+ "</td>"+"</tr>";
+          body.appendChild(fila);
+          return body;
 		}
 
-    function verArchivo(){
+    function añadirTablaSeleccionada(producto, body){
+        var fila=document.createElement('tr'); 
+        fila.innerHTML="<tr>"+
+        "<td>"+producto.Empresa+"</td>"+
+        "<td>"+producto.Nombre+"</td>"+
+        "<td>"+producto.Referencia+"</td>"+
+        "<td>"+producto.Cantidad+"</td>"+
+        "<td> <input type='number' size='1'style='width: 5em' value='"+producto.Precio+"'> </input> </td>"+
+        "</tr>";
+        body.appendChild(fila);
+        return body;
+    }
 
+    function modificar(){
+      document.getElementById('tablaSeleccionado').style.display = "block";
+      
+//////////////EN ESA PARTE SE DEBE VERIFICAR CUAL DE LOS PEDIDOS FUE SELECCIONADO, POR AHORA SIEMPRE ESTA CON EL MISMO
+      pedido = pedidosAsesor[1];
+      pedidoEnModificacion = pedido;
+      lista = pedido.listaProductos;
+   
+      var body = document.createElement('tbody');
+      var tabla=document.getElementById('table2');
+      body.id="tablaSeleccionado"
+
+      var filaTitulos= document.createElement('tr'); 
+        filaTitulos.innerHTML= "<tr>"+
+          "<td>Empresa</td>"+
+          "<td>Producto</td>"+
+          "<td>Referencia</td>"+
+          "<td>Cantidad</td>"+
+          "<td>Precio</td>"+
+        "</tr>";
+      body.appendChild(filaTitulos);
+
+      for (var i = 0; i < lista.length; i++) {
+        body = añadirTablaSeleccionada(lista[i], body);
+      }
+       tabla.replaceChild(body,document.getElementById("tablaSeleccionado"));
+       añadirFinal(pedido);
+    }
+
+    function añadirFinal(pedido){
+      var content = "";
+      var campo = document.createElement('div');
+      campo.id= 'final';
+      if (pedido.estado == "sinRevisar"){
+        content = "<textArea id='preguntas'>"+pedido.preguntas+"</textArea>"+
+      "<br>"+
+      "<input type='checkbox' id='checkItem' name='revisada' value='check'> Revisada"+
+      "<br>"+
+      "<button class='btn btn-default' style ='display: inline-block' onclick='guardar()'> Solo guardar </button>"+
+      "<button class='btn btn-default' style ='display: inline-block' onclick='enviar()'> Enviar Correccion </button>";
+      }else if (pedido.estado == "Revisada"){
+         content = "<textArea id='preguntas'>"+pedido.preguntas+"</textArea>"+
+      "<br>"+
+      "<input type='checkbox' id='checkItem' onchange='cambioEstado()' name='revisada' value='check' checked> Revisada"+
+      "<br>"+
+      "<button class='btn btn-default' style ='display: inline-block' onclick='guardar()'> Solo guardar </button>"+
+      "<button class='btn btn-default' style ='display: inline-block' onclick='enviar()'> Enviar Correccion </button>"+
+      "</div>"
+      }
+        campo.innerHTML = content;
+        document.getElementById("tableSelect").replaceChild(campo,document.getElementById("final"));
+    }
+
+    function cambioEstado(){
+      var ch = document.getElementById("checkItem");
+      if (ch.checked){
+        pedidoEnModificacion.estado = "Revisada";
+      }else {
+        pedidoEnModificacion.estado = "sinRevisar";
+      }
+    }
+
+
+    //////////////METODOS PARA PODER CREAR EL PDF IGUAL AL ENVIADO POR LE CLIENTE con el campo PRECIO AÑADIDO
+
+    //variable global del archivo PDF
+    var pdfUser = new jsPDF();
+
+    //Variables para mantener el control de la distancia vertical del texto en el pdf - la horizontal es fija
+    var lastNombre=40;
+    var lastRefer=40;
+    var lastCant=40;
+    var lastEmp=40;
+    var lastPre=40;
+
+
+    function verArchivo(){
+      //aqui tambien se debe verificar a cual de los pedidos se selecciono y si es pdf o adjunto
+      var lista = pedidosAsesor[1].listaProductos
+      if (true) {
+        verPDF(lista); 
+      }else {
+        //DESCARGAR ADJUNTO
+      }
+    }
+
+     function addProductoPdf (pro) {
+      pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
+      pdfUser.text(20,40, "Empresa");
+      pdfUser.text(48,40, "Nombre");
+      pdfUser.text(110,40, "Referencia");
+      pdfUser.text(140,40, "Cantidad");
+      pdfUser.text(160,40, "Precio");
+
+      var posicion1 = lastNombre+15;
+      var posicion2 = lastRefer+15;
+      var posicion3 = lastCant+15;
+      var posicion4 = lastEmp+15;
+      var posicion5 = lastPre+15;
+
+      
+      pdfUser.text(20, posicion1, pro.Empresa);
+      pdfUser.text(48, posicion2, pro.Nombre);
+      pdfUser.text(110,posicion3, pro.Referencia);
+      pdfUser.text(140, posicion4, pro.Cantidad);
+      pdfUser.text(160, posicion5, pro.Precio.toString());
+
+
+      lastNombre = posicion1;
+      lastRefer = posicion2;
+      lastCant = posicion3;
+      lastEmp = posicion4;
+      lastPre = posicion5;
+
+
+      //Con esta linea se abre el documento en una nueva ventana
+      console.log("PDF CREADO EXITOSAMENTE!");
+
+      //Esta linea descarga el documento
+      //pdfUser.save('prueba1.pdf');
+    }
+
+    function reiniciarPosicion(){
+      lastNombre=40;
+     lastRefer=40;
+     lastCant=40;
+     lastEmp=40;
+     lastPre=40;
+    }
+
+    function  verPDF (lista) {
+      pdfUser = new jsPDF();
+      pdfUser.setFont("helvetica");
+      pdfUser.setFontType("bold");
+      pdfUser.setFontSize(9);
+      reiniciarPosicion();
+      for (var i = 0; i < lista.length; i++) {
+        addProductoPdf(lista[i]);
+      }
+      pdfUser.output("dataurlnewwindow");
     }
 
 	</script>
+
+  <style type="text/css">
+
+    #tablePro{
+      width: 55%;
+      display: inline-block;
+      vertical-align: top;
+
+    }
+
+    #tableSelect{
+      display: inline-block;
+    }
+
+    #final{
+      width: 50%; 
+      margin: 0 auto;
+    }
+
+    textArea {
+      width: 90%;
+      height: auto;
+    }
+
+  </style>
 
 </head>
 <body>
@@ -120,17 +316,32 @@
     </div>
  	
  	<hr class="featurette-divider">
+  <button class='btn btn-default' onclick="cargarCotizaciones()"> Actualizar </button>
 
-	<div>
-		<button onclick="cargarCotizaciones()"> Actualizar </button>
-		<table class="table">
+<div>
+	<div id="tablePro">
+		<table id = "table1" class="table">
         <caption>Tus Pendientes</caption>
         <thead>
         </thead>
         <tbody id="tablaProd">
-          </tbody>
+        </tbody>
         </table>
 	</div>
+  <div id="tableSelect">
+    <table id="table2" class="table">
+        <caption>Modificando</caption>
+        <thead>
+        </thead>
+        <tbody id="tablaSeleccionado" style=" display: none;">
+        
+        </tbody>
+        </table>
+    <div id="final">
+    </div>
+  </div>
+
+</div>
      <!-- FOOTER -->
       
      <hr class="featurette-divider">
