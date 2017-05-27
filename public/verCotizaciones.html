@@ -56,8 +56,7 @@
           "<td>Envio</td>"+
           "<td>Nombre</td>"+
           "<td>Correo</td>"+
-          "<td>archivo</td>"+
-          "<td>Modificar</td>"+
+          "<td>Ver/Modificar</td>"+
         "</tr>";
       body.appendChild(filaTitulos);
 
@@ -77,7 +76,6 @@
           "<td>"+pedido.fechaTent+"</td>"+
           "<td>"+pedido.nombre+"</td>"+
           "<td>"+pedido.usuario+"</td>"+
-          "<td> <button class='btn btn-default' onclick='verArchivo()'>Ver </button>"+"</td>"+
           "<td> <button class='btn btn-default' onclick='modificar()'> Modificar </button>"+ "</td>"+"</tr>";
           body.appendChild(fila);
           return body;
@@ -97,6 +95,7 @@
     }
 
     function modificar(){
+      
       document.getElementById('tablaSeleccionado').style.display = "block";
       
 //////////////EN ESA PARTE SE DEBE VERIFICAR CUAL DE LOS PEDIDOS FUE SELECCIONADO, POR AHORA SIEMPRE ESTA CON EL MISMO
@@ -121,6 +120,7 @@
       for (var i = 0; i < lista.length; i++) {
         body = añadirTablaSeleccionada(lista[i], body);
       }
+       verArchivo();
        tabla.replaceChild(body,document.getElementById("tablaSeleccionado"));
        añadirFinal(pedido);
     }
@@ -183,6 +183,10 @@
     }
 
      function addProductoPdf (pro) {
+
+      //VALIDANDO QUE NO SE LLENE EL PDF
+      pageHeight= pdfUser.internal.pageSize.height;
+
       pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
       pdfUser.text(20,40, "Empresa");
       pdfUser.text(48,40, "Nombre");
@@ -196,6 +200,16 @@
       var posicion4 = lastEmp+15;
       var posicion5 = lastPre+15;
 
+      if (posicion1 >= pageHeight || posicion2 >= pageHeight || posicion3 >= pageHeight || posicion4 >= pageHeight || posicion5 >= pageHeight)
+      {
+        pdfUser.addPage();
+        reiniciarPosicionPagina();
+        posicion1 = lastNombre+15;
+        posicion2 = lastRefer+15;
+        posicion3 = lastCant+15;
+        posicion4 = lastEmp+15;
+        posicion5 = lastPre+15;
+      } 
       
       pdfUser.text(20, posicion1, pro.Empresa);
       pdfUser.text(48, posicion2, pro.Nombre);
@@ -218,8 +232,22 @@
       //pdfUser.save('prueba1.pdf');
     }
 
-    function reiniciarPosicion(){
+    function reiniciarPosicionPagina() {
+      pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
+      pdfUser.text(20,40, "Empresa");
+      pdfUser.text(48,40, "Nombre");
+      pdfUser.text(110,40, "Referencia");
+      pdfUser.text(140,40, "Cantidad");
+      pdfUser.text(160,40, "Precio");
       lastNombre=40;
+     lastRefer=40;
+     lastCant=40;
+     lastEmp=40;
+     lastPre=40;
+    }
+
+    function reiniciarPosicion(){
+     lastNombre=40;
      lastRefer=40;
      lastCant=40;
      lastEmp=40;

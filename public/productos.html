@@ -84,6 +84,9 @@
     }
 
     function addProductoPdf (pro) {
+
+      pageHeight= pdfUser.internal.pageSize.height;
+
       pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
       pdfUser.text(20,40, "Empresa");
       pdfUser.text(48,40, "Nombre");
@@ -94,6 +97,16 @@
       var posicion2 = lastRefer+15;
       var posicion3 = lastCant+15;
       var posicion4 = lastEmp+15;
+
+       if (posicion1 >= pageHeight || posicion2 >= pageHeight || posicion3 >= pageHeight || posicion4 >= pageHeight)
+      {
+        pdfUser.addPage();
+        reiniciarPosicionPagina();
+        posicion1 = lastNombre+15;
+        posicion2 = lastRefer+15;
+        posicion3 = lastCant+15;
+        posicion4 = lastEmp+15;
+      } 
 
       pdfUser.text(20, posicion1, pro.Empresa);
       pdfUser.text(48, posicion2, pro.Nombre);
@@ -112,6 +125,18 @@
 
       //Esta linea descarga el documento
       //pdfUser.save('prueba1.pdf');
+    }
+
+     function reiniciarPosicionPagina() {
+      pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
+      pdfUser.text(20,40, "Empresa");
+      pdfUser.text(48,40, "Nombre");
+      pdfUser.text(110,40, "Referencia");
+      pdfUser.text(140,40, "Cantidad");
+      lastNombre=40;
+     lastRefer=40;
+     lastCant=40;
+     lastEmp=40;
     }
 
     function reiniciarPosicion(){
