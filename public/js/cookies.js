@@ -23,11 +23,11 @@
 
             user = cookies[i+1];
 
-            document.getElementById("prueba").innerHTML = "<li><a href='productos.html'> Hacer cotizacion </a></li>"
+            document.getElementById("prueba").innerHTML = "<li><a href='productos.html'> Hacer pedido </a></li>"
+            + "<li><a onclick=''> Ver Pedidos</a></li>"
             + "<li><a onclick='cerrarSesion()'> Cerrar sesion </a></li>"
             + "<li class='dropdown-header'Nav header</li>"
             + "<li role='separator' class='divider'></li>"
-            + "<li><a href='#'>Preguntas Frecuentes</a></li>"
             + "<li><a href='#'>Terminos y Condiciones</a></li>"; 
 
         }
@@ -35,11 +35,10 @@
 
           user = cookies[i+1];
 
-          document.getElementById("prueba").innerHTML = "<li><a href='verCotizaciones.html'> Ver cotizaciones </a></li>"
+          document.getElementById("prueba").innerHTML = "<li><a href='verCotizaciones.html'> Ver Pedidos </a></li>"
           + " <li><a onclick='cerrarSesion()'> Cerrar sesion </a></li>"
           + "<li class='dropdown-header'Nav header</li>"
           + "<li role='separator' class='divider'></li>"
-          + "<li><a href='#'>Preguntas Frecuentes</a></li>"
           + "<li><a href='#'>Terminos y Condiciones</a></li>"; ; 
 
         }

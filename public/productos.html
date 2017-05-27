@@ -20,8 +20,34 @@
     <script src="js/jsPDF/dist/jspdf.min.js" ></script>
     <script>
 
-    function cargarEnvio(){
-      document.getElementById("envio").style.display = 'block';
+    //TIPO 1 = CREANDO - TIPO 2 = ADJUNTO
+    function desplegarFormulario(tipo){
+      if (tipo==1){
+        if(productos.length != 0 ){
+          document.getElementById("envio").style.display = 'block';
+        }else {
+          window.alert("aun no has añadido ningun producto");
+        }
+      } 
+      else if (tipo ==2 ){
+        //IF NO HAY ARCHIVO ADJUNTO NO ABRE
+        if (true){
+        document.getElementById("envio").style.display = 'block';
+        }else {
+          window.alert("aun no has añadido ningun producto");
+        }
+      }
+      
+    }
+
+    function desplegarCrear(){
+      document.getElementById("adjuntarListado").style.display = 'none';
+      document.getElementById("crearListado").style.display = 'block'; 
+    }
+
+     function desplegarAdjunto(){
+      document.getElementById("crearListado").style.display = 'none';
+      document.getElementById("adjuntarListado").style.display = 'block'; 
     }
 
     //---------------------///////////SCRIPTS DE PRODUCTOS///////////////-----------------------------------
@@ -59,9 +85,9 @@
     function addProductoPdf (pro) {
       pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
       pdfUser.text(20,40, "Empresa");
-      pdfUser.text(70,40, "Nombre");
-      pdfUser.text(120,40, "Referencia");
-      pdfUser.text(160,40, "Cantidad");
+      pdfUser.text(48,40, "Nombre");
+      pdfUser.text(110,40, "Referencia");
+      pdfUser.text(140,40, "Cantidad");
 
       var posicion1 = lastNombre+15;
       var posicion2 = lastRefer+15;
@@ -69,9 +95,9 @@
       var posicion4 = lastEmp+15;
 
       pdfUser.text(20, posicion1, pro.Empresa);
-      pdfUser.text(70, posicion2, pro.Nombre);
-      pdfUser.text(120,posicion3, pro.Referencia);
-      pdfUser.text(160, posicion4, pro.Cantidad);
+      pdfUser.text(48, posicion2, pro.Nombre);
+      pdfUser.text(110,posicion3, pro.Referencia);
+      pdfUser.text(140, posicion4, pro.Cantidad);
 
 
       lastNombre = posicion1;
@@ -96,9 +122,9 @@
 
     function  verPDF () {
       pdfUser = new jsPDF();
-      pdf.setFont("helvetica");
-      pdf.setFontType("bold");
-      pdf.setFontSize(9);
+      pdfUser.setFont("helvetica");
+      pdfUser.setFontType("bold");
+      pdfUser.setFontSize(9);
       reiniciarPosicion();
       for (var i = 0; i < productos.length; i++) {
         addProductoPdf(productos[i]);
@@ -117,7 +143,7 @@
       function salvarCampos(){
         var datos = {};
         datos.empresa = document.getElementById('empresa').value ;
-        datos.producto = document.getElementById('producto').value ;
+        datos.producto = document.getElementById('producto').options.item(document.getElementById('producto').options.selectedIndex).textContent;
         datos.cantidad=document.getElementById('cantidad').value;
         datos.unidades=document.getElementById('unidades').options.item(document.getElementById('unidades').options.selectedIndex).value
         datos.Referencia = "Auto";
@@ -240,6 +266,7 @@
       
       function salvarCampos2(){
         var datos = {};
+
         datos.empresa = document.getElementById('empresa2').value ;
         datos.producto = document.getElementById('producto2').value ;
         datos.Referencia = document.getElementById('Referencia').value;
@@ -361,6 +388,13 @@
         document.getElementById("asesores").innerHTML = opt;
     }
 
+    ////ALGORITMO PARA ADJUNTAR UN ARCHIVO
+    function adjuntar(){
+
+
+    }
+
+
     </script>
 
   </head>
@@ -397,7 +431,7 @@
 
                 <!-- Desplegable-->
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Navegar<span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Aplicacion Pedidos<span class="caret"></span></a>
                   <ul id="prueba" class="dropdown-menu">
 
                   	<!-- colocar las marcas que tenemos -->
@@ -406,7 +440,6 @@
                     <li><a href="registro2.html">Registrarse</a></li>
                     <li role="separator" class="divider"></li>
                     <li class="dropdown-header">Nav header</li>
-                    <li><a href="#">Preguntas Frecuentes</a></li>
                     <li><a href="#">Terminos y Condiciones</a></li>
                   </ul>
                 </li>
@@ -420,9 +453,30 @@
       <!-- Marketing messaging and featurettes
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
-    <div>
-	<hr class="featurette-divider">
+    <div> </div>
+    <hr class="featurette-divider">
+  <div>
+    <button type="button" class="btn btn-default" onclick="desplegarCrear()">Crear Listado</button>
+    <button type="button" class="btn btn-default" onclick="desplegarAdjunto()">Adjuntar Listado</button>
+  </div>
+	
+  <div id="adjuntarListado" style="display: none;">
+  <hr>
+    <div style="margin-left: 40%; margin-right: 40%;">
+      <button onclick="adjuntar()">Adjuntar Archivo</button> <br>
+      <label id="estadoAdjunto"> No ha adjuntado ningun archivo</label>
+    </div> 
 
+    <button onclick="desplegarFormulario(2)">
+      Hacer pedido
+    </button>
+    <button onclick="">
+      Cancelar
+    </button>
+  </div>
+  
+  <div id= "crearListado" style="display:none">
+  <hr>
   <div class="col-sm-5" style="padding-left:5%">
            <div class="form-group">
                <label for="inputPassword" class="col-md-4 input-xs">Empresa:</label>
@@ -475,14 +529,14 @@
       <br></br>
       <br></br>
       <hr>
-      <div>
+      
 
 <!-- ESTOS SON LOS CAMPOS PARA LLENAR MANUALMENTE-->
 
-
+      <div>
       <h4> ¿No Encuentras un producto?... Igualmente envialo con tu listado, sólo llena los campos!:</h1>
       <br>
-      </div>
+      
       <div class="col-sm-5" style="padding-left:5%">
            <div class="form-group">
                <label for="inputPassword" class="col-md-4 input-xs">Empresa:</label>
@@ -557,33 +611,43 @@
    <div>
     <button type="button" class="btn btn-default" onclick="verPDF()" >Ver Archivo</button>
     <button type="button" class="btn btn-default" onclick="descargarPDF()" >Descargar Archivo</button>
-     <button type="button" class="btn btn-default" onclick="cargarEnvio()">Realizar Pedido</button>
+     <button type="button" class="btn btn-default" onclick="desplegarFormulario(1)">Realizar Pedido</button>
    </div>
-
+ </div>
    <br>
    <br>
    <br>
 
+  
 
    <div id= "envio" style="display:none">
-     <div style="margin-left: 30%; margin-right: 30%;">
-  <p>Envianos esta informacion y espera respuesta del asesor respectivo</p>  
-  <p id="nombreArchivo"> archivo: Cargado Correctamente </p>
+     <div style="margin-left: 15%; margin-right: 15%;">
+  <h3>Envianos esta informacion y espera respuesta del asesor respectivo</h3>  
   <hr>
-  <p>Informacion del cliente solicitante: </p>
-  <input type="text" id="nombre" placeholder="Nombre">
-  <input type="number" id="telefono" placeholder="Tel Contacto">
-  <div>
-  <hr>
-   <p> tienes preguntas?, envialas junto con tu listado</p>
-   <textarea id="preguntas"></textarea>
-   </div>
 
-  <div>
-    <p>selecciona el asesor que deseas que atienda tu peticion: </p>
+  <div class="col-md-8">
+    <label>Informacion para posible envio - Datos de la persona que recibiria </label>
+    <input style="display: inline-flex;" class="form-control" size="1" type="text" id="nombre" placeholder="Nombre">
+    <input style="display: inline-flex;" class="form-control" size="1" type="number" id="telefono" placeholder="Tel Contacto">
+  </div>
+
+  <div class="col-md-8" style="margin-top: 2em">
+    <input style="display: inline-block;" class="form-control" size="1" type="text" id="direccion" placeholder="direccion envio">
+    <input style="display: inline-block;" class="form-control" size="1" type="text" id="proyecto" placeholder="proyecto">
+    <input style="margin-bottom: 2em" class="form-control" size="1" type="Date" id="fechaT" placeholder="Fecha tentativa de envio">
+  </div>  
+
+  <div >
+    <label>Tienes preguntas?, envialas junto con tu listado </label>
+    <textarea id="preguntas" style="width: 80%; height: 30%"></textarea>
+  </div>
+
+  <div style="margin-top: 2em">
+    <label>Selecciona el asesor que deseas que atienda tu peticion: </label>
     <select id="asesores">
     </select>
     <br>
+    <a href="ContacUs.html" target="_blank">Mira nuestros Asesores</a>
     <br>
   </div>
    <div>
