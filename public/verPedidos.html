@@ -86,6 +86,8 @@
 
 	function ver( id ){     
       	seleccionado = id;
+        document.getElementById("preguntas").innerHTML = pedidosUsuario[seleccionado].preguntas;
+        document.getElementById("titPed").innerHTML = "Preguntas del pedidod para el proyecto " + pedidosUsuario[seleccionado].proyecto;
       	verArchivo( seleccionado );
     }
 
@@ -206,6 +208,9 @@
     </script>
 
     <style type="text/css">
+      body{
+        margin:2em;
+      }
     	#Revisada {
     		background-color: rgba(10,200,10,0.7);
     	}
@@ -213,6 +218,25 @@
     	#sinRevisar{
     		background-color: rgba(200,10,10,0.7);
     	}
+
+      #tablePro{
+        width: 60%;
+        height: 100%;
+        margin: 5px;
+      }
+
+      #tablePre{
+        vertical-align: top;
+        margin: 5px;
+        width: 30%;
+        height: 100%;
+      }
+      #preguntas{
+        
+        width: 90%;
+        height: 20em;
+        display: inline-block;
+      }
     </style>
 
 </head>
@@ -271,17 +295,30 @@
     <hr class="featurette-divider">
   	<button class='btn btn-default' onclick="cargarPedidos()"> Actualizar </button>
 
-  	<div id="tablePro">
-		<table id = "table1" class="table">
+    <div id='cont' style="display:block">
+
+  	<div id="tablePro" style="display:inline-block;">
+		  <table id = "table1" class="table">
         <caption> Pedidos Hechos </caption>
         <thead>
         </thead>
         <tbody id="tablaProd">
         </tbody>
         </table>
-	</div>
-
-    <div>
+	  </div>
+      
+    <div id = "tablePre" style="display:inline-block;">
+      <table id = "table1" class="table">
+        <caption id ="titPed"> Preguntas pedido seleccionado </caption>
+        <thead>
+        </thead>
+        <tbody id="tablaProd">
+         <textarea readonly id = "preguntas"></textarea>
+        </tbody>      
+        </table>
+        
+    </div>
+    </div>
      <!-- FOOTER -->
       
      	<hr class="featurette-divider">
