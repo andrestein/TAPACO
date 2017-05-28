@@ -100,7 +100,7 @@
     }
 
     function modificar( id ){
-      
+      precio = 0;
       seleccionado = id;
 
       document.getElementById('tablaSeleccionado').style.display = "block";
@@ -129,6 +129,7 @@
        //verArchivo( seleccionado );
        tabla.replaceChild(body,document.getElementById("tablaSeleccionado"));
        añadirFinal(pedido);
+       
     }
 
     function añadirFinal(pedido){
@@ -192,6 +193,7 @@
     function salvarModificado(){
 
       pedido = pedidosAsesor[ seleccionado ];
+      pedido.preguntas = document.getElementById("preguntas").value;
       lista = pedido.listaProductos;
 
       for(var i = 0 ; i < precio ; i++){
@@ -202,8 +204,6 @@
       pedido.listaProductos = lista;
       cambioEstado(pedido);
       console.log(pedido);
-      precio = 0;
-
       return pedido;
 
     }

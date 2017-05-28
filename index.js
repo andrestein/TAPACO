@@ -297,6 +297,7 @@ function guardarPedido(req, res){
 	function recibir(data){
 		var pedi = JSON.parse(data.toString() );
 		pedi.id = idPedios;
+		pedi.estado = "sinRevisar";
 		pedidos.push(pedi);
 
 		fs.writeFile('BD/pedidos.json', JSON.stringify(pedidos), null);
