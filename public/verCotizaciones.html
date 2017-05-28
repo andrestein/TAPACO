@@ -25,7 +25,10 @@
 
 		var pedidos = {};
 		var pedidosAsesor = new Array();
-    var pedidoEnModificacion ={};
+    var pedidoEnModificacion = {};
+    var btn = 0;
+    var precio = 0;
+    var seleccionado = 0; 
 
 		function cargarCotizaciones(){
 			 // Crear un objeto para hacer peticiones HTTP
@@ -76,7 +79,8 @@
           "<td>"+pedido.fechaTent+"</td>"+
           "<td>"+pedido.nombre+"</td>"+
           "<td>"+pedido.usuario+"</td>"+
-          "<td> <button class='btn btn-default' onclick='modificar()'> Modificar </button>"+ "</td>"+"</tr>";
+          "<td> <button class='btn btn-default' id='" + btn + "' onclick='modificar(this.id)'> Modificar </button>"+ "</td>"+"</tr>";
+          btn++;
           body.appendChild(fila);
           return body;
 		}
@@ -88,18 +92,21 @@
         "<td>"+producto.Nombre+"</td>"+
         "<td>"+producto.Referencia+"</td>"+
         "<td>"+producto.Cantidad+"</td>"+
-        "<td> <input type='number' size='1'style='width: 5em' value='"+producto.Precio+"'> </input> </td>"+
+        "<td> <input type='number' id ='precio"+precio+"' size='1'style='width: 5em' value='"+producto.Precio+"'> </input> </td>"+
         "</tr>";
+        precio++;
         body.appendChild(fila);
         return body;
     }
 
-    function modificar(){
+    function modificar( id ){
       
+      seleccionado = id;
+
       document.getElementById('tablaSeleccionado').style.display = "block";
       
-//////////////EN ESA PARTE SE DEBE VERIFICAR CUAL DE LOS PEDIDOS FUE SELECCIONADO, POR AHORA SIEMPRE ESTA CON EL MISMO
-      pedido = pedidosAsesor[1];
+
+      pedido = pedidosAsesor[ seleccionado ];
       pedidoEnModificacion = pedido;
       lista = pedido.listaProductos;
    
@@ -120,7 +127,7 @@
       for (var i = 0; i < lista.length; i++) {
         body = añadirTablaSeleccionada(lista[i], body);
       }
-       verArchivo();
+       //verArchivo( seleccionado );
        tabla.replaceChild(body,document.getElementById("tablaSeleccionado"));
        añadirFinal(pedido);
     }
@@ -149,13 +156,70 @@
         document.getElementById("tableSelect").replaceChild(campo,document.getElementById("final"));
     }
 
-    function cambioEstado(){
+    function cambioEstado( pedido ){
       var ch = document.getElementById("checkItem");
       if (ch.checked){
-        pedidoEnModificacion.estado = "Revisada";
+        pedido.estado = "Revisada";
       }else {
-        pedidoEnModificacion.estado = "sinRevisar";
+        pedido.estado = "sinRevisar";
       }
+    }
+
+
+
+
+    //////////////METODOS PARA CUANDO SE ESTA REVISANDO EL PEDIDO , botones Solo Guardar y Enviar Correccion
+
+    function guardar(){
+        var serializado = "";
+        // Serializar el objeto como una cadena de texto JSON
+        serializado = JSON.stringify( salvarModificado());
+      
+        // Crear un objeto para hacer peticiones HTTP
+        var request = new XMLHttpRequest();
+    
+        // Abrir una peticion HTTP POST a la url deseado y no asincronico
+        request.open( "POST", "guardarPedidoModificado", false );
+    
+        // Ejecuta la peticion HTTP
+        request.send( serializado );
+        console.log("ya envio el JSON");
+    }
+
+    function enviar(){ 
+        var serializado = "";
+        // Serializar el objeto como una cadena de texto JSON
+        serializado = JSON.stringify( salvarModificado() );
+      
+        // Crear un objeto para hacer peticiones HTTP
+        var request = new XMLHttpRequest();
+    
+        // Abrir una peticion HTTP POST a la url deseado y no asincronico
+        request.open( "POST", "enviarPedidoModificado", false );
+    
+        // Ejecuta la peticion HTTP
+        request.send( serializado );
+        console.log("ya envio el JSON");   
+    }
+
+    function salvarModificado(){
+
+      pedido = pedidosAsesor[ seleccionado ];
+      pedidoEnModificacion = pedido;
+      lista = pedido.listaProductos;
+
+      for(var i = 0 ; i < precio ; i++){
+        var campo = "precio" + i;
+        lista[i].Precio = document.getElementById(campo).value;
+      }
+
+      pedido.listaProductos = lista;
+      cambioEstado(pedido);
+      console.log(pedido);
+      precio = 0;
+
+      return pedido;
+
     }
 
 
@@ -172,9 +236,9 @@
     var lastPre=40;
 
 
-    function verArchivo(){
+    function verArchivo( seleccionado ){
       //aqui tambien se debe verificar a cual de los pedidos se selecciono y si es pdf o adjunto
-      var lista = pedidosAsesor[1].listaProductos
+      var lista = pedidosAsesor[ seleccionado ].listaProductos
       if (true) {
         verPDF(lista); 
       }else {

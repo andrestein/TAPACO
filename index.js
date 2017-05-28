@@ -124,7 +124,8 @@ var mimeTypes =
 var usuarios = [];
 var asesores = [];
 var producto = [];
-var pedidos =[];
+var pedidos = [];
+var idPedios = 0;
 
 fs.readFile( "BD/usuarios.json", cargarUsuarios );
 function cargarUsuarios( error, data ){
@@ -156,6 +157,7 @@ function cargarProductos( error, data ){
 
 	if( error == null ){
 		producto = JSON.parse( data ); // Des - stringify
+
 		console.log( "Los productos han sido cargados correctamente " );
 
 	} else {
@@ -168,6 +170,8 @@ function cargarPedidos(error, data){
 
 	if( error == null ){
 		pedidos = JSON.parse( data ); // Des - stringify
+		idPedios = pedidos.length;
+		console.log(idPedios);
 		console.log( "Los pedidos han sido cargados correctamente " );
 
 	} else {
@@ -264,7 +268,11 @@ function atenderServidor( request, response ){
 		guardarPedido(request, response);
 	}else if( request.url=="/obtenerPedido"){
 		darPedidos(request, response);
-	}else{
+	}else if( request.url == "/guardarPedidoModificado"){
+		guardarPedidoModificado(request, response);
+	}
+
+	else{
 		if(request.url =="/"){
 			retornarArchivoInicio( request, response );
 			cerrarSesion( request, response );
@@ -286,7 +294,7 @@ function guardarPedido(req, res){
 
 	function recibir(data){
 		var pedi = JSON.parse(data.toString() );
-
+		pedi.id = idPedios;
 		pedidos.push(pedi);
 
 		fs.writeFile('BD/pedidos.json', JSON.stringify(pedidos), null);
@@ -500,3 +508,32 @@ function retornarArchivoInicio( request, response ){
 		}
   	}
 }
+
+
+//RECIBE EL ARCHIVO MODIFICADO POR EL CLIENTE, ACTUALIZA EL ANTERIOR Y LO GUARDA EN LA BD
+
+function guardarPedidoModificado( request, response){
+		request.on( "data" , recibir);
+
+	function recibir(data){
+		var pedi = JSON.parse(data.toString() );
+		modificarPedido(pedi);
+
+		fs.writeFile('BD/pedidos.json', JSON.stringify(pedidos), null);
+		console.log("el pedido modificado por el asesor fue añadido");
+
+		var resp= {};
+		resp.status= "ok";
+		response.end(JSON.stringify(resp,null,2) );
+	}
+}
+
+// verifica el pedido que va a modificar
+	function modificarPedido( pedido ){
+		for(var i = 0; i < pedidos.length; i++){
+			if(pedidos[i].id == pedido.id){
+				pedidos[i] = pedido;
+				break;
+			}
+		}
+	}
