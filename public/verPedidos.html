@@ -190,9 +190,15 @@
       pdfUser.setFontType("bold");
       pdfUser.setFontSize(9);
       reiniciarPosicion();
+
+      var total = 0;
       for (var i = 0; i < lista.length; i++) {
         addProductoPdf(lista[i]);
+        total += parseInt(lista[i].Precio);
+        //console.log(lista[i]);
       }
+      pdfUser.text(20,lastEmp +15, "Precio Total : ");
+      pdfUser.text(160,lastPre +15, total.toString());
       pdfUser.output("dataurlnewwindow");
     }
 
