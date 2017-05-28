@@ -77,18 +77,138 @@
           	"<td>"+pedido.fecha+"</td>"+
           	"<td>"+pedido.asesor+"</td>"+
           	"<td>"+pedido.proyecto+"</td>"+
-          	"<td id ='estado'>"+pedido.estado+"</td>"+
-          	"<td> <button class='btn btn-default' id='" + btn + "' onclick='modificar(this.id)'> Ver </button>"+ "</td>"+"</tr>";
+          	"<td id ='"+pedido.estado+"'>"+pedido.estado+"</td>"+
+          	"<td> <button class='btn btn-default' id='" + btn + "' onclick='ver(this.id)'> Ver </button>"+ "</td>"+"</tr>";
           	btn++;
           	body.appendChild(fila);
-          	if(pedido.estado = "Revisado"){
-          		document.getElementById('estado').Style.backgroundColor = rgba(10,180,10,0.5);
-          	}
           	return body;
-
 		}
 
+	function ver( id ){     
+      	seleccionado = id;
+      	verArchivo( seleccionado );
+    }
+
+		///////////METODOS PARA PODER CREAR EL PDF IGUAL AL ENVIADO POR LE CLIENTE con el campo PRECIO AÑADIDO
+
+    //variable global del archivo PDF
+    var pdfUser = new jsPDF();
+
+    //Variables para mantener el control de la distancia vertical del texto en el pdf - la horizontal es fija
+    var lastNombre=40;
+    var lastRefer=40;
+    var lastCant=40;
+    var lastEmp=40;
+    var lastPre=40;
+
+
+    function verArchivo( seleccionado ){
+      //aqui tambien se debe verificar a cual de los pedidos se selecciono y si es pdf o adjunto
+      var lista = pedidosUsuario[ seleccionado ].listaProductos;
+      if (true) {
+        verPDF(lista); 
+      }else {
+        //DESCARGAR ADJUNTO
+      }
+    }
+
+     function addProductoPdf (pro) {
+
+      //VALIDANDO QUE NO SE LLENE EL PDF
+      pageHeight= pdfUser.internal.pageSize.height;
+
+      pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
+      pdfUser.text(20,40, "Empresa");
+      pdfUser.text(48,40, "Nombre");
+      pdfUser.text(110,40, "Referencia");
+      pdfUser.text(140,40, "Cantidad");
+      pdfUser.text(160,40, "Precio");
+
+      var posicion1 = lastNombre+15;
+      var posicion2 = lastRefer+15;
+      var posicion3 = lastCant+15;
+      var posicion4 = lastEmp+15;
+      var posicion5 = lastPre+15;
+
+      if (posicion1 >= pageHeight || posicion2 >= pageHeight || posicion3 >= pageHeight || posicion4 >= pageHeight || posicion5 >= pageHeight)
+      {
+        pdfUser.addPage();
+        reiniciarPosicionPagina();
+        posicion1 = lastNombre+15;
+        posicion2 = lastRefer+15;
+        posicion3 = lastCant+15;
+        posicion4 = lastEmp+15;
+        posicion5 = lastPre+15;
+      } 
+      
+      pdfUser.text(20, posicion1, pro.Empresa);
+      pdfUser.text(48, posicion2, pro.Nombre);
+      pdfUser.text(110,posicion3, pro.Referencia);
+      pdfUser.text(140, posicion4, pro.Cantidad);
+      pdfUser.text(160, posicion5, pro.Precio.toString());
+
+
+      lastNombre = posicion1;
+      lastRefer = posicion2;
+      lastCant = posicion3;
+      lastEmp = posicion4;
+      lastPre = posicion5;
+
+
+      //Con esta linea se abre el documento en una nueva ventana
+      console.log("PDF CREADO EXITOSAMENTE!");
+
+      //Esta linea descarga el documento
+      //pdfUser.save('prueba1.pdf');
+    }
+
+    function reiniciarPosicionPagina() {
+      pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
+      pdfUser.text(20,40, "Empresa");
+      pdfUser.text(48,40, "Nombre");
+      pdfUser.text(110,40, "Referencia");
+      pdfUser.text(140,40, "Cantidad");
+      pdfUser.text(160,40, "Precio");
+      lastNombre=40;
+     lastRefer=40;
+     lastCant=40;
+     lastEmp=40;
+     lastPre=40;
+    }
+
+    function reiniciarPosicion(){
+     lastNombre=40;
+     lastRefer=40;
+     lastCant=40;
+     lastEmp=40;
+     lastPre=40;
+    }
+
+    function  verPDF (lista) {
+      pdfUser = new jsPDF();
+      pdfUser.setFont("helvetica");
+      pdfUser.setFontType("bold");
+      pdfUser.setFontSize(9);
+      reiniciarPosicion();
+      for (var i = 0; i < lista.length; i++) {
+        addProductoPdf(lista[i]);
+      }
+      pdfUser.output("dataurlnewwindow");
+    }
+
+
     </script>
+
+    <style type="text/css">
+    	#Revisada {
+    		background-color: rgba(10,200,10,0.7);
+    	}
+
+    	#sinRevisar{
+    		background-color: rgba(200,10,10,0.7);
+    	}
+    </style>
+
 </head>
 
 <body>
