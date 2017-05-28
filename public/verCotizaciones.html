@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico"> -->
 
-    <title>TOPACO S.A</title>
+    <title>TOPACO S.A - Revisar Pedidos</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
@@ -49,7 +49,7 @@
 
 		function hacerTabla(){
       var body = document.createElement('tbody');
-      var tabla=document.getElementById('table1');
+      var tabla = document.getElementById('table1');
       body.id="tablaProd"
 
 
@@ -107,7 +107,6 @@
       
 
       pedido = pedidosAsesor[ seleccionado ];
-      pedidoEnModificacion = pedido;
       lista = pedido.listaProductos;
    
       var body = document.createElement('tbody');
@@ -187,25 +186,12 @@
     }
 
     function enviar(){ 
-        var serializado = "";
-        // Serializar el objeto como una cadena de texto JSON
-        serializado = JSON.stringify( salvarModificado() );
-      
-        // Crear un objeto para hacer peticiones HTTP
-        var request = new XMLHttpRequest();
-    
-        // Abrir una peticion HTTP POST a la url deseado y no asincronico
-        request.open( "POST", "enviarPedidoModificado", false );
-    
-        // Ejecuta la peticion HTTP
-        request.send( serializado );
-        console.log("ya envio el JSON");   
+      guardar(); // POR AHORA HACE LO MISMO HASTA QUE SEPAMOS ENVIAR EL CORREO
     }
 
     function salvarModificado(){
 
       pedido = pedidosAsesor[ seleccionado ];
-      pedidoEnModificacion = pedido;
       lista = pedido.listaProductos;
 
       for(var i = 0 ; i < precio ; i++){
@@ -442,7 +428,7 @@
         <p>&copy; 2016 Todo Para Construir y TOPACO S.A son marcas registradas. &middot; <a href="#">Privacidad</a> &middot; <a href="#">Terminos de Uso</a></p>
       </footer>
       <script> loadOptions(); </script>
-    </div><!-- /.container -->
+</div><!-- /.container -->
 
 
     <!-- Bootstrap core JavaScript
@@ -450,5 +436,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -261,17 +261,19 @@ function atenderServidor( request, response ){
 	}
 	else if (request.url == "/obtenerProductos"){
 		darProductos(request, response);
-
-	}else if (request.url =="/obtenerAsesores"){
+	}
+	else if (request.url =="/obtenerAsesores"){
 		darAsesores(request, response);
-	}else if (request.url =="/guardarPedido"){
+	}
+	else if (request.url =="/guardarPedido"){
 		guardarPedido(request, response);
-	}else if( request.url=="/obtenerPedido"){
+	}
+	else if( request.url=="/obtenerPedido"){
 		darPedidos(request, response);
-	}else if( request.url == "/guardarPedidoModificado"){
+	}
+	else if( request.url == "/guardarPedidoModificado"){
 		guardarPedidoModificado(request, response);
 	}
-
 	else{
 		if(request.url =="/"){
 			retornarArchivoInicio( request, response );

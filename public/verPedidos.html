@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico"> -->
+
+    <title>TOPACO S.A - Ver Pedidos</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+	  <link href="./css/app.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="./css/Style.css" rel="stylesheet">
+
+    <script src="js/cookies.js" > </script>
+	<script src="js/jsPDF/jspdf.js"></script>
+    <script src="js/jsPDF/dist/jspdf.min.js" ></script>
+
+    <script type="text/javascript">
+    	var pedidos = {};
+		var pedidosUsuario = new Array();
+    	var pedidoEnModificacion = {};
+    	var btn = 0;
+    	var precio = 0;
+    	var seleccionado = 0;
+
+
+    	function cargarPedidos(){
+			 // Crear un objeto para hacer peticiones HTTP
+        	var request = new XMLHttpRequest();
+
+        	// Abrir una peticion HTTP POST a la url deseado y no asincronico
+        	request.open( "GET", "obtenerPedido", false );
+    
+  	    	// Ejecuta la peticion HTTP
+        	request.send();
+
+        	var resp = request.response;
+        	resp = JSON.parse(resp);
+        	pedidos = resp.data;       
+        	hacerTabla();
+		} 
+
+
+    	function hacerTabla(){
+      	var body = document.createElement('tbody');
+      	var tabla = document.getElementById('table1');
+      	body.id = "tablaProd";
+
+
+     	var filaTitulos= document.createElement('tr'); 
+        filaTitulos.innerHTML= "<tr>"+
+        	"<td>Fecha</td>"+
+          	"<td>Asesor</td>"+
+          	"<td>Proyecto</td>"+
+          	"<td>Estado</td>"+
+          	"<td>Ver Archivo</td>"+
+        	"</tr>";
+      	body.appendChild(filaTitulos);
+
+			for (var i = 0; i < pedidos.length; i++) {
+				if (pedidos[i].usuario == user/* esta variable esta definida en el archivo de las cookies*/){
+					pedidosUsuario.push(pedidos[i]);
+					body = añadirTabla(pedidos[i], body);
+				}
+			}
+      	tabla.replaceChild(body,document.getElementById("tablaProd"));
+		}
+
+		function añadirTabla(pedido, body){		      
+          	var fila=document.createElement('tr');
+          	fila.innerHTML="<tr>"+
+          	"<td>"+pedido.fecha+"</td>"+
+          	"<td>"+pedido.asesor+"</td>"+
+          	"<td>"+pedido.proyecto+"</td>"+
+          	"<td id ='estado'>"+pedido.estado+"</td>"+
+          	"<td> <button class='btn btn-default' id='" + btn + "' onclick='modificar(this.id)'> Ver </button>"+ "</td>"+"</tr>";
+          	btn++;
+          	body.appendChild(fila);
+          	if(pedido.estado = "Revisado"){
+          		document.getElementById('estado').Style.backgroundColor = rgba(10,180,10,0.5);
+          	}
+          	return body;
+
+		}
+
+    </script>
+</head>
+
+<body>
+<div>
+	<!-- Aqui empieza lo que llamabamos Header -->
+    <div class="navbar-wrapper">
+      <div class="container">
+
+        <nav class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+
+          	<!-- Parte del Titulo - TOPACO S.A -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">TOPACO S.A</a>
+            </div>
+
+            <!-- los demas opciones principales menos el desplegable -->
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="AboutUs.html">Acerca de Nosotros</a></li>
+                <li><a href="ContacUs.html">Contactenos</a></li>
+				<li><a href="brands.html">Marcas de Distribucion</a></li>
+
+
+                <!-- Desplegable-->
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Aplicacion Pedidos<span class="caret"></span></a>
+                  <ul id="prueba" class="dropdown-menu">
+
+                  	<!-- colocar las marcas que tenemos -->
+
+                    <li><a href="iniciosesion.html">Iniciar Sesion</a></li>
+                    <li><a href="Registro.html">Registrarse</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="Terms.html">Terminos y Condiciones</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+      </div>
+
+    </div>
+
+    <hr class="featurette-divider">
+  	<button class='btn btn-default' onclick="cargarPedidos()"> Actualizar </button>
+
+  	<div id="tablePro">
+		<table id = "table1" class="table">
+        <caption> Pedidos Hechos </caption>
+        <thead>
+        </thead>
+        <tbody id="tablaProd">
+        </tbody>
+        </table>
+	</div>
+
+    <div>
+     <!-- FOOTER -->
+      
+     	<hr class="featurette-divider">
+      	<footer>
+        	<p class="pull-right"><a href="#">Incio de la Pagina</a></p>
+        	<p>&copy; 2016 Todo Para Construir y TOPACO S.A son marcas registradas. &middot; <a href="#">Privacidad</a> &middot; <a href="#">Terminos de Uso</a></p>
+      	</footer>
+      	<script> loadOptions(); </script>
+    </div>
+
+</div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+</body>
+</html>
