@@ -29,6 +29,16 @@
     var btn = 0;
     var precio = 0;
     var seleccionado = 0; 
+    //TIPO DE DOCUMENTO ADJUNTO O PDF 1=pdf 2 = adjunto
+    var tipo=1;
+
+      function Producto(Empresa, Nombre, Referencia, Cantidad, Precio){
+      this.Nombre = Nombre;
+      this.Referencia = Referencia;
+      this.Cantidad = Cantidad;
+      this.Empresa = Empresa;
+      this.Precio = Precio;
+    }
 
 		function cargarCotizaciones(){
 			 // Crear un objeto para hacer peticiones HTTP
@@ -100,36 +110,116 @@
     }
 
     function modificar( id ){
-      precio = 0;
-      seleccionado = id;
+        precio = 0;
+        seleccionado = id;
 
-      document.getElementById('tablaSeleccionado').style.display = "block";
-      
+        pedido = pedidosAsesor[ seleccionado ];
+        lista = pedido.listaProductos;
 
-      pedido = pedidosAsesor[ seleccionado ];
-      lista = pedido.listaProductos;
-   
-      var body = document.createElement('tbody');
-      var tabla=document.getElementById('table2');
-      body.id="tablaSeleccionado"
+      if(typeof lista == 'string'){
+        console.log("es un string con adjunto");
+        tablaDeAdjunto();
+        añadirFinal(pedido);
+        tipo=2;
 
-      var filaTitulos= document.createElement('tr'); 
-        filaTitulos.innerHTML= "<tr>"+
-          "<td>Empresa</td>"+
-          "<td>Producto</td>"+
-          "<td>Referencia</td>"+
-          "<td>Cantidad</td>"+
-          "<td>Precio</td>"+
-        "</tr>";
-      body.appendChild(filaTitulos);
+      }else if (typeof lista == 'object'){
+        tipo=1;
+        document.getElementById('table2').style.display = "block";
+        document.getElementById('formAdjunto').style.display = 'none';
 
-      for (var i = 0; i < lista.length; i++) {
-        body = añadirTablaSeleccionada(lista[i], body);
+        var body = document.createElement('tbody');
+        var tabla=document.getElementById('table2');
+        body.id="tablaSeleccionado"
+
+        var filaTitulos= document.createElement('tr'); 
+          filaTitulos.innerHTML= "<tr>"+
+            "<td>Empresa</td>"+
+            "<td>Producto</td>"+
+            "<td>Referencia</td>"+
+            "<td>Cantidad</td>"+
+            "<td>Precio</td>"+
+          "</tr>";
+        body.appendChild(filaTitulos);
+        
+     
+          console.log("es una lista de productos");
+
+          for (var i = 0; i < lista.length; i++) {
+          body = añadirTablaSeleccionada(lista[i], body);
+          }
+         verArchivo(seleccionado );
+         tabla.replaceChild(body,document.getElementById("tablaSeleccionado"));
+         añadirFinal(pedido);
+
+      }else {
+        console.log("error identificando tipo de pedido");
       }
-       //verArchivo( seleccionado );
-       tabla.replaceChild(body,document.getElementById("tablaSeleccionado"));
-       añadirFinal(pedido);
-       
+
+    }
+
+    var productos =  new Array();
+
+    function tablaDeAdjunto(){
+       var espacio=document.getElementById('tableSelect');
+       var campos = document.createElement('div');
+
+
+       document.getElementById('table2').style.display = "none";
+       document.getElementById('formAdjunto').style.display = "block";
+       productos =  new Array();
+
+    }
+
+    function salvarCampos2(){
+        var datos = {};
+
+        datos.empresa = document.getElementById('empresa2').value ;
+        datos.producto = document.getElementById('producto2').value ;
+        datos.Referencia = document.getElementById('Referencia').value;
+        datos.cantidad=document.getElementById('cantidad2').value;
+        datos.unidades=document.getElementById('unidades2').options.item(document.getElementById('unidades2').options.selectedIndex).value
+        datos.precio=document.getElementById('precio').value;
+        
+        if (datos.Referencia == ""){
+          datos.Referencia = "No conocida";
+        }
+        if(datos.cantidad != ""){
+          datos.cantidad = datos.cantidad +" " + datos.unidades
+        }
+        return datos;
+      }
+
+     function limpiarCampos(){
+      document.getElementById("cantidad2").value = "";
+      document.getElementById("empresa2").value = "";
+      document.getElementById("Referencia").value = "";
+      document.getElementById("producto2").value = "";
+      document.getElementById("precio").value = "";
+    }
+
+
+    function addTable(){
+       var datos = salvarCampos2();
+        if(!(datos.producto == "" || datos.empresa == "" || datos.cantidad == "" || datos.precio == '' || datos.precio== 0)){
+
+          //guarda el producto en el listado creado para este cliente
+
+          productos.push(new Producto(datos.empresa,datos.producto,datos.Referencia,datos.cantidad, datos.precio));
+
+          var tabla=document.getElementById('tableCreate');
+          var fila=document.createElement('tr');
+          fila.innerHTML="<tr>"+
+          "<td>"+datos.empresa+"</td>"+
+          "<td>"+datos.producto+"</td>"+
+          "<td>"+datos.Referencia+"</td>"+
+          "<td>"+datos.cantidad+"</td>"+
+          "<td>"+datos.precio+"</td>"+
+          "</tr>";
+          tabla.appendChild(fila);
+          limpiarCampos();
+        }else {
+          window.alert("Debes ingresar el producto, la empresa, una cantidad y precio valido");
+        }
     }
 
     function añadirFinal(pedido){
@@ -172,9 +262,16 @@
 
     function guardar(){
         var serializado = "";
-        // Serializar el objeto como una cadena de texto JSON
+
+
+      //TIPO DE DOCUMENTO ADJUNTO O PDF 1=pdf 2 = adjunto
+      if (tipo==1){
+         // Serializar el objeto como una cadena de texto JSON
         serializado = JSON.stringify( salvarModificado());
-      
+      }else if(tipo==2){
+        serializado = JSON.stringify( salvarModificado2());
+      }
+
         // Crear un objeto para hacer peticiones HTTP
         var request = new XMLHttpRequest();
     
@@ -188,6 +285,19 @@
 
     function enviar(){ 
       guardar(); // POR AHORA HACE LO MISMO HASTA QUE SEPAMOS ENVIAR EL CORREO
+    }
+
+    function salvarModificado2(){
+      pedido = pedidosAsesor[ seleccionado ];
+      pedido.preguntas = document.getElementById("preguntas").value;
+      pedido.listaProductos = new Array();
+
+      pedido.listaProductos = productos;
+
+      cambioEstado(pedido);
+      console.log(pedido);
+      return pedido;
+
     }
 
     function salvarModificado(){
@@ -329,6 +439,10 @@
 
     #tableSelect{
       display: inline-block;
+      width: 42%;
+      vertical-align: top;
+      padding: 0;
+
     }
 
     #final{
@@ -339,6 +453,11 @@
     textArea {
       width: 90%;
       height: auto;
+    }
+
+    #formAdjunto{
+      width: 100%;
+      padding: 0;
     }
 
   </style>
@@ -406,17 +525,99 @@
         </tbody>
         </table>
 	</div>
-  <div id="tableSelect">
-    <table id="table2" class="table">
+
+
+
+<div id="tableSelect">
+   <div id="formAdjunto" style="display: none;">   
+      <div class="col-sm-5" style="padding-left:5%">
+           <div class="form-group">
+               <label for="inputPassword" class="col-md-4 input-xs">Empresa:</label>
+               <div class="col-md-8">
+               <input class="form-control" id="empresa2" size="1" placeholder="Empresa">                          
+               </div>
+           </div>
+      </div>
+      <div class="col-sm-5" style="padding-left:5%">
+       <div class="form-group">
+           <label for="inputLabel3" class="col-md-4 input-xs">Producto:</label>
+           <div class="col-md-8">
+               <input class="form-control" id="producto2" size="1" placeholder="Nombre Producto">
+           </div>
+       </div>
+      </div>
+   <br></br>
+   <br></br>
+      <div class="col-sm-5" style="padding-left:5%">
+       <div class="form-group">
+           <label for="inputLabel3" class="col-md-4 input-xs">Referencia:</label>
+           <div class="col-md-8">
+               <input class="form-control" id="Referencia" size="1" placeholder="Solo si conoce" value="">
+           </div>
+       </div>
+   </div>
+   <div class="col-sm-5" style="padding-left:5%">
+       <div class="form-group">
+           <label for="inputLabel3" class="col-md-4 input-xs">Precio:</label>
+           <div class="col-md-8">
+               <input type='number' class="form-control" id="precio" size="1" placeholder="Solo si conoce" value="">
+           </div>
+       </div>
+   </div>
+        <div class="col-sm-5" style="padding-left:5%">
+           <div class="form-group">
+             <label for="inputLabel3" class="col-md-4 input-xs">Cantidad:</label>
+             <div class="col-xs-3">
+               <input style="display: inline-block;width: 10em;" type="number" class="form-control" id="cantidad2"  min="1" placeholder="Cantidad">
+               <select style="display: inline-block;width: 10em;" class="form-control" id="unidades2">
+                  <option value="Uni">Unidad</option>
+                  <option value="metros">M</option>
+                  <option value="M2">M¨2</option>
+                  <option value="M3">M¨3</option>
+                  <option value="Cm">CM</option>
+                  <option value="pulgadas">Pulgadas</option>
+                  <option value="Gramos">g</option>
+                  <option value="kilogramos">Kg</option>
+               </select>
+            </div>
+           </div>
+       </div>
+       <div class="col-sm-5" style="padding-left:5%">
+           <div class="form-group">
+             <div class="col-xs-3">
+               <button onclick="addTable()" type="button" class="btn btn-default" >Agregar producto</button>
+            </div>
+           </div>
+       </div>
+      <br></br>
+      <hr>
+      <table class="table">
+        <caption>Tus productos</caption>
+        <thead>
+          <tr>
+            <th>Empresa</th>
+            <th>Producto</th>
+            <th>Referencia</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody id="tableCreate">
+          </tbody>
+        </table>
+  </div>
+
+   <table id="table2" class="table" style=" display: none;">
         <caption>Modificando</caption>
         <thead>
         </thead>
-        <tbody id="tablaSeleccionado" style=" display: none;">
+        <tbody id="tablaSeleccionado">
         
         </tbody>
         </table>
-    <div id="final">
-    </div>
+  <div id="final">
+
+  </div>
   </div>
 
 </div>
