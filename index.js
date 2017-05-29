@@ -1,6 +1,7 @@
 var http = require( "http" );
 var fs = require( "fs" );
-path = require("path");
+var path = require("path");
+var formidable = require("formidable");
 
 var mimeTypes =
 {
@@ -125,7 +126,8 @@ var usuarios = [];
 var asesores = [];
 var producto = [];
 var pedidos = [];
-var idPedios = 0;
+var idPedidos = 0;
+var numFile = 0;
 
 fs.readFile( "BD/usuarios.json", cargarUsuarios );
 function cargarUsuarios( error, data ){
@@ -170,8 +172,8 @@ function cargarPedidos(error, data){
 
 	if( error == null ){
 		pedidos = JSON.parse( data ); // Des - stringify
-		idPedios = pedidos.length;
-		console.log(idPedios);
+		idPedidos = pedidos.length;
+		console.log(idPedidos);
 		console.log( "Los pedidos han sido cargados correctamente " );
 
 	} else {
@@ -203,37 +205,6 @@ function darPedidos(req, resp){
 			console.log("respuesta enviada");
 			resp.end(JSON.stringify(res));
 }
-
-//var pedidos = [];
-
-/* function cargarVariables(url){
-
-	var vector = [];
-
-	fs.readFile( url , cargarDatos );
-	function cargarDatos( error, data ){
-
-		if( error == null ){
-			vector = JSON.parse( data ); // Des - stringify
-			console.log("\n elementos del archivo " + url + " cargados Correctamente" );
-			console.log("\n " + vector.toString() );
-
-		} else {
-			console.log( error );
-			response.end( error.toString() );
-		}
-	}
-
-	return vector
-
-
-}
-
-usuarios = cargarVariables("BD/usuarios.json");
-asesores = cargarVariables("BD/asesores.json");
-//pedidos = cargarVariables("BD/pedidos.json");
-
-*/
 
 // Crear una instancia del servidor HTTP
 var server = http.createServer( atenderServidor );
@@ -273,6 +244,8 @@ function atenderServidor( request, response ){
 	}
 	else if( request.url == "/guardarPedidoModificado"){
 		guardarPedidoModificado(request, response);
+	}else if ( request.url =="/guardarArchivo"){
+		guardarArchivo(request, response);
 	}
 	else{
 		if(request.url =="/"){
@@ -286,8 +259,6 @@ function atenderServidor( request, response ){
 }
 
 
-
-
 //--------------------------------------------------------------------------------------------
 // AQUI SE MANEJAN LOS DATOS RECIVIDOS DEL NAVEGADOR, AL REGISTRARSE UN NUEVO USUARIO
 
@@ -296,7 +267,7 @@ function guardarPedido(req, res){
 
 	function recibir(data){
 		var pedi = JSON.parse(data.toString() );
-		pedi.id = idPedios;
+		pedi.id = idPedidos;
 		pedi.estado = "sinRevisar";
 		pedidos.push(pedi);
 
@@ -474,15 +445,13 @@ function retornarArchivo( request, response ){
 	//fs.readFile( url, archivoListo );
 
   	function archivoListo( error, data ){
-  		console.log("\n nueva peticion(es) \n");
 		if( error == null ){
 
-			if(request.url == "/css/Style.css" || request.url == "/css/bootstrap.min.css"){
+			if(request.url == "/css/Style.css" || request.url == "/css/bootstrap.min.css" || request.url == "/css/app.css"){
 				console.log("es un estilo");
 				response.writeHead(200, {'content-type': 'text/css'})
 			}
 			else {
-
 			response.writeHead(200, { 'content-type': 'text/html' });
 			}
 			response.write( data );
@@ -497,10 +466,9 @@ function retornarArchivo( request, response ){
 function retornarArchivoInicio( request, response ){
 
 	fs.readFile( "./public" + "/index.html", archivoListo );
-	//fs.readFile( url, archivoListo );
 
   	function archivoListo( error, data ){
-  		console.log("\n nueva peticion(es) \n");
+
 		if( error == null ){
 			response.writeHead(200, { 'content-type': 'text/html' });
 			response.write( data );
@@ -540,3 +508,40 @@ function guardarPedidoModificado( request, response){
 			}
 		}
 	}
+
+
+function verificarNumArchivo(){
+	console.log("verificando cuantos archivos hay");
+	fs.readdir('./public/files/',function (error,archivos){
+      var contador=0;
+      for(var x=0;x<archivos.length;x++) {
+          contador= contador+1;
+      }
+      numFile= contador;
+      console.log("adjuntos: "+contador); 
+  });    
+}
+
+//GUARDAR ARCHIVO ENVIADO EN FORMULARIO
+function guardarArchivo(request, response){
+var entrada=new formidable.IncomingForm();
+var name ="";
+
+    entrada.uploadDir='upload';
+    entrada.parse(request);
+    
+    entrada.on('fileBegin', function(field, file){
+    	var ext = path.extname( file.name );
+    	verificarNumArchivo();
+    	file.name="adjunto#"+(numFile+1)+""+ext;
+    	name = file.name;
+        file.path = "./public/files/"+file.name;
+    });    
+    entrada.on('end', function(){
+        var resp= {};
+		resp.status= "ok";
+		resp.nameFile=name;
+		response.end(JSON.stringify(resp));		
+    });    
+
+}

@@ -20,34 +20,39 @@
     <script src="js/jsPDF/dist/jspdf.min.js" ></script>
     <script>
 
-    //TIPO 1 = CREANDO - TIPO 2 = ADJUNTO
-    function desplegarFormulario(tipo){
-      if (tipo==1){
+     //TIPO 1 = CREADO - TIPO 2 = ADJUNTO
+    var tipoPedido= 2;
+    var nombreArchivo="";
+
+    function desplegarFormulario(tipoPedido){
+      if (tipoPedido==1){
         if(productos.length != 0 ){
           document.getElementById("envio").style.display = 'block';
+          document.getElementById("btnEnviar").setAttribute('onclick','enviarFormulario()') ;
         }else {
           window.alert("aun no has añadido ningun producto");
         }
       } 
-      else if (tipo ==2 ){
-        //IF NO HAY ARCHIVO ADJUNTO NO ABRE
-        if (true){
-        document.getElementById("envio").style.display = 'block';
-        }else {
-          window.alert("aun no has añadido ningun producto");
-        }
+      else if (tipoPedido ==2 ){
+          document.getElementById("envio").style.display = 'block';
+          document.getElementById("btnEnviar").setAttribute('onclick','adjuntar()') ;
+          //document.getElementById("btnEnviar").onclick=function adjuntar(){}
       }
       
     }
 
     function desplegarCrear(){
+      tipoPedido = 1;
       document.getElementById("adjuntarListado").style.display = 'none';
       document.getElementById("crearListado").style.display = 'block'; 
+      document.getElementById("envio").style.display = 'none';       
     }
 
      function desplegarAdjunto(){
+      tipoPedido = 2;
       document.getElementById("crearListado").style.display = 'none';
-      document.getElementById("adjuntarListado").style.display = 'block'; 
+      document.getElementById("adjuntarListado").style.display = 'block';
+      document.getElementById("envio").style.display = 'none'; 
     }
 
     //---------------------///////////SCRIPTS DE PRODUCTOS///////////////-----------------------------------
@@ -316,30 +321,38 @@
     //---------------------///////////SCRIPTS DE PRODUCTOS///////////////-----------------------------------
     //---------------------///////////SCRIPTS DE Envio///////////////-----------------------------------
 
+    function validarCampos() {
+       var asesor = document.getElementById('asesores').options.item(document.getElementById('asesores').options.selectedIndex).value
+      var nombre= document.getElementById('nombre').value  
+      var telefono= document.getElementById('telefono').value
+      var direccion= document.getElementById('direccion').value   
+      var proyecto= document.getElementById('proyecto').value
+
+      if(nombre == ""){
+        return false;
+      }else if(telefono == ""){
+        return false;
+      }else if(direccion == ""){
+        return false;
+      }else if(proyecto == ""){
+        return false;
+      }else {
+       return true;
+      }
+    }    
+
      function enviarFormulario(){
-      var enviar = true;
 
       var asesor = document.getElementById('asesores').options.item(document.getElementById('asesores').options.selectedIndex).value
-      var nombre= document.getElementById('nombre').value
-      if(nombre == ""){
-        enviar=false;
-      }
+      var nombre= document.getElementById('nombre').value  
       var telefono= document.getElementById('telefono').value
-      if(telefono == ""){
-        enviar=false;
-      }
-      var direccion= document.getElementById('direccion').value
-      if(direccion == ""){
-        enviar=false;
-      }
+      var direccion= document.getElementById('direccion').value   
       var proyecto= document.getElementById('proyecto').value
-      if(proyecto == ""){
-        enviar=false;
-      }
       var preguntas= document.getElementById('preguntas').value
       if(preguntas==""){
         preguntas = "Sin Dudas";
       }
+      
       //faltafecha tentantiva
       var fechaTent = document.getElementById("fechaT").value;
 
@@ -357,12 +370,17 @@
       archivo.preguntas = preguntas;
       archivo.fechaTent = fechaTent;
       archivo.fecha = fecha;
-      archivo.listaProductos = listaProductos;
-      
+
+         ///valida tipo de archivo que se envia pdf necesita listado - ajunto no
+      if (tipoPedido==1){
+        archivo.listaProductos = listaProductos;
+      }else if (tipoPedido==2){
+        archivo.listaProductos = nombreArchivo;
+      }
+
 
       console.log(archivo);
 
-      if(enviar){
         var serializado = "";
         // Serializar el objeto como una cadena de texto JSON
         serializado = JSON.stringify( archivo );
@@ -385,10 +403,8 @@
           window.alert("su pedido se ha enviado, espere nuestra pronta respuesta");
           window.location.href="index.html";
         }
-      //ALADIR AL JSON
-      }else {
-        window.alert("verificar por favor, hay informacion incompleta")
-      }
+
+  
     }
 
     function cargarInfo(){    
@@ -431,9 +447,33 @@
 
     ////ALGORITMO PARA ADJUNTAR UN ARCHIVO
     function adjuntar(){
+       if (validarCampos()){
+            
+        var formData = new FormData(document.getElementById("form"));
 
+        var request = new XMLHttpRequest();
 
-    }
+        // Abrir una peticion HTTP POST a la url deseado y no asincronico
+        request.open( "POST", "/guardarArchivo", false );
+
+        // Ejecuta la peticion HTTP
+        request.send(formData);
+
+        var respuesta;
+        respuesta = JSON.parse( request.responseText );
+        if(respuesta.status=="ok"){
+         console.log("archivo enviado, enviado formulario");
+         nombreArchivo = respuesta.nameFile;
+         enviarFormulario();
+        }else {
+          window.alert("error guardando archivo");
+        }
+
+    } else {
+        window.alert("verificar por favor, hay informacion incompleta")
+      }
+
+  }
 
 
     </script>
@@ -501,19 +541,22 @@
     <button type="button" class="btn btn-default" onclick="desplegarAdjunto()">Adjuntar Listado</button>
   </div>
 	
-  <div id="adjuntarListado" style="display: none;">
-  <hr>
-    <div style="margin-left: 40%; margin-right: 40%;">
-      <button onclick="adjuntar()">Adjuntar Archivo</button> <br>
-      <label id="estadoAdjunto"> No ha adjuntado ningun archivo</label>
+  <div style="width: 45%; margin: 0 auto;" id="adjuntarListado" style="display:none">
+  
+    <div>
+      <form id="form"  method="get" action="javascript: adjuntar()" enctype="multipart/form-data">
+        Seleccione un archivo donde podamos apreciar su lista de productos
+        <input class="btn btn-default" id="archivo" type="file" name="archivo">
+        <br>
+      </form>
     </div> 
+        <button class="btn btn-default" onclick="desplegarFormulario(2)">
+        Hacer pedido
+        </button>
+        <button class="btn btn-default" onclick="">
+        Cancelar
+        </button>
 
-    <button onclick="desplegarFormulario(2)">
-      Hacer pedido
-    </button>
-    <button onclick="">
-      Cancelar
-    </button>
   </div>
   
   <div id= "crearListado" style="display:none">
@@ -696,7 +739,7 @@
    <hr>
 
      
-     <button onclick="enviarFormulario()" class="btn btn-default"> Enviar</button>
+     <button id="btnEnviar" onclick='enviarFormulario("")' class="btn btn-default"> Enviar</button>
    </div>
  </div>
 
