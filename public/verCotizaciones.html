@@ -263,11 +263,12 @@
     function guardar(){
         var serializado = "";
 
-
+      //console.log(salvarModificado());
       //TIPO DE DOCUMENTO ADJUNTO O PDF 1=pdf 2 = adjunto
       if (tipo==1){
          // Serializar el objeto como una cadena de texto JSON
         serializado = JSON.stringify( salvarModificado());
+        //console.log("entro lista");
       }else if(tipo==2){
         serializado = JSON.stringify( salvarModificado2());
       }
@@ -281,6 +282,8 @@
         // Ejecuta la peticion HTTP
         request.send( serializado );
         console.log("ya envio el JSON");
+        window.alert("pedido guardado");
+        window.location.href="verCotizaciones.html";
     }
 
     function enviar(){ 
@@ -295,7 +298,7 @@
       pedido.listaProductos = productos;
 
       cambioEstado(pedido);
-      console.log(pedido);
+  
       return pedido;
 
     }
@@ -313,7 +316,7 @@
 
       pedido.listaProductos = lista;
       cambioEstado(pedido);
-      console.log(pedido);
+
       return pedido;
 
     }

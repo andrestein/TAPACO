@@ -380,7 +380,7 @@
       }
 
 
-      console.log(archivo);
+      //console.log(archivo);
 
         var serializado = "";
         // Serializar el objeto como una cadena de texto JSON
@@ -441,7 +441,7 @@
       var opt = "";
         for (var i= 0; i < lista.length; i++) {
 
-          opt = opt + "<option value="+lista[i].correo +">"+ lista[i].nombre + lista[i].apellido + "</option>";
+          opt = opt + "<option value="+lista[i].correo +">"+ lista[i].nombre + " " +lista[i].apellido + "</option>";
         }
 
         document.getElementById("asesores").innerHTML = opt;
@@ -655,14 +655,15 @@
              <div class="col-xs-3">
                <input style="display: inline-block;width: 10em;" type="number" class="form-control" id="cantidad2"  min="1" placeholder="Cantidad">
                <select style="display: inline-block;width: 10em;" class="form-control" id="unidades2">
-                  <option value="Uni">Unidad</option>
-                  <option value="metros">M</option>
-                  <option value="M2">M¨2</option>
-                  <option value="M3">M¨3</option>
-                  <option value="Cm">CM</option>
-                  <option value="pulgadas">Pulgadas</option>
-                  <option value="Gramos">g</option>
-                  <option value="kilogramos">Kg</option>
+                  <option value="uni">Unidad</option>
+                  <option value="m">Metros</option>
+                  <option value="m2">M¨2</option>
+                  <option value="m3">M¨3</option>
+                  <option value="cm">CM</option>
+                  <option value="pul">Pulgadas</option>
+                  <option value="g">gramos</option>
+                  <option value="kg">Kilogramos</option>
+                  <option value="Gal">Galones</option>
                </select>
             </div>
            </div>
