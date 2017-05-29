@@ -97,7 +97,6 @@
 
       	var respuesta;
       	respuesta = JSON.parse( request.responseText );
-      	console.log(respuesta);
       	if( respuesta.status == "ok" ){
         	window.location.href = respuesta.url;
       	}

@@ -182,7 +182,7 @@
           datos.cantidad = datos.cantidad +" " + datos.unidades
         }
         
-        console.log(document.getElementById('empresa').value );
+        //console.log(document.getElementById('empresa').value );
         return datos;
       }
 
@@ -264,7 +264,7 @@
       function llenarProductos(){
         var index = document.getElementById("empresa").options.selectedIndex;
         var nombre = document.getElementById("empresa").options.item(index).value;
-        console.log("seleccionado: " + nombre);
+        //console.log("seleccionado: " + nombre);
 
         recorrerYLlenar(nombre);
       }
@@ -399,7 +399,7 @@
 
         var respuesta;
         respuesta = JSON.parse( request.responseText );
-        console.log(respuesta);
+        //console.log(respuesta);
         if( respuesta.status == "ok" ){
           window.alert("su pedido se ha enviado, espere nuestra pronta respuesta");
           window.location.href="index.html";
@@ -435,12 +435,13 @@
       
     }
 
+    //listado usuario
     function llenarBox(lista){
       var asesor= "";
       var opt = "";
         for (var i= 0; i < lista.length; i++) {
 
-          opt = opt + "<option value="+lista[i].correo +">"+ lista[i].nombre+"</option>"
+          opt = opt + "<option value="+lista[i].correo +">"+ lista[i].nombre + lista[i].apellido + "</option>";
         }
 
         document.getElementById("asesores").innerHTML = opt;
@@ -696,7 +697,7 @@
    <div>
     <button type="button" class="btn btn-default" onclick="verPDF()" >Ver Archivo</button>
     <button type="button" class="btn btn-default" onclick="descargarPDF()" >Descargar Archivo</button>
-     <button type="button" class="btn btn-default" onclick="desplegarFormulario(1)">Realizar Pedido</button>
+     <button type="button" class="btn btn-default" onclick="desplegarFormulario(1)"><a href="#envio"> Realizar Pedido </a></button>
    </div>
  </div>
    <br>
@@ -740,7 +741,7 @@
    <hr>
 
      
-     <button id="btnEnviar" onclick='enviarFormulario("")' class="btn btn-default"> Enviar</button>
+     <button id="btnEnviar" onclick='enviarFormulario("")' class="btn btn-default">Enviar</button>
    </div>
  </div>
 

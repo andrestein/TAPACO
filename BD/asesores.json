@@ -1,33 +1,37 @@
 [{
-	"nombre": "asesor1",
-	"apellido": "1",
+	"nombre": "Hernan",
+	"apellido": "Gil",
 	"telefono": "3217713038",
-	"empresa": "G^3",
 	"correo": "asesor1@hotmail.com",
-	"contraseña": "asdf",
-	"encargado": "cementos"
+	"contraseña": "asdf"
 	},{
-	"nombre": "asesor2",
+	"nombre": "Reiner",
 	"apellido": "2",
 	"telefono": "3217713038",
-	"empresa": "G^3",
 	"correo": "asesor2@hotmail.com",
-	"contraseña": "asdf",
-	"encargado": "baños"
+	"contraseña": "asdf"
 	},{
-	"nombre": "asesor3",
+	"nombre": "Alejandro",
 	"apellido": "3",
 	"telefono": "3217713038",
-	"empresa": "G^3",
 	"correo": "asesor3@hotmail.com",
-	"contraseña": "asdf",
-	"encargado": "tuberia"
+	"contraseña": "asdf"
 	},{
-	"nombre": "asesor4",
+	"nombre": "Juan Carlos",
 	"apellido": "4",
 	"telefono": "3217713038",
-	"empresa": "G^3",
 	"correo": "asesor4@hotmail.com",
-	"contraseña": "asdf",
-	"encargado": "porcelanatos"
+	"contraseña": "asdf"
+	},{
+	"nombre": "Diego",
+	"apellido": "5",
+	"telefono": "3217713038",
+	"correo": "asesor5@hotmail.com",
+	"contraseña": "asdf"
+	},{
+	"nombre": "otro",
+	"apellido": "6",
+	"telefono": "3217713038",
+	"correo": "asesor6@hotmail.com",
+	"contraseña": "asdf"
 }]
