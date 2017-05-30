@@ -1,0 +1,113 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <title></title>
+    <style>
+
+body{
+        font-family: Verdana;
+		font-size: 120%;
+		padding: 4em 4em 4em 4em;
+}
+
+div{
+	margin: 7px;
+}
+
+.label{
+	display:inline-block;
+	width: 150px;
+}
+
+nolabel {
+	display: block;
+}
+
+#mensaje {
+	color: red;
+}
+
+</style>
+
+<script>
+	// Declarar un objeto
+	// Guarsda los datos del usuario en un objeto 
+	function SalvarCampos(){
+		var usuario = {};
+		usuario.email = document.getElementById( "email" ).value ;
+		usuario.clave = document.getElementById( "clave" ).value ;
+		return usuario;
+	}
+	
+	function Ingresar(){
+		var usuario=SalvarCampos();
+		
+		var serializado = "";
+		// Serializar el objeto como una cadena de texto JSON
+		serializado = JSON.stringify( usuario );
+		window.alert( serializado );
+		// Crear un objeto para hacer peticiones HTTP
+		var request = new XMLHttpRequest();
+		// Abrir una peticion HTTP POST a la url deseado y no asincronico
+		request.open( "POST", "/login", false );
+		// Ejecuta la peticion HTTP
+		request.send( serializado );
+		
+		// responseText contiene el cuerpo de la respuesta enviada desde el servidor
+		// en el objeto XMLHttpRequest
+		var respuesta;
+		respuesta = JSON.parse( request.responseText );  
+		
+		console.log( respuesta );
+		
+		if(respuesta.estado == 'ok'){
+			// Login correcto
+			document.getElementById('mensaje').innerHTML = 'Bienvenido';
+			window.location.href = '/index.html';
+		} else {
+			document.getElementById('mensaje').innerHTML = respuesta.estado;
+		}
+	}
+	
+</script>
+
+  </head>
+  <body >
+    <h1>Ingrese</h1>
+
+  <form action="#" >
+
+
+	<p>
+    <label>
+      Ingrese su Email
+    </label>
+      <input type="text" id="email" value="yo@aqui.com">
+
+	</p>
+	<p>
+	  <label>
+      Ingrese su contraseña
+    </label>
+      <input type="password" id="clave" value="">
+
+	</p>
+	<div id="mensaje"> </div>
+</form>
+
+	<button id="guardar" onclick="Ingresar()"  >Ingresar</button>
+  
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

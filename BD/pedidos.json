@@ -1,1 +1,102 @@
-[{"id":0,"asesor":"asesor1@hotmail.com","usuario":"thomasgiln@hotmail.com","nombre":"adasd","telefono":"1","direccion":"aasfd sasdf","proyecto":"edificiacion","preguntas":"","fechaTent":"21/7/2017","fecha":"10/5/2017","estado":"Revisada","listaProductos":[{"Nombre":"Juego","Referencia":"Auto","Cantidad":"3 Uni","Empresa":"corona","Precio":"5"},{"Nombre":"Juego","Referencia":"Auto","Cantidad":"3 Uni","Empresa":"corona","Precio":"2"},{"Nombre":"Torre","Referencia":"Auto","Cantidad":"3 Uni","Empresa":"corona","Precio":"5"}]},{"id":1,"asesor":"asesor2@hotmail.com","usuario":"jhosep.pg01@gmail.com","nombre":"granda","telefono":"3123922","direccion":"asd","proyecto":"casa","preguntas":"Sin Dudas","fechaTent":"11/7/2017","fecha":"26/5/2017","estado":"sinRevisar","listaProductos":[{"Nombre":"Juego Accesorios x4 Dual Suction","Referencia":"Auto","Cantidad":"2 Uni","Empresa":"corona","Precio":0},{"Nombre":"Base Decorada Cienfuegos Geométrico","Referencia":"Auto","Cantidad":"5 Uni","Empresa":"corona","Precio":0}]},{"id":2,"asesor":"asesor2@hotmail.com","usuario":"jhosep.pg01@gmail.com","nombre":"carlos cotra","telefono":"1231231","direccion":"asdfa sd fac a","proyecto":"123a czsdaa ","preguntas":"Sin Dudas","fechaTent":"2017-05-31","fecha":"27/5/2017","estado":"Revisada","listaProductos":[{"Nombre":"Juego Accesorios x4 Dual Suction","Referencia":"Auto","Cantidad":"1 Uni","Empresa":"corona","Precio":"53000"},{"Nombre":"Porta Rollo Dual Suction","Referencia":"Auto","Cantidad":"4 Uni","Empresa":"corona","Precio":"150000"},{"Nombre":"Base Decorada Laos Rosas","Referencia":"Auto","Cantidad":"1 Uni","Empresa":"corona","Precio":"35000"},{"Nombre":"Regadera Tana Redonda","Referencia":"Auto","Cantidad":"1 Uni","Empresa":"corona","Precio":"30000"},{"Nombre":"Kit Cocina Comfort Silver","Referencia":"Auto","Cantidad":"3 Uni","Empresa":"corona","Precio":"89000"},{"Nombre":"Mosaico Capricornius","Referencia":"Auto","Cantidad":"5 Uni","Empresa":"corona","Precio":"10000"}]},{"id":3,"asesor":"asesor2@hotmail.com","usuario":"jhosep.pg01@gmail.com","nombre":"jhosep","telefono":"132213","direccion":"asdfsadf","proyecto":"asdfas","preguntas":"Sin Dudas","fechaTent":"2017-07-01","fecha":"27/5/2017","estado":"sinRevisar","listaProductos":[{"Nombre":"Juego Accesorios x4 Dual Suction","Referencia":"Auto","Cantidad":"4 Uni","Empresa":"corona","Precio":"0"},{"Nombre":"Base Decorada Laos Geométrica","Referencia":"Auto","Cantidad":"5 Uni","Empresa":"corona","Precio":"0"}]},{"id":4,"asesor":"asesor2@hotmail.com","usuario":"jhosep.pg01@gmail.com","nombre":"asdf","telefono":"12321","direccion":"asdf","proyecto":"sadfas","preguntas":"Si hay Dudas","fechaTent":"2017-05-30","fecha":"27/5/2017","estado":"Revisada","listaProductos":[{"Nombre":"Porta Rollo Dual Suction","Referencia":"Auto","Cantidad":"2 Uni","Empresa":"corona","Precio":"2000"},{"Nombre":"Base Decorada Laos Geométrica","Referencia":"Auto","Cantidad":"1 Uni","Empresa":"corona","Precio":"3000"}]},{"asesor":"asesor2@hotmail.com","usuario":"jhosep.pg01@gmail.com","nombre":"Jhosep","telefono":"1234567","direccion":"No me la se","proyecto":"Globant","preguntas":"Sera que si terminamos esto para el martes?\nHasta depronto\nla materia nos va a quedar por encima de 4?\na mi si\nhotel?\nTrivago","fechaTent":"2017-06-01","fecha":"28/5/2017","estado":"Revisada","listaProductos":[{"Nombre":"Tubo Sanitario 4","Referencia":"No conocida","Cantidad":"36 metros","Empresa":"Pavco","Precio":"36000"},{"Nombre":"Cemento gris","Referencia":"No conocida","Cantidad":"250 kg","Empresa":"Holcim","Precio":"15000"}],"id":5},{"asesor":"asesor1@hotmail.com","usuario":"jhosep.pg01@gmail.com","nombre":"asdfa","telefono":"3413200","direccion":"safd","proyecto":"sadf","preguntas":"Sin Dudas","fechaTent":"2017-05-31","fecha":"28/5/2017","listaProductos":[{"Nombre":"dfgsd","Referencia":"dfgs","Cantidad":"5 Uni","Empresa":"dfgsdfg","Precio":"3"}],"id":8,"estado":"Revisada"},{"asesor":"asesor1@hotmail.com","usuario":"jhosep.pg01@gmail.com","nombre":"asdfa","telefono":"3413200","direccion":"safd","proyecto":"sadf","preguntas":"Sin Dudas","fechaTent":"2017-05-31","fecha":"28/5/2017","listaProductos":"adjunto#2.pdf","id":8,"estado":"sinRevisar"},{"asesor":"asesor4@hotmail.com","usuario":"jhosep.pg01@gmail.com","nombre":"castro","telefono":"3117988852","direccion":"la casa","proyecto":"jorge isaza casa","preguntas":"Sin Dudas","fechaTent":"2017-06-22","fecha":"28/5/2017","listaProductos":[{"Nombre":"Juego Accesorios x4 Dual Suction","Referencia":"Auto","Cantidad":"1 Uni","Empresa":"corona","Precio":0},{"Nombre":"asdf","Referencia":"No conocida","Cantidad":"1 Uni","Empresa":"asdf","Precio":0}],"id":8,"estado":"sinRevisar"},{"asesor":"asesor4@hotmail.com","usuario":"jhosep.pg01@gmail.com","nombre":"proyecto 1","telefono":"1111111","direccion":"11111111","proyecto":"construccione 1","preguntas":"Sin Dudas","fechaTent":"2017-06-23","fecha":"29/5/2017","listaProductos":[{"Nombre":"asdf","Referencia":"asdf","Cantidad":"12 Uni","Empresa":"assdaf","Precio":"1"},{"Nombre":"sdf","Referencia":"sadf","Cantidad":"4545 Uni","Empresa":"sfd","Precio":"1"}],"id":9,"estado":"Revisada"},{"asesor":"asesor1@hotmail.com","usuario":"thomasgiln@hotmail.com","nombre":"asdf","telefono":"1234","direccion":"asdc","proyecto":"ahdshs","preguntas":"no","fechaTent":"2017-05-29","fecha":"29/5/2017","listaProductos":[{"Nombre":"Juego Accesorios x4 Dual Suction","Referencia":"Auto","Cantidad":"1 Uni","Empresa":"corona","Precio":"1"},{"Nombre":"medio codo 2\" ","Referencia":"No conocida","Cantidad":"4 uni","Empresa":"pavco","Precio":"2"},{"Nombre":"cemento blanco","Referencia":"No conocida","Cantidad":"25 kg","Empresa":"argos","Precio":"3"}],"tipo":[{"Nombre":"Juego Accesorios x4 Dual Suction","Referencia":"Auto","Cantidad":"1 Uni","Empresa":"corona","Precio":0},{"Nombre":"medio codo 2\" ","Referencia":"No conocida","Cantidad":"4 uni","Empresa":"pavco","Precio":0},{"Nombre":"cemento blanco","Referencia":"No conocida","Cantidad":"25 kg","Empresa":"argos","Precio":0}],"id":10,"estado":"Revisada"},{"asesor":"asesor1@hotmail.com","usuario":"thomasgiln@hotmail.com","nombre":"a","telefono":"1","direccion":"b","proyecto":"c","preguntas":"no","fechaTent":"","fecha":"29/5/2017","listaProductos":[{"Nombre":"Juego Accesorios x4 Dual Suction","Referencia":"Auto","Cantidad":"1 Uni","Empresa":"corona","Precio":"2"}],"tipo":[{"Nombre":"Juego Accesorios x4 Dual Suction","Referencia":"Auto","Cantidad":"1 Uni","Empresa":"corona","Precio":0}],"id":11,"estado":"Revisada"}]
+[
+  {
+    "asesor": "asesor2@hotmail.com",
+    "usuario": "jhosep.pg01@gmail.com",
+    "nombre": "prueba1",
+    "telefono": "1",
+    "direccion": "dir1",
+    "proyecto": "adjunto1",
+    "preguntas": "Sin Dudas",
+    "fechaTent": "2017-05-12",
+    "fecha": "29/5/2017",
+    "listaProductos": [
+      {
+        "Nombre": "13012",
+        "Referencia": "No conocida",
+        "Cantidad": "2 Uni",
+        "Empresa": "corona",
+        "Precio": "1000"
+      },
+      {
+        "Nombre": "dasd",
+        "Referencia": "No conocida",
+        "Cantidad": "3 Uni",
+        "Empresa": "toxement",
+        "Precio": "299"
+      }
+    ],
+    "id": 0,
+    "estado": "Revisada"
+  },
+  {
+    "asesor": "asesor2@hotmail.com",
+    "usuario": "jhosep.pg01@gmail.com",
+    "nombre": "prueba 2",
+    "telefono": "2",
+    "direccion": "dir2",
+    "proyecto": "pdf",
+    "preguntas": "sera que funciona?\nclaro que si",
+    "fechaTent": "2017-05-27",
+    "fecha": "29/5/2017",
+    "listaProductos": [
+      {
+        "Nombre": "Base Decorada Cienfuegos Geométrico",
+        "Referencia": "Auto",
+        "Cantidad": "3 Uni",
+        "Empresa": "corona",
+        "Precio": "1000"
+      },
+      {
+        "Nombre": "cemento",
+        "Referencia": "No conocida",
+        "Cantidad": "3 kg",
+        "Empresa": "toxement",
+        "Precio": "2000"
+      }
+    ],
+    "id": 1,
+    "estado": "Revisada"
+  },
+  {
+    "asesor": "asesor1@hotmail.com",
+    "usuario": "jhosep.pg01@gmail.com",
+    "nombre": "prueba3",
+    "telefono": "3",
+    "direccion": "dir3",
+    "proyecto": "adjunto2",
+    "preguntas": "porque el adjunto no descarga correctamente?",
+    "fechaTent": "2017-06-15",
+    "fecha": "29/5/2017",
+    "listaProductos": "adjunto#0.html",
+    "id": 2,
+    "estado": "sinRevisar"
+  },
+  {
+    "asesor": "asesor1@hotmail.com",
+    "usuario": "jhosep.pg01@gmail.com",
+    "nombre": "prueba 4",
+    "telefono": "4",
+    "direccion": "dir4",
+    "proyecto": "adjunto3 ",
+    "preguntas": "Sin Dudas",
+    "fechaTent": "2017-05-12",
+    "fecha": "29/5/2017",
+    "listaProductos": "adjunto#2.pptx",
+    "id": 3,
+    "estado": "sinRevisar"
+  },
+  {
+    "asesor": "asesor3@hotmail.com",
+    "usuario": "jhosep.pg01@gmail.com",
+    "nombre": "prueba 45",
+    "telefono": "3",
+    "direccion": "dir5",
+    "proyecto": "adjunto 3",
+    "preguntas": "Sin Dudas",
+    "fechaTent": "",
+    "fecha": "29/5/2017",
+    "listaProductos": "adjunto#3.pptx",
+    "id": 4,
+    "estado": "sinRevisar"
+  }
+]

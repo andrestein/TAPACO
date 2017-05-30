@@ -2,6 +2,7 @@ var http = require( "http" );
 var fs = require( "fs" );
 var path = require("path");
 var formidable = require("formidable");
+var shell = require('shelljs');
 
 var mimeTypes =
 {
@@ -172,7 +173,7 @@ function cargarPedidos(error, data){
 
 	if( error == null ){
 		pedidos = JSON.parse( data ); // Des - stringify
-		idPedidos = pedidos.length;
+		verificarId();
 		console.log(idPedidos);
 		console.log( "Los pedidos han sido cargados correctamente " );
 
@@ -181,7 +182,9 @@ function cargarPedidos(error, data){
 		response.end( error.toString() );
 	}
 }
-
+function verificarId(){
+	idPedidos = pedidos.length;
+}
 function darProductos(request, response){
 			var resp = {};
 			resp.estado = 'ok';
@@ -216,8 +219,6 @@ console.log( "Servidor iniciado" );
 // Iniciar la escucha del servidor en el puero 8088
 server.listen(process.env.PORT || 5000);
 
-
-
 //--------------------------------------------------------------------------------------------
 // AQUI SE ATIENDEN LAS PETICIONES QUE RECIBE EL SERVIDOR
 
@@ -246,6 +247,8 @@ function atenderServidor( request, response ){
 		guardarPedidoModificado(request, response);
 	}else if ( request.url =="/guardarArchivo"){
 		guardarArchivo(request, response);
+	}else if (request.url.split('=')[0]=="/abrirPedido"){
+		abrirPedido(request, response);
 	}
 	else{
 		if(request.url =="/"){
@@ -259,6 +262,33 @@ function atenderServidor( request, response ){
 }
 
 
+///ABRIR ARCHIVO
+function abrirPedido(request, response){
+
+	var fileName = request.url.split('=')[1];
+	console.log(fileName);
+
+	fs.readFile( "./public/files/adjunto#" + fileName, archivoListo );
+
+	function archivoListo( error, data ){
+
+		if( error == null ){
+			response.setHeader('Content-disposition', 'attachment; filename=adjunto#'+fileName);
+            response.setHeader('Access-Control-Request-Headers', 'Content-Description,content-disposition');
+            response.setHeader('Access-Control-Allow-Origin','*');
+            response.setHeader('Access-Control-Expose-Headers','Content-Length');
+			response.setHeader('Content-Type', 'application/octet-stream;charset=UTF-8');
+            response.end(data);
+
+		} else {
+			
+			response.end( error.toString() );
+		}
+  	}
+
+	
+}
+
 //--------------------------------------------------------------------------------------------
 // AQUI SE MANEJAN LOS DATOS RECIVIDOS DEL NAVEGADOR, AL REGISTRARSE UN NUEVO USUARIO
 
@@ -267,7 +297,7 @@ function guardarPedido(req, res){
 
 	function recibir(data){
 		var pedi = JSON.parse(data.toString() );
-		pedi.id = idPedidos;
+		pedi.id = idPedidos++;
 		pedi.estado = "sinRevisar";
 		pedidos.push(pedi);
 
@@ -512,12 +542,12 @@ function guardarPedidoModificado( request, response){
 
 function verificarNumArchivo(){
 	console.log("verificando cuantos archivos hay");
+	var contador=0;
 	fs.readdir('./public/files/',function (error,archivos){
-      var contador=0;
       for(var x=0;x<archivos.length;x++) {
-          contador= contador+1;
+          contador++;
       }
-      numFile= contador;
+      numFile= contador+1;
       console.log("adjuntos: "+contador); 
   });    
 }
@@ -533,7 +563,8 @@ var name ="";
     entrada.on('fileBegin', function(field, file){
     	var ext = path.extname( file.name );
     	verificarNumArchivo();
-    	file.name="adjunto#"+(numFile+1)+""+ext;
+    	file.name="adjunto#"+(numFile)+""+ext;
+    	console.log("guardado como arhcivo #"+numFile);
     	name = file.name;
         file.path = "./public/files/"+file.name;
     });    

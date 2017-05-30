@@ -56,6 +56,21 @@
         hacerTabla();
 		}
 
+    function verPedidoAjunto(namefile){
+      var numFile = namefile.split('#')[1]
+      window.open("http://localhost:5000/abrirPedido="+numFile);
+ /*     var request = new XMLHttpRequest();
+
+        // Abrir una peticion HTTP POST a la url deseado y no asincronico
+      request.open( "POST", "abrirPedido", false )
+      var data = {};
+      data.name = namefile;
+      data = JSON.stringify(data);
+      request.send(data);
+*/
+
+    }
+
 
 		function hacerTabla(){
       var body = document.createElement('tbody');
@@ -119,6 +134,7 @@
       if(typeof lista == 'string'){
         console.log("es un string con adjunto");
         tablaDeAdjunto();
+        verPedidoAjunto(pedido.listaProductos);
         añadirFinal(pedido);
         tipo=2;
 
