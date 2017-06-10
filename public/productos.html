@@ -20,39 +20,8 @@
     <script src="js/jsPDF/dist/jspdf.min.js" ></script>
     <script>
 
-     //TIPO 1 = CREADO - TIPO 2 = ADJUNTO
-    var tipoPedido= 2;
-    var nombreArchivo="";
-
-    function desplegarFormulario(tipoPedido){
-      if (tipoPedido==1){
-        if(productos.length != 0 ){
-          document.getElementById("envio").style.display = 'block';
-          document.getElementById("btnEnviar").setAttribute('onclick','enviarFormulario()') ;
-        }else {
-          window.alert("aun no has añadido ningun producto");
-        }
-      } 
-      else if (tipoPedido ==2 ){
-          document.getElementById("envio").style.display = 'block';
-          document.getElementById("btnEnviar").setAttribute('onclick','adjuntar()') ;
-          //document.getElementById("btnEnviar").onclick=function adjuntar(){}
-      }
-      
-    }
-
-    function desplegarCrear(){
-      tipoPedido = 1;
-      document.getElementById("adjuntarListado").style.display = 'none';
-      document.getElementById("crearListado").style.display = 'block'; 
-      document.getElementById("envio").style.display = 'none';       
-    }
-
-     function desplegarAdjunto(){
-      tipoPedido = 2;
-      document.getElementById("crearListado").style.display = 'none';
-      document.getElementById("adjuntarListado").style.display = 'block';
-      document.getElementById("envio").style.display = 'none'; 
+    function cargarEnvio(){
+      document.getElementById("envio").style.display = 'block';
     }
 
     //---------------------///////////SCRIPTS DE PRODUCTOS///////////////-----------------------------------
@@ -76,47 +45,24 @@
       this.Referencia = Referencia;
       this.Cantidad = Cantidad;
       this.Empresa = Empresa;
-      this.Precio = 0;
-    }
-
-    function limpiarCampos(){
-      document.getElementById("cantidad").value = "";
-      document.getElementById("cantidad2").value = "";
-      document.getElementById("empresa2").value = "";
-      document.getElementById("Referencia").value = "";
-      document.getElementById("producto2").value = "";
-
     }
 
     function addProductoPdf (pro) {
-
-      pageHeight= pdfUser.internal.pageSize.height;
-
       pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
       pdfUser.text(20,40, "Empresa");
-      pdfUser.text(48,40, "Nombre");
-      pdfUser.text(110,40, "Referencia");
-      pdfUser.text(140,40, "Cantidad");
+      pdfUser.text(70,40, "Nombre");
+      pdfUser.text(120,40, "Referencia");
+      pdfUser.text(160,40, "Cantidad");
 
       var posicion1 = lastNombre+15;
       var posicion2 = lastRefer+15;
       var posicion3 = lastCant+15;
       var posicion4 = lastEmp+15;
 
-       if (posicion1 >= pageHeight || posicion2 >= pageHeight || posicion3 >= pageHeight || posicion4 >= pageHeight)
-      {
-        pdfUser.addPage();
-        reiniciarPosicionPagina();
-        posicion1 = lastNombre+15;
-        posicion2 = lastRefer+15;
-        posicion3 = lastCant+15;
-        posicion4 = lastEmp+15;
-      } 
-
       pdfUser.text(20, posicion1, pro.Empresa);
-      pdfUser.text(48, posicion2, pro.Nombre);
-      pdfUser.text(110,posicion3, pro.Referencia);
-      pdfUser.text(140, posicion4, pro.Cantidad);
+      pdfUser.text(70, posicion2, pro.Nombre);
+      pdfUser.text(120,posicion3, pro.Referencia);
+      pdfUser.text(160, posicion4, pro.Cantidad);
 
 
       lastNombre = posicion1;
@@ -132,18 +78,6 @@
       //pdfUser.save('prueba1.pdf');
     }
 
-     function reiniciarPosicionPagina() {
-      pdfUser.text(100, 20, 'TOPACO SA - Orden de Producto', null, null, 'center');
-      pdfUser.text(20,40, "Empresa");
-      pdfUser.text(48,40, "Nombre");
-      pdfUser.text(110,40, "Referencia");
-      pdfUser.text(140,40, "Cantidad");
-      lastNombre=40;
-     lastRefer=40;
-     lastCant=40;
-     lastEmp=40;
-    }
-
     function reiniciarPosicion(){
        lastNombre=40;
      lastRefer=40;
@@ -153,9 +87,6 @@
 
     function  verPDF () {
       pdfUser = new jsPDF();
-      pdfUser.setFont("helvetica");
-      pdfUser.setFontType("bold");
-      pdfUser.setFontSize(9);
       reiniciarPosicion();
       for (var i = 0; i < productos.length; i++) {
         addProductoPdf(productos[i]);
@@ -174,7 +105,7 @@
       function salvarCampos(){
         var datos = {};
         datos.empresa = document.getElementById('empresa').value ;
-        datos.producto = document.getElementById('producto').options.item(document.getElementById('producto').options.selectedIndex).textContent;
+        datos.producto = document.getElementById('producto').value ;
         datos.cantidad=document.getElementById('cantidad').value;
         datos.unidades=document.getElementById('unidades').options.item(document.getElementById('unidades').options.selectedIndex).value
         datos.Referencia = "Auto";
@@ -182,7 +113,7 @@
           datos.cantidad = datos.cantidad +" " + datos.unidades
         }
         
-        //console.log(document.getElementById('empresa').value );
+        console.log(document.getElementById('empresa').value );
         return datos;
       }
 
@@ -202,7 +133,6 @@
           "<td>"+datos.cantidad+"</td>"+
           "</tr>";
           tabla.appendChild(fila);
-          limpiarCampos();
         }else {
           window.alert("Debes ingresar el producto, la empresa y una cantidad valida");
         }
@@ -264,7 +194,7 @@
       function llenarProductos(){
         var index = document.getElementById("empresa").options.selectedIndex;
         var nombre = document.getElementById("empresa").options.item(index).value;
-        //console.log("seleccionado: " + nombre);
+        console.log("seleccionado: " + nombre);
 
         recorrerYLlenar(nombre);
       }
@@ -289,7 +219,6 @@
           "<td>"+datos.cantidad+"</td>"+
           "</tr>";
           tabla.appendChild(fila);
-          limpiarCampos();
         }else {
           window.alert("Debes ingresar el producto, la empresa y una cantidad valida");
         }
@@ -297,7 +226,6 @@
       
       function salvarCampos2(){
         var datos = {};
-
         datos.empresa = document.getElementById('empresa2').value ;
         datos.producto = document.getElementById('producto2').value ;
         datos.Referencia = document.getElementById('Referencia').value;
@@ -315,73 +243,52 @@
 
       //////////////////////FUNCIONES PARA EL LISTADO MANUALMENTE//////////////////
 
+      function enviarInfo(){
+       localStorage.setItem('listadoTopaco', productos);
+        window.location.href = "Envio.html";
+        //OBTENER INFO DE USUARIO
+
+        //Tomar la variable productos y añadirla al json
+
+    }
 
     //---------------------///////////SCRIPTS DE PRODUCTOS///////////////-----------------------------------
     //---------------------///////////SCRIPTS DE PRODUCTOS///////////////-----------------------------------
     //---------------------///////////SCRIPTS DE PRODUCTOS///////////////-----------------------------------
     //---------------------///////////SCRIPTS DE Envio///////////////-----------------------------------
 
-    function validarCampos() {
-       var asesor = document.getElementById('asesores').options.item(document.getElementById('asesores').options.selectedIndex).value
-      var nombre= document.getElementById('nombre').value  
-      var telefono= document.getElementById('telefono').value
-      var direccion= document.getElementById('direccion').value   
-      var proyecto= document.getElementById('proyecto').value
-
-      if(nombre == ""){
-        return false;
-      }else if(telefono == ""){
-        return false;
-      }else if(direccion == ""){
-        return false;
-      }else if(proyecto == ""){
-        return false;
-      }else {
-       return true;
-      }
-    }    
-
      function enviarFormulario(){
+      var enviar = true;
 
       var asesor = document.getElementById('asesores').options.item(document.getElementById('asesores').options.selectedIndex).value
-      var nombre= document.getElementById('nombre').value  
+      var nombre= document.getElementById('nombre').value
+      if(nombre == ""){
+        enviar=false;
+      }
       var telefono= document.getElementById('telefono').value
-      var direccion= document.getElementById('direccion').value   
-      var proyecto= document.getElementById('proyecto').value
+      if(telefono == ""){
+        enviar=false;
+      }
       var preguntas= document.getElementById('preguntas').value
       if(preguntas==""){
         preguntas = "Sin Dudas";
       }
-      
-      //faltafecha tentantiva
-      var fechaTent = document.getElementById("fechaT").value;
-
+      var listaProductos = productos;
       var f = new Date();
       var fecha = f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
-      var listaProductos = productos;
 
       var archivo = {}
       archivo.asesor = asesor;
-      archivo.usuario = user; //se debe obtener los datos del usuario iniciado
+      archivo.usuario = user;
       archivo.nombre = nombre;    
       archivo.telefono = telefono;
-      archivo.direccion = direccion;
-      archivo.proyecto = proyecto;
       archivo.preguntas = preguntas;
-      archivo.fechaTent = fechaTent;
+      archivo.listaProductos = listaProductos;
       archivo.fecha = fecha;
 
-         ///valida tipo de archivo que se envia pdf necesita listado - ajunto no
-      if (tipoPedido==1){
-        archivo.tipo = 
-        archivo.listaProductos = listaProductos;
-      }else if (tipoPedido==2){
-        archivo.listaProductos = nombreArchivo;
-      }
+      console.log(archivo);
 
-
-      //console.log(archivo);
-
+      if(enviar){
         var serializado = "";
         // Serializar el objeto como una cadena de texto JSON
         serializado = JSON.stringify( archivo );
@@ -399,13 +306,14 @@
 
         var respuesta;
         respuesta = JSON.parse( request.responseText );
-        //console.log(respuesta);
+        console.log(respuesta);
         if( respuesta.status == "ok" ){
           window.alert("su pedido se ha enviado, espere nuestra pronta respuesta");
-          window.location.href="index.html";
         }
-
-  
+      //ALADIR AL JSON
+      }else {
+        window.alert("verificar por favor, hay informacion incompleta")
+      }
     }
 
     function cargarInfo(){    
@@ -435,48 +343,16 @@
       
     }
 
-    //listado usuario
     function llenarBox(lista){
       var asesor= "";
       var opt = "";
         for (var i= 0; i < lista.length; i++) {
 
-          opt = opt + "<option value="+lista[i].correo +">"+ lista[i].nombre + " " +lista[i].apellido + "</option>";
+          opt = opt + "<option value="+lista[i].correo +">"+ lista[i].nombre+"</option>"
         }
 
         document.getElementById("asesores").innerHTML = opt;
     }
-
-    ////ALGORITMO PARA ADJUNTAR UN ARCHIVO
-    function adjuntar(){
-       if (validarCampos()){
-            
-        var formData = new FormData(document.getElementById("form"));
-
-        var request = new XMLHttpRequest();
-
-        // Abrir una peticion HTTP POST a la url deseado y no asincronico
-        request.open( "POST", "/guardarArchivo", false );
-
-        // Ejecuta la peticion HTTP
-        request.send(formData);
-
-        var respuesta;
-        respuesta = JSON.parse( request.responseText );
-        if(respuesta.status=="ok"){
-         console.log("archivo enviado, enviado formulario");
-         nombreArchivo = respuesta.nameFile;
-         enviarFormulario();
-        }else {
-          window.alert("error guardando archivo");
-        }
-
-    } else {
-        window.alert("verificar por favor, hay informacion incompleta")
-      }
-
-  }
-
 
     </script>
 
@@ -514,7 +390,7 @@
 
                 <!-- Desplegable-->
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Aplicacion Pedidos<span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Navegar<span class="caret"></span></a>
                   <ul id="prueba" class="dropdown-menu">
 
                   	<!-- colocar las marcas que tenemos -->
@@ -523,7 +399,8 @@
                     <li><a href="registro2.html">Registrarse</a></li>
                     <li role="separator" class="divider"></li>
                     <li class="dropdown-header">Nav header</li>
-                    <li><a href="Terms.html">Terminos y Condiciones</a></li>
+                    <li><a href="#">Preguntas Frecuentes</a></li>
+                    <li><a href="#">Terminos y Condiciones</a></li>
                   </ul>
                 </li>
               </ul>
@@ -536,33 +413,9 @@
       <!-- Marketing messaging and featurettes
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
-    <div> </div>
-    <hr class="featurette-divider">
-  <div>
-    <button type="button" class="btn btn-default" onclick="desplegarCrear()">Crear Listado</button>
-    <button type="button" class="btn btn-default" onclick="desplegarAdjunto()">Adjuntar Listado</button>
-  </div>
-	
-  <div style="width: 45%; margin: 0 auto;" id="adjuntarListado" style="display:none">
-  
     <div>
-      <form id="form"  method="get" action="javascript: adjuntar()" enctype="multipart/form-data">
-        Seleccione un archivo donde podamos apreciar su lista de productos
-        <input class="btn btn-default" id="archivo" type="file" name="archivo">
-        <br>
-      </form>
-    </div> 
-        <button class="btn btn-default" onclick="desplegarFormulario(2)">
-        Hacer pedido
-        </button>
-        <button class="btn btn-default" onclick="">
-        Cancelar
-        </button>
+	<hr class="featurette-divider">
 
-  </div>
-  
-  <div id= "crearListado" style="display:none">
-  <hr>
   <div class="col-sm-5" style="padding-left:5%">
            <div class="form-group">
                <label for="inputPassword" class="col-md-4 input-xs">Empresa:</label>
@@ -598,7 +451,7 @@
                   <option value="Cm">CM</option>
                   <option value="pulgadas">Pulgadas</option>
                   <option value="Gramos">g</option>
-                  <option value="kg">Kg</option>
+                  <option value="kilogramos">Kg</option>
                </select>
             </div>
            </div>
@@ -615,14 +468,14 @@
       <br></br>
       <br></br>
       <hr>
-      
+      <div>
 
 <!-- ESTOS SON LOS CAMPOS PARA LLENAR MANUALMENTE-->
 
-      <div>
+
       <h4> ¿No Encuentras un producto?... Igualmente envialo con tu listado, sólo llena los campos!:</h1>
       <br>
-      
+      </div>
       <div class="col-sm-5" style="padding-left:5%">
            <div class="form-group">
                <label for="inputPassword" class="col-md-4 input-xs">Empresa:</label>
@@ -655,15 +508,14 @@
              <div class="col-xs-3">
                <input style="display: inline-block;width: 10em;" type="number" class="form-control" id="cantidad2"  min="1" placeholder="Cantidad">
                <select style="display: inline-block;width: 10em;" class="form-control" id="unidades2">
-                  <option value="uni">Unidad</option>
-                  <option value="m">Metros</option>
-                  <option value="m2">M¨2</option>
-                  <option value="m3">M¨3</option>
-                  <option value="cm">CM</option>
-                  <option value="pul">Pulgadas</option>
-                  <option value="g">gramos</option>
-                  <option value="kg">Kilogramos</option>
-                  <option value="Gal">Galones</option>
+                  <option value="Uni">Unidad</option>
+                  <option value="metros">M</option>
+                  <option value="M2">M¨2</option>
+                  <option value="M3">M¨3</option>
+                  <option value="Cm">CM</option>
+                  <option value="pulgadas">Pulgadas</option>
+                  <option value="Gramos">g</option>
+                  <option value="kilogramos">Kg</option>
                </select>
             </div>
            </div>
@@ -698,43 +550,33 @@
    <div>
     <button type="button" class="btn btn-default" onclick="verPDF()" >Ver Archivo</button>
     <button type="button" class="btn btn-default" onclick="descargarPDF()" >Descargar Archivo</button>
-     <button type="button" class="btn btn-default" onclick="desplegarFormulario(1)"><a href="#envio"> Realizar Pedido </a></button>
+     <button type="button" class="btn btn-default" onclick="cargarEnvio()">Realizar Pedido</button>
    </div>
- </div>
+
    <br>
    <br>
    <br>
 
-  
 
    <div id= "envio" style="display:none">
-     <div style="margin-left: 15%; margin-right: 15%;">
-  <h3>Envianos esta informacion y espera respuesta del asesor respectivo</h3>  
+     <div style="margin-left: 30%; margin-right: 30%;">
+  <p>Envianos esta informacion y espera respuesta del asesor respectivo</p>  
+  <p id="nombreArchivo"> archivo: Cargado Correctamente </p>
   <hr>
+  <p>Informacion del cliente solicitante: </p>
+  <input type="text" id="nombre" placeholder="Nombre">
+  <input type="number" id="telefono" placeholder="Tel Contacto">
+  <div>
+  <hr>
+   <p> tienes preguntas?, envialas junto con tu listado</p>
+   <textarea id="preguntas"></textarea>
+   </div>
 
-  <div class="col-md-8">
-    <label>Informacion para posible envio - Datos de la persona que recibiria </label>
-    <input style="display: inline-flex;" class="form-control" size="1" type="text" id="nombre" placeholder="Nombre">
-    <input style="display: inline-flex;" class="form-control" size="1" type="number" id="telefono" placeholder="Tel Contacto">
-  </div>
-
-  <div class="col-md-8" style="margin-top: 2em">
-    <input style="display: inline-block;" class="form-control" size="1" type="text" id="direccion" placeholder="direccion envio">
-    <input style="display: inline-block;" class="form-control" size="1" type="text" id="proyecto" placeholder="proyecto">
-    <input style="margin-bottom: 2em" class="form-control" size="1" type="Date" id="fechaT" placeholder="Fecha tentativa de envio">
-  </div>  
-
-  <div >
-    <label>Tienes preguntas?, envialas junto con tu listado </label>
-    <textarea id="preguntas" style="width: 80%; height: 30%"></textarea>
-  </div>
-
-  <div style="margin-top: 2em">
-    <label>Selecciona el asesor que deseas que atienda tu peticion: </label>
+  <div>
+    <p>selecciona el asesor que deseas que atienda tu peticion: </p>
     <select id="asesores">
     </select>
     <br>
-    <a href="ContacUs.html" target="_blank">Mira nuestros Asesores</a>
     <br>
   </div>
    <div>
@@ -742,7 +584,7 @@
    <hr>
 
      
-     <button id="btnEnviar" onclick='enviarFormulario("")' class="btn btn-default">Enviar</button>
+     <button onclick="enviarFormulario()"> Enviar</button>
    </div>
  </div>
 

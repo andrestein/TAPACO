@@ -1,37 +1,33 @@
 [{
-	"nombre": "Hernan",
-	"apellido": "Gil",
+	"nombre": "asesor1",
+	"apellido": "1",
 	"telefono": "3217713038",
+	"empresa": "G^3",
 	"correo": "asesor1@hotmail.com",
-	"contraseña": "asdf"
-	},{
-	"nombre": "Reiner",
+	"contraseña": "asdf",
+	"encargado": "cementos"
+},{
+	"nombre": "asesor2",
 	"apellido": "2",
 	"telefono": "3217713038",
+	"empresa": "G^3",
 	"correo": "asesor2@hotmail.com",
-	"contraseña": "asdf"
-	},{
-	"nombre": "Alejandro",
+	"contraseña": "asdf",
+	"encargado": "baños"
+},{
+	"nombre": "asesor3",
 	"apellido": "3",
 	"telefono": "3217713038",
+	"empresa": "G^3",
 	"correo": "asesor3@hotmail.com",
-	"contraseña": "asdf"
-	},{
-	"nombre": "Juan Carlos",
+	"contraseña": "asdf",
+	"encargado": "tuberia"
+},{
+	"nombre": "asesor4",
 	"apellido": "4",
 	"telefono": "3217713038",
+	"empresa": "G^3",
 	"correo": "asesor4@hotmail.com",
-	"contraseña": "asdf"
-	},{
-	"nombre": "Diego",
-	"apellido": "5",
-	"telefono": "3217713038",
-	"correo": "asesor5@hotmail.com",
-	"contraseña": "asdf"
-	},{
-	"nombre": "otro",
-	"apellido": "6",
-	"telefono": "3217713038",
-	"correo": "asesor6@hotmail.com",
-	"contraseña": "asdf"
+	"contraseña": "asdf",
+	"encargado": "porcelanatos"
 }]

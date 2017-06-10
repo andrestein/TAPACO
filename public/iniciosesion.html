@@ -2,38 +2,17 @@
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico"> -->
-
-    <title>TOPACO S.A - Iniciar</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="./css/Style.css" rel="stylesheet">
-    <link href="./css/app.css" rel="stylesheet">
-    <script src="js/cookies.js" > </script>
-
 	<title> iniciar sesion </title>
 	<style type="text/css">
 
-		.container2{
-			margin-top: 10%;
+		.container{
+			margin-top: 20%;
 			border-radius: 5px;
 			margin-right: 35%;
 			margin-left: 35%;
-			border-style:outset;
+
 		}
 		
-		#logo {
-			width: 17em;
-			height: 6em;
-		}
-
 		.campo {
 			margin-top: 2em;
 			margin-bottom: 2em;
@@ -63,6 +42,7 @@
 			var datos = {};
 			datos.correo = document.getElementById("correo").value;
 			datos.contraseña = document.getElementById("contraseña").value;
+			console.log(datos);
 			return datos;
 		}
 		
@@ -93,95 +73,21 @@
 		
 	</script>
 </head>
-
 <body>
-	<!-- Aqui empieza lo que llamabamos Header -->
-    <div class="navbar-wrapper">
-      <div class="container">
-
-        <nav class="navbar navbar-inverse navbar-static-top">
-          <div class="container">
-
-          	<!-- Parte del Titulo - TOPACO S.A -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#">TOPACO S.A</a>
-            </div>
-
-            <!-- los demas opciones principales menos el desplegable -->
-            <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="AboutUs.html">Acerca de Nosotros</a></li>
-                <li><a href="ContacUs.html">Contactenos</a></li>
-				<li><a href="brands.html">Marcas de Distribucion</a></li>
-
-
-                <!-- Desplegable-->
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Aplicacion Pedidos<span class="caret"></span></a>
-                  <ul id="prueba" class="dropdown-menu">
-
-                  	<!-- colocar las marcas que tenemos -->
-                    <li><a href="iniciosesion.html">Iniciar Sesion</a></li>
-                    <li><a href="Registro.html">Registrarse</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="Terms.html">Terminos y Condiciones</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-
-      </div>
-    </div>
-
-<hr class="featurette-divider">
-
-	<div class="container2">
-		<div class="campo">
-			<img id="logo" src="images/logoTOPACO.jpg">
-		</div>
+	<div class="container">
 		<div class="campo">
 			<label> Correo Electronico </label>
-			<input class="form-control" type="email" name="email" id="correo">
+			<input type="email" name="email" id="correo">
 		</div>
 		<div class="campo">
 			<label> Contraseña </label>
-			<input class="form-control" type="password" name="clave" id="contraseña">
+			<input type="password" name="clave" id="contraseña">
 		</div>
 		<div id="mensaje">
 		</div>
 		<div class="campo">
-			<a href="Registro.html"> No tienes un usuario? registrate </a>
-		</div>
-		<div class="campo">
-			<button class="btn btn-default" id = "iniciarSesion" onclick="iniciarSesion()">Iniciar Sesion</button>
+			<button id = "iniciarSesion" onclick="iniciarSesion()">Iniciar Sesion</button>
 		</div>
 	</div>
-
-<hr class="featurette-divider">
-
-	<!-- FOOTER -->
-      <footer>
-        <p class="pull-right"><a href="#">Incio de la Pagina</a></p>
-        <p>&copy; 2016 Todo Para Construir y TOPACO S.A son marcas registradas. &middot; <a href="#">Privacidad</a> &middot; <a href="#">Terminos de Uso</a></p>
-      </footer>
-      <script> loadOptions(); </script>
-    </div><!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
-
 </body>
 </html>

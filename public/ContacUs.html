@@ -16,35 +16,6 @@
         <link href="./css/Style.css" rel="stylesheet">
 
         <script src="js/cookies.js" > </script>
-        <script type="text/javascript">
-          
-        var asesores = {};
-        function cargarAsesores(){
-       // Crear un objeto para hacer peticiones HTTP
-          var request = new XMLHttpRequest();
-
-          // Abrir una peticion HTTP POST a la url deseado y no asincronico
-          request.open( "GET", "obtenerAsesores", false );
-    
-          // Ejecuta la peticion HTTP
-          request.send();
-
-          var resp = request.response;
-          resp = JSON.parse(resp);
-          asesores = resp.data;   
-          llenarInfoAsesores();          
-          } 
-
-          function llenarInfoAsesores(){
-            for(var i = 0;i < asesores.length;i++){        
-                  document.getElementById('asesor' + i).innerHTML += 
-                    "<h2>" + asesores[i].nombre + " " + asesores[i].apellido + "</h2>" +
-                    "<p>" + asesores[i].telefono + "</p>" +
-                    "<p>" + asesores[i].correo + "</p></div>";                               
-                }
-            }
-                  
-        </script>
       </head>
 
 <body>
@@ -80,7 +51,7 @@
 
                 <!-- Desplegable-->
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Aplicacion Pedidos<span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Navegar<span class="caret"></span></a>
                   <ul  id="prueba" class="dropdown-menu">
 
                     <!-- colocar las marcas que tenemos -->
@@ -88,7 +59,8 @@
                     <li><a href="iniciosesion.html">Iniciar Sesion</a></li>
                     <li><a href="Registro.html">Registrarse</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="Terms.html">Terminos y Condiciones</a></li>
+                    <li><a href="#">Preguntas Frecuentes</a></li>
+                    <li><a href="#">Terminos y Condiciones</a></li>
                   </ul>
                 </li>
               </ul>
@@ -124,40 +96,52 @@
       <div class="container marketing">
 
       <!-- Three columns of text below the carousel -->
-      <div id ="fila1" class="row">
-      
-          <div id = "asesor0" class="col-lg-4">
+      <div class="row">
+          <div class="col-lg-4">
               <img class="img-circle" src="images/siluetaAsesor.jpg" width="140" height="140">
-          </div>
+              <h2> Asesor # 1</h2>
+              <p> Datos Asesor # 1</p>
+              <p><a class="btn btn-default" href="#" role="button">Ver Más &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
 
-          <div id = "asesor1" class="col-lg-4">
+          <div class="col-lg-4">
             <img class="img-circle" src="images/siluetaAsesor.jpg" alt="Generic placeholder image" width="140" height="140">
+              <h2> Asesor # 2</h2>
+              <p> Datos Asesor # 2</p>
+              <p><a class="btn btn-default" href="#" role="button">Ver Más &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
 
-          </div>
-
-          <div id = "asesor2" class="col-lg-4">
+          <div class="col-lg-4">
               <img class="img-circle" src="images/siluetaAsesor.jpg" alt="Generic placeholder image" width="140" height="140">
-          </div>
-      </div>
-      
+              <h2>Asesor # 3</h2>
+              <p>Datos Asesor # 3</p>
+            <p><a class="btn btn-default" href="#" role="button">Ver Más &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
 
-      <div id="fila2" class="row">
-      
-          <div id = "asesor3"class="col-lg-4">
+            <div class="row">
+          <div class="col-lg-4">
               <img class="img-circle" src="images/siluetaAsesor.jpg" width="140" height="140">
+              <h2>Asesor # 4</h2>
+              <p>Datos Asesor # 4</p>
+              <p><a class="btn btn-default" href="#" role="button">Ver Más &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
 
-          </div>
-
-          <div id = "asesor4"class="col-lg-4">
+          <div class="col-lg-4">
             <img class="img-circle" src="images/siluetaAsesor.jpg" alt="Generic placeholder image" width="140" height="140">
-          </div>
+              <h2>Asesor # 5</h2>
+              <p>Datos Asesor # 5</p>
+              <p><a class="btn btn-default" href="#" role="button">Ver Más &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
 
-          <div id = "asesor5"class="col-lg-4">
+          <div class="col-lg-4">
               <img class="img-circle" src="images/siluetaAsesor.jpg" alt="Generic placeholder image" width="140" height="140">
-          </div>
-      </div>
-      
-      <script> cargarAsesores(); </script>
+              <h2>Asesor # 6</h2>
+              <p>Datos Asesor # 6</p>
+            <p><a class="btn btn-default" href="#" role="button">Ver Más &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+
       <hr class="featurette-divider">
 
       <!-- FOOTER -->
@@ -166,7 +150,6 @@
         <p>&copy; 2016 Todo Para Construir y TOPACO S.A son marcas registradas. &middot; <a href="#">Privacidad</a> &middot; <a href="#">Terminos de Uso</a></p>
       </footer>
       <script> loadOptions(); </script>
-      
     </div><!-- /.container -->
 
 

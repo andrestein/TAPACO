@@ -1,7 +1,6 @@
 var http = require( "http" );
 var fs = require( "fs" );
-var path = require("path");
-var formidable = require("formidable");
+path = require("path");
 
 var mimeTypes =
 {
@@ -125,9 +124,7 @@ var mimeTypes =
 var usuarios = [];
 var asesores = [];
 var producto = [];
-var pedidos = [];
-var idPedidos = 0;
-var numFile = 0;
+var pedidos =[];
 
 fs.readFile( "BD/usuarios.json", cargarUsuarios );
 function cargarUsuarios( error, data ){
@@ -159,7 +156,6 @@ function cargarProductos( error, data ){
 
 	if( error == null ){
 		producto = JSON.parse( data ); // Des - stringify
-
 		console.log( "Los productos han sido cargados correctamente " );
 
 	} else {
@@ -172,8 +168,6 @@ function cargarPedidos(error, data){
 
 	if( error == null ){
 		pedidos = JSON.parse( data ); // Des - stringify
-		idPedidos = pedidos.length;
-		console.log(idPedidos);
 		console.log( "Los pedidos han sido cargados correctamente " );
 
 	} else {
@@ -206,6 +200,37 @@ function darPedidos(req, resp){
 			resp.end(JSON.stringify(res));
 }
 
+//var pedidos = [];
+
+/* function cargarVariables(url){
+
+	var vector = [];
+
+	fs.readFile( url , cargarDatos );
+	function cargarDatos( error, data ){
+
+		if( error == null ){
+			vector = JSON.parse( data ); // Des - stringify
+			console.log("\n elementos del archivo " + url + " cargados Correctamente" );
+			console.log("\n " + vector.toString() );
+
+		} else {
+			console.log( error );
+			response.end( error.toString() );
+		}
+	}
+
+	return vector
+
+
+}
+
+usuarios = cargarVariables("BD/usuarios.json");
+asesores = cargarVariables("BD/asesores.json");
+//pedidos = cargarVariables("BD/pedidos.json");
+
+*/
+
 // Crear una instancia del servidor HTTP
 var server = http.createServer( atenderServidor );
 
@@ -232,22 +257,14 @@ function atenderServidor( request, response ){
 	}
 	else if (request.url == "/obtenerProductos"){
 		darProductos(request, response);
-	}
-	else if (request.url =="/obtenerAsesores"){
+
+	}else if (request.url =="/obtenerAsesores"){
 		darAsesores(request, response);
-	}
-	else if (request.url =="/guardarPedido"){
+	}else if (request.url =="/guardarPedido"){
 		guardarPedido(request, response);
-	}
-	else if( request.url=="/obtenerPedido"){
+	}else if( request.url=="/obtenerPedido"){
 		darPedidos(request, response);
-	}
-	else if( request.url == "/guardarPedidoModificado"){
-		guardarPedidoModificado(request, response);
-	}else if ( request.url =="/guardarArchivo"){
-		guardarArchivo(request, response);
-	}
-	else{
+	}else{
 		if(request.url =="/"){
 			retornarArchivoInicio( request, response );
 			cerrarSesion( request, response );
@@ -259,6 +276,8 @@ function atenderServidor( request, response ){
 }
 
 
+
+
 //--------------------------------------------------------------------------------------------
 // AQUI SE MANEJAN LOS DATOS RECIVIDOS DEL NAVEGADOR, AL REGISTRARSE UN NUEVO USUARIO
 
@@ -267,8 +286,7 @@ function guardarPedido(req, res){
 
 	function recibir(data){
 		var pedi = JSON.parse(data.toString() );
-		pedi.id = idPedidos;
-		pedi.estado = "sinRevisar";
+
 		pedidos.push(pedi);
 
 		fs.writeFile('BD/pedidos.json', JSON.stringify(pedidos), null);
@@ -302,7 +320,7 @@ function guardarRegistro( request, response ){
 
 			var resp = {} ;
 			resp.status = "ok";
-			resp.url = "iniciosesion.html";
+			resp.url = "index.html";
 
 			response.end( JSON.stringify(resp) );
 		}
@@ -440,18 +458,32 @@ function cerrarSesion( request, response ){
 // AQUI SE CARGAN LOS ARCHIVOS QUE REQUIERE CADA PETICION
 
 function retornarArchivo( request, response ){
-
+	/* var a = "./public" + request.url;
+	var url = "";
+	for(var i = 0; i < a.length; i++){
+		if(a.charAt(i) != '?'){
+			url += a.charAt(i);
+		}
+	}
+	*/
 	fs.readFile( "./public" + request.url, archivoListo );
 	//fs.readFile( url, archivoListo );
 
   	function archivoListo( error, data ){
+  		console.log("\n nueva peticion(es) \n");
 		if( error == null ){
 
-			if(request.url == "/css/Style.css" || request.url == "/css/bootstrap.min.css" || request.url == "/css/app.css"){
+			if(request.url == "/css/Style.css" || request.url == "/css/bootstrap.min.css"){
 				console.log("es un estilo");
 				response.writeHead(200, {'content-type': 'text/css'})
 			}
 			else {
+			/*var ext = path.extname( fileName);
+          // Busca la extension para retornar el content-type correcto del archivo
+          	var filetype = mimeTypes[ ext ];
+          	console.log( "tipo: " + filetype);
+       		response.writeHead(200, { 'content-type': filetype })
+			*/
 			response.writeHead(200, { 'content-type': 'text/html' });
 			}
 			response.write( data );
@@ -464,11 +496,19 @@ function retornarArchivo( request, response ){
 }
 
 function retornarArchivoInicio( request, response ){
-
+	/* var a = "./public" + request.url;
+	var url = "";
+	for(var i = 0; i < a.length; i++){
+		if(a.charAt(i) != '?'){
+			url += a.charAt(i);
+		}
+	}
+	*/
 	fs.readFile( "./public" + "/index.html", archivoListo );
+	//fs.readFile( url, archivoListo );
 
   	function archivoListo( error, data ){
-
+  		console.log("\n nueva peticion(es) \n");
 		if( error == null ){
 			response.writeHead(200, { 'content-type': 'text/html' });
 			response.write( data );
@@ -478,70 +518,4 @@ function retornarArchivoInicio( request, response ){
 			response.end( error.toString() );
 		}
   	}
-}
-
-
-//RECIBE EL ARCHIVO MODIFICADO POR EL CLIENTE, ACTUALIZA EL ANTERIOR Y LO GUARDA EN LA BD
-
-function guardarPedidoModificado( request, response){
-		request.on( "data" , recibir);
-
-	function recibir(data){
-		var pedi = JSON.parse(data.toString() );
-		modificarPedido(pedi);
-
-		fs.writeFile('BD/pedidos.json', JSON.stringify(pedidos), null);
-		console.log("el pedido modificado por el asesor fue añadido");
-
-		var resp= {};
-		resp.status= "ok";
-		response.end(JSON.stringify(resp,null,2) );
-	}
-}
-
-// verifica el pedido que va a modificar
-	function modificarPedido( pedido ){
-		for(var i = 0; i < pedidos.length; i++){
-			if(pedidos[i].id == pedido.id){
-				pedidos[i] = pedido;
-				break;
-			}
-		}
-	}
-
-
-function verificarNumArchivo(){
-	console.log("verificando cuantos archivos hay");
-	fs.readdir('./public/files/',function (error,archivos){
-      var contador=0;
-      for(var x=0;x<archivos.length;x++) {
-          contador= contador+1;
-      }
-      numFile= contador;
-      console.log("adjuntos: "+contador); 
-  });    
-}
-
-//GUARDAR ARCHIVO ENVIADO EN FORMULARIO
-function guardarArchivo(request, response){
-var entrada=new formidable.IncomingForm();
-var name ="";
-
-    entrada.uploadDir='upload';
-    entrada.parse(request);
-    
-    entrada.on('fileBegin', function(field, file){
-    	var ext = path.extname( file.name );
-    	verificarNumArchivo();
-    	file.name="adjunto#"+(numFile+1)+""+ext;
-    	name = file.name;
-        file.path = "./public/files/"+file.name;
-    });    
-    entrada.on('end', function(){
-        var resp= {};
-		resp.status= "ok";
-		resp.nameFile=name;
-		response.end(JSON.stringify(resp));		
-    });    
-
 }
