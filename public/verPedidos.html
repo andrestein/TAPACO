@@ -87,7 +87,7 @@
 	function ver( id ){     
       	seleccionado = id;
         document.getElementById("preguntas").innerHTML = pedidosUsuario[seleccionado].preguntas;
-        document.getElementById("titPed").innerHTML = "Preguntas del pedido para el proyecto " + pedidosUsuario[seleccionado].proyecto;
+        document.getElementById("titPed").innerHTML = "Preguntas del pedidod para el proyecto " + pedidosUsuario[seleccionado].proyecto;
       	verArchivo( seleccionado );
     }
 
@@ -107,16 +107,11 @@
     function verArchivo( seleccionado ){
       //aqui tambien se debe verificar a cual de los pedidos se selecciono y si es pdf o adjunto
       var lista = pedidosUsuario[ seleccionado ].listaProductos;
-      if(typeof lista == 'object'){
+      if (true) {
         verPDF(lista); 
-      }else if (typeof lista == 'string'){
-        verPedidoAjunto(lista);
+      }else {
+        //DESCARGAR ADJUNTO
       }
-    }
-
-    function verPedidoAjunto(namefile){
-      var numFile = namefile.split('#')[1]
-      window.open("http://localhost:5000/abrirPedido="+numFile);
     }
 
      function addProductoPdf (pro) {

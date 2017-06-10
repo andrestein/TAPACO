@@ -373,6 +373,7 @@
 
          ///valida tipo de archivo que se envia pdf necesita listado - ajunto no
       if (tipoPedido==1){
+        archivo.tipo = 
         archivo.listaProductos = listaProductos;
       }else if (tipoPedido==2){
         archivo.listaProductos = nombreArchivo;
@@ -400,7 +401,7 @@
         respuesta = JSON.parse( request.responseText );
         //console.log(respuesta);
         if( respuesta.status == "ok" ){
-          window.alert("su pedido se ha enviado, este atento a la seccion 'ver pedido' donde podra ver nuestra respuesta");
+          window.alert("su pedido se ha enviado, espere nuestra pronta respuesta");
           window.location.href="index.html";
         }
 
@@ -619,8 +620,7 @@
 <!-- ESTOS SON LOS CAMPOS PARA LLENAR MANUALMENTE-->
 
       <div>
-      <h4> ¿No Encuentras un producto?... Igualmente envialo con tu listado, sólo llena los campos!: <a href="brands.html" target="_blank"> Recuerda nuestras marcas </a> </h1>
-      
+      <h4> ¿No Encuentras un producto?... Igualmente envialo con tu listado, sólo llena los campos!:</h1>
       <br>
       
       <div class="col-sm-5" style="padding-left:5%">

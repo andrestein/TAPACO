@@ -163,44 +163,11 @@
 		"nombre": "pavco",
 		"productos": [{
 			"id": "1",
-			"categoria": "tuberia",
+			"categoria": "tubos",
 			"items": [{
 				"id": "1",
-				"nombre": "tuberia sanitaria",
-				"costo": "$99.700 COP"
-			}]
-		}]
-	},{"id": "3",
-		"nombre": "Holcim",
-		"productos": [{
-			"id": "1",
-			"categoria": "cementos",
-			"items": [{
-				"id": "1",
-				"nombre": "cementos tipo ug",
-				"costo": "$150.000 COP"
-			}]
-		}]
-	},{"id": "4",
-		"nombre": "Toxement",
-		"productos": [{
-			"id": "1",
-			"categoria": "aditivos",
-			"items": [{
-				"id": "1",
-				"nombre": "EUCOCELL 200",
-				"costo": "$20.000 COP"
-			}]
-		}]
-	},{"id": "5",
-		"nombre": "Grival",
-		"productos": [{
-			"id": "1",
-			"categoria": "Baños",
-			"items": [{
-				"id": "1",
-				"nombre": "Manija Acuario ",
-				"costo": "$40.000 COP"
+				"nombre": "tuberia de 20",
+				"costo": "$148.700 COP"
 			}]
 		}]
 	}]
